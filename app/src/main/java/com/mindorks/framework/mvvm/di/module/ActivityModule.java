@@ -19,12 +19,16 @@ package com.mindorks.framework.mvvm.di.module;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
+import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.di.ActivityContext;
 import com.mindorks.framework.mvvm.di.PerActivity;
+import com.mindorks.framework.mvvm.utils.rx.AppSchedulerProvider;
+import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 import com.mindorks.framework.mvvm.viewmodel.main.MainViewModel;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by amitshekhar on 07/07/17.
@@ -50,8 +54,20 @@ public class ActivityModule {
     }
 
     @Provides
+    CompositeDisposable provideCompositeDisposable() {
+        return new CompositeDisposable();
+    }
+
+    @Provides
+    SchedulerProvider provideSchedulerProvider() {
+        return new AppSchedulerProvider();
+    }
+
+    @Provides
     @PerActivity
-    MainViewModel provideMainViewModel() {
-        return new MainViewModel("MainViewModel");
+    MainViewModel provideMainViewModel(DataManager dataManager,
+                                       SchedulerProvider schedulerProvider,
+                                       CompositeDisposable compositeDisposable) {
+        return new MainViewModel(dataManager, schedulerProvider, compositeDisposable);
     }
 }

@@ -14,13 +14,10 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.viewmodel.main;
-
-import android.databinding.ObservableField;
+package com.mindorks.framework.mvvm.viewmodel.base;
 
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
-import com.mindorks.framework.mvvm.viewmodel.base.BaseViewModel;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -28,18 +25,44 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by amitshekhar on 07/07/17.
  */
 
-public class MainViewModel extends BaseViewModel {
+public abstract class BaseViewModel<V> {
 
-    public final ObservableField<String> value = new ObservableField<>();
+    private V mCallback;
 
-    public MainViewModel(DataManager dataManager,
+    private final DataManager mDataManager;
+    private final SchedulerProvider mSchedulerProvider;
+    private final CompositeDisposable mCompositeDisposable;
+
+    public BaseViewModel(DataManager dataManager,
                          SchedulerProvider schedulerProvider,
                          CompositeDisposable compositeDisposable) {
-        super(dataManager, schedulerProvider, compositeDisposable);
+        this.mDataManager = dataManager;
+        this.mSchedulerProvider = schedulerProvider;
+        this.mCompositeDisposable = compositeDisposable;
     }
 
-    public void setText(String text) {
-        this.value.set(text);
+    public void onAttach(V callback) {
+        this.mCallback = callback;
+    }
+
+    public void onDetach() {
+        mCompositeDisposable.dispose();
+    }
+
+    public V getCallback() {
+        return mCallback;
+    }
+
+    public DataManager getDataManager() {
+        return mDataManager;
+    }
+
+    public SchedulerProvider getSchedulerProvider() {
+        return mSchedulerProvider;
+    }
+
+    public CompositeDisposable getCompositeDisposable() {
+        return mCompositeDisposable;
     }
 
 }

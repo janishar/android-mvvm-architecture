@@ -51,7 +51,6 @@ public class ApplicationModule {
         return mApplication;
     }
 
-
     @Provides
     @Singleton
     DataManager provideDataManager(AppDataManager appDataManager) {

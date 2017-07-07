@@ -47,7 +47,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .activityModule(new ActivityModule(this))
                 .applicationComponent(((MvvmApp) getApplication()).getComponent())
                 .build();
-
     }
 
     public ActivityComponent getActivityComponent() {
