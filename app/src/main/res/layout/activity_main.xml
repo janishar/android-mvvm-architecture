@@ -13,16 +13,34 @@
   ~  See the License for the specific language governing permissions and
   ~  limitations under the License
   -->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context="com.mindorks.framework.mvvm.view.main.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <data>
 
-</LinearLayout>
+        <import type="android.view.View" />
+
+        <variable
+            name="view"
+            type="com.mindorks.framework.mvvm.view.main.MainActivity" />
+
+        <variable
+            name="viewmodel"
+            type="com.mindorks.framework.mvvm.viewmodel.main.MainViewModel" />
+
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewmodel.value}" />
+
+    </LinearLayout>
+
+</layout>

@@ -16,9 +16,25 @@
 
 package com.mindorks.framework.mvvm.viewmodel.main;
 
+import android.databinding.BaseObservable;
+import android.databinding.ObservableField;
+
 /**
  * Created by amitshekhar on 07/07/17.
  */
 
-public class MainViewModel {
+public class MainViewModel extends BaseObservable {
+
+    public final ObservableField<String> value = new ObservableField<>();
+
+    private final String dummyValue;
+
+    public MainViewModel(String value) {
+        this.dummyValue = value;
+    }
+
+    public void setText(String text) {
+        this.value.set(text);
+    }
+
 }

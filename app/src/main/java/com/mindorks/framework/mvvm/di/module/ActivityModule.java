@@ -20,6 +20,8 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
 import com.mindorks.framework.mvvm.di.ActivityContext;
+import com.mindorks.framework.mvvm.di.PerActivity;
+import com.mindorks.framework.mvvm.viewmodel.main.MainViewModel;
 
 import dagger.Module;
 import dagger.Provides;
@@ -45,5 +47,11 @@ public class ActivityModule {
     @Provides
     AppCompatActivity provideActivity() {
         return mActivity;
+    }
+
+    @Provides
+    @PerActivity
+    MainViewModel provideMainViewModel() {
+        return new MainViewModel("MainViewModel");
     }
 }

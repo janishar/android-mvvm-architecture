@@ -16,16 +16,45 @@
 
 package com.mindorks.framework.mvvm.view.main;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.mindorks.framework.mvvm.MvvmApp;
 import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.databinding.ActivityMainBinding;
+import com.mindorks.framework.mvvm.di.component.ActivityComponent;
+import com.mindorks.framework.mvvm.di.component.DaggerActivityComponent;
+import com.mindorks.framework.mvvm.di.module.ActivityModule;
+import com.mindorks.framework.mvvm.viewmodel.main.MainViewModel;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ActivityComponent mActivityComponent;
+
+    @Inject
+    public MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        ActivityMainBinding mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        mActivityComponent = DaggerActivityComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .applicationComponent(((MvvmApp) getApplication()).getComponent())
+                .build();
+
+        mActivityComponent.inject(this);
+
+        mainBinding.setViewmodel(mainViewModel);
+    }
+
+    @Override
+    protected void onResume() {
+        mainViewModel.setText("Amit Shekhar");
+        super.onResume();
     }
 }
