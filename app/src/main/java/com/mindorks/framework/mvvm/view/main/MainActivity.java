@@ -16,38 +16,39 @@
 
 package com.mindorks.framework.mvvm.view.main;
 
+import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
-import com.mindorks.framework.mvvm.MvvmApp;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.ActivityMainBinding;
-import com.mindorks.framework.mvvm.di.component.ActivityComponent;
-import com.mindorks.framework.mvvm.di.component.DaggerActivityComponent;
-import com.mindorks.framework.mvvm.di.module.ActivityModule;
+import com.mindorks.framework.mvvm.view.base.BaseActivity;
 import com.mindorks.framework.mvvm.viewmodel.main.MainViewModel;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity {
+import butterknife.ButterKnife;
 
-    private ActivityComponent mActivityComponent;
+public class MainActivity extends BaseActivity {
 
     @Inject
     public MainViewModel mainViewModel;
 
+    public static Intent getStartIntent(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         ActivityMainBinding mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        mActivityComponent = DaggerActivityComponent.builder()
-                .activityModule(new ActivityModule(this))
-                .applicationComponent(((MvvmApp) getApplication()).getComponent())
-                .build();
+        getActivityComponent().inject(this);
 
-        mActivityComponent.inject(this);
+        setUnBinder(ButterKnife.bind(this));
 
         mainBinding.setViewmodel(mainViewModel);
     }
