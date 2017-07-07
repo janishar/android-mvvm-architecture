@@ -17,12 +17,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         applicationId "com.mindorks.framework.mvvm"
-        minSdkVersion 15
-        targetSdkVersion 26
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -33,14 +33,67 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
+
+    // android support libraries
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:design:$rootProject.supportLibraryVersion"
+    compile "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
+    compile "com.android.support:animated-vector-drawable:$rootProject.supportLibraryVersion"
+
+    // network
+    compile "com.amitshekhar.android:rx2-android-networking:$rootProject.rx2FastAndroidNetworking"
+
+    // image
+    compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+
+    // parser
+    compile "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+    // debug database
+    debugCompile "com.amitshekhar.android:debug-db:$rootProject.debugDBVersion"
+
+    // dependency injection
+    compile "com.google.dagger:dagger:$rootProject.dagger2Version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+    provided 'javax.annotation:jsr250-api:1.0'
+    compile 'javax.inject:javax.inject:1'
+
+    // reactive
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
+    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
+
+    // code generator for view
+    compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
+
+    // swipe view
+    compile "com.mindorks:placeholderview:$rootProject.placeholderviewVersion"
+
+    // logger
+    compile "com.jakewharton.timber:timber:$rootProject.timberVersion"
+
+    // dependencies for local unit tests
+    testCompile "junit:junit:$rootProject.ext.junitVersion"
+    testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+
+    // UI Testing
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+    androidTestCompile "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
+    androidTestCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
 }
+
+configurations.all {
+    resolutionStrategy.force "com.android.support:support-annotations:$supportLibraryVersion"
+}
+
