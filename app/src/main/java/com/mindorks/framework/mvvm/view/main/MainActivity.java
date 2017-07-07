@@ -14,10 +14,12 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm;
+package com.mindorks.framework.mvvm.view.main;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.mindorks.framework.mvvm.R;
 
 public class MainActivity extends AppCompatActivity {
 
