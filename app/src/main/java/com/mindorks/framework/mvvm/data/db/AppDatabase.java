@@ -22,9 +22,9 @@ import android.arch.persistence.room.RoomDatabase;
 import com.mindorks.framework.mvvm.data.db.dao.OptionDao;
 import com.mindorks.framework.mvvm.data.db.dao.QuestionDao;
 import com.mindorks.framework.mvvm.data.db.dao.UserDao;
-import com.mindorks.framework.mvvm.data.db.entity.Option;
-import com.mindorks.framework.mvvm.data.db.entity.Question;
-import com.mindorks.framework.mvvm.data.db.entity.User;
+import com.mindorks.framework.mvvm.data.db.model.Option;
+import com.mindorks.framework.mvvm.data.db.model.Question;
+import com.mindorks.framework.mvvm.data.db.model.User;
 
 /**
  * Created by amitshekhar on 07/07/17.

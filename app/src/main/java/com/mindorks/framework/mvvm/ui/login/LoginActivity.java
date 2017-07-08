@@ -14,7 +14,7 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.ui.main;
+package com.mindorks.framework.mvvm.ui.login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,20 +22,24 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
 import com.mindorks.framework.mvvm.R;
-import com.mindorks.framework.mvvm.databinding.ActivityMainBinding;
+import com.mindorks.framework.mvvm.databinding.ActivityLoginBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity {
+/**
+ * Created by amitshekhar on 08/07/17.
+ */
+
+public class LoginActivity extends BaseActivity implements LoginCallback {
 
     @Inject
-    MainViewModel mMainViewModel;
+    LoginViewModel mLoginViewModel;
 
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, LoginActivity.class);
         return intent;
     }
 
@@ -43,25 +47,20 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
         getActivityComponent().inject(this);
 
         setUnBinder(ButterKnife.bind(this));
 
-        binding.setViewmodel(mMainViewModel);
+        binding.setViewmodel(mLoginViewModel);
 
+        mLoginViewModel.setCallback(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mMainViewModel.onDestroy();
-    }
-
-    @Override
-    protected void onResume() {
-        mMainViewModel.setText("Amit Shekhar");
-        super.onResume();
+        mLoginViewModel.onDestroy();
     }
 }

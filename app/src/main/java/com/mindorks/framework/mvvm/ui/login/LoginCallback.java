@@ -14,32 +14,11 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.data.db.dao;
-
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.Query;
-
-import com.mindorks.framework.mvvm.data.db.model.Question;
-
-import java.util.List;
-
-import io.reactivex.Flowable;
+package com.mindorks.framework.mvvm.ui.login;
 
 /**
  * Created by amitshekhar on 08/07/17.
  */
-@Dao
-public interface QuestionDao {
 
-    @Query("SELECT * FROM questions")
-    Flowable<List<Question>> loadAll();
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Question question);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Question> questions);
-
+public interface LoginCallback {
 }

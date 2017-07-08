@@ -16,9 +16,9 @@
 
 package com.mindorks.framework.mvvm.data.db;
 
-import com.mindorks.framework.mvvm.data.db.entity.Option;
-import com.mindorks.framework.mvvm.data.db.entity.Question;
-import com.mindorks.framework.mvvm.data.db.entity.User;
+import com.mindorks.framework.mvvm.data.db.model.Option;
+import com.mindorks.framework.mvvm.data.db.model.Question;
+import com.mindorks.framework.mvvm.data.db.model.User;
 
 import java.util.List;
 import java.util.concurrent.Callable;

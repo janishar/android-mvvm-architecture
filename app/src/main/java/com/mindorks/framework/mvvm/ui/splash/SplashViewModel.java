@@ -52,14 +52,23 @@ public class SplashViewModel extends BaseViewModel<SplashCallback> {
                 .subscribe(new Consumer<Boolean>() {
                     @Override
                     public void accept(Boolean aBoolean) throws Exception {
-                        getCallback().onSeedingComplete();
+                        decideNextActivity();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        getCallback().onSeedingComplete();
+                        decideNextActivity();
                     }
                 }));
+    }
+
+    private void decideNextActivity() {
+        if (getDataManager().getCurrentUserLoggedInMode()
+                == DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType()) {
+            getCallback().openLoginActivity();
+        } else {
+            getCallback().openMainActivity();
+        }
     }
 
 }

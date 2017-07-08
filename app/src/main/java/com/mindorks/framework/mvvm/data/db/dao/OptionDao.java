@@ -21,7 +21,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.mindorks.framework.mvvm.data.db.entity.Option;
+import com.mindorks.framework.mvvm.data.db.model.Option;
 
 import java.util.List;
 

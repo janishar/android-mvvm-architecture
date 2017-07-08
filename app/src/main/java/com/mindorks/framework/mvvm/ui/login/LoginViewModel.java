@@ -14,32 +14,23 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.data.db.dao;
+package com.mindorks.framework.mvvm.ui.login;
 
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.Query;
+import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
+import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
-import com.mindorks.framework.mvvm.data.db.model.Question;
-
-import java.util.List;
-
-import io.reactivex.Flowable;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by amitshekhar on 08/07/17.
  */
-@Dao
-public interface QuestionDao {
 
-    @Query("SELECT * FROM questions")
-    Flowable<List<Question>> loadAll();
+public class LoginViewModel extends BaseViewModel<LoginCallback> {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Question question);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Question> questions);
-
+    public LoginViewModel(DataManager dataManager,
+                          SchedulerProvider schedulerProvider,
+                          CompositeDisposable compositeDisposable) {
+        super(dataManager, schedulerProvider, compositeDisposable);
+    }
 }

@@ -18,6 +18,7 @@ package com.mindorks.framework.mvvm.di.component;
 
 import com.mindorks.framework.mvvm.di.PerActivity;
 import com.mindorks.framework.mvvm.di.module.ActivityModule;
+import com.mindorks.framework.mvvm.ui.login.LoginActivity;
 import com.mindorks.framework.mvvm.ui.main.MainActivity;
 import com.mindorks.framework.mvvm.ui.splash.SplashActivity;
 
@@ -31,6 +32,8 @@ import dagger.Component;
 public interface ActivityComponent {
 
     void inject(SplashActivity activity);
+
+    void inject(LoginActivity activity);
 
     void inject(MainActivity activity);
 

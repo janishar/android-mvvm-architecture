@@ -17,6 +17,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mindorks.framework.mvvm">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MvvmApp"
         android:allowBackup="true"
@@ -32,6 +34,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.main.MainActivity"

@@ -17,7 +17,7 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.mindorks.framework.mvvm.ui.main.MainActivity">
+    tools:context="com.mindorks.framework.mvvm.ui.splash.SplashActivity">
 
     <data>
 
@@ -48,6 +48,5 @@
             android:layout_centerInParent="true"
             android:src="@mipmap/ic_launcher" />
     </RelativeLayout>
-
 
 </layout>

@@ -22,6 +22,8 @@ package com.mindorks.framework.mvvm.ui.splash;
 
 public interface SplashCallback {
 
-    void onSeedingComplete();
+    void openLoginActivity();
+
+    void openMainActivity();
 
 }

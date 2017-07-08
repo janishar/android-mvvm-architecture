@@ -14,11 +14,10 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.data.db.entity;
+package com.mindorks.framework.mvvm.data.db.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
@@ -27,30 +26,22 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by amitshekhar on 08/07/17.
  */
-@Entity(tableName = "options", foreignKeys
-        = @ForeignKey(entity = Question.class,
-        parentColumns = "id",
-        childColumns = "question_id"))
-public class Option {
+@Entity(tableName = "questions")
+public class Question {
 
     @Expose
     @PrimaryKey
     public Long id;
 
     @Expose
-    @SerializedName("option_text")
-    @ColumnInfo(name = "option_text")
-    public String optionText;
+    @SerializedName("question_text")
+    @ColumnInfo(name = "question_text")
+    public String questionText;
 
     @Expose
-    @SerializedName("question_id")
-    @ColumnInfo(name = "question_id")
-    public Long questionId;
-
-    @Expose
-    @SerializedName("is_correct")
-    @ColumnInfo(name = "is_correct")
-    public boolean isCorrect;
+    @SerializedName("question_img_url")
+    @ColumnInfo(name = "question_img_url")
+    public String imgUrl;
 
     @Expose
     @SerializedName("created_at")
