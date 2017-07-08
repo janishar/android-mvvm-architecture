@@ -16,8 +16,18 @@
 
 package com.mindorks.framework.mvvm.data.db;
 
+import com.mindorks.framework.mvvm.data.db.entity.Option;
+import com.mindorks.framework.mvvm.data.db.entity.Question;
+import com.mindorks.framework.mvvm.data.db.entity.User;
+
+import java.util.List;
+import java.util.concurrent.Callable;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 /**
  * Created by amitshekhar on 07/07/17.
@@ -26,9 +36,103 @@ import javax.inject.Singleton;
 @Singleton
 public class AppDbHelper implements DbHelper {
 
-    @Inject
-    public AppDbHelper() {
+    private final AppDatabase mAppDatabase;
 
+    @Inject
+    public AppDbHelper(AppDatabase appDatabase) {
+        this.mAppDatabase = appDatabase;
+    }
+
+    @Override
+    public Flowable<List<User>> getAllUsers() {
+        return mAppDatabase.userDao().loadAll();
+    }
+
+    @Override
+    public Flowable<List<Question>> getAllQuestions() {
+        return mAppDatabase.questionDao().loadAll();
+    }
+
+    @Override
+    public Observable<Boolean> isQuestionEmpty() {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                // TODO
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public Observable<Boolean> isOptionEmpty() {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                // TODO
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public Observable<Boolean> insertUser(final User user) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                mAppDatabase.userDao().insert(user);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public Observable<Boolean> saveQuestion(final Question question) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                mAppDatabase.questionDao().insert(question);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public Observable<Boolean> saveOption(final Option option) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                mAppDatabase.optionDao().insert(option);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public Observable<Boolean> saveQuestionList(final List<Question> questionList) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                mAppDatabase.questionDao().insertAll(questionList);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public Observable<Boolean> saveOptionList(final List<Option> optionList) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                mAppDatabase.optionDao().insertAll(optionList);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public Flowable<List<Option>> getOptionsForQuestionId(Long questionId) {
+        return mAppDatabase.optionDao().loadAllByQuestionId(questionId);
     }
 
 }

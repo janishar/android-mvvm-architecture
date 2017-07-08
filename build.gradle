@@ -31,6 +31,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url 'https://maven.google.com' }
     }
 }
 
@@ -47,11 +48,11 @@ ext {
     buildToolsVersion = '26.0.0'
 
     // App dependencies
-    supportLibraryVersion = '25.3.1'
+    supportLibraryVersion = '25.4.0'
     gsonVersion = '2.8.0'
     calligraphyVersion = '2.2.0'
     glideVersion = '3.7.0'
-
+    roomDatabase = '1.0.0-alpha3'
     rx2FastAndroidNetworking = '1.0.0'
 
     dagger2Version = '2.8'

@@ -6,22 +6,12 @@
   },
   {
     "id": 2,
-    "question_text": "Which component of the MVP controls the data flow?",
-    "question_img_url": null
-  },
-  {
-    "id": 3,
-    "question_text": "Can a View ask for data from a Data Manager?",
-    "question_img_url": null
-  },
-  {
-    "id": 4,
-    "question_text": "What is the role of a Presenter?",
+    "question_text": "Which component of the MVVM controls the data flow?",
     "question_img_url": null
   },
   {
     "id": 5,
-    "question_text": "Why should we follow MVP?",
+    "question_text": "Why should we follow MVVM?",
     "question_img_url": null
   },
   {

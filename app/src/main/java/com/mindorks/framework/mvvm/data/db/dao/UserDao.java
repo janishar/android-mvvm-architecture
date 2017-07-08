@@ -14,41 +14,43 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.data.db;
+package com.mindorks.framework.mvvm.data.db.dao;
 
-import com.mindorks.framework.mvvm.data.db.entity.Option;
-import com.mindorks.framework.mvvm.data.db.entity.Question;
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
+import android.arch.persistence.room.Query;
+
 import com.mindorks.framework.mvvm.data.db.entity.User;
 
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 
 /**
  * Created by amitshekhar on 07/07/17.
  */
 
-public interface DbHelper {
+@Dao
+public interface UserDao {
 
-    Observable<Boolean> insertUser(final User user);
+    @Query("SELECT * FROM users")
+    Flowable<List<User>> loadAll();
 
-    Flowable<List<User>> getAllUsers();
+    @Query("SELECT * FROM users WHERE id IN (:userIds)")
+    Flowable<List<User>> loadAllByIds(List<Integer> userIds);
 
-    Flowable<List<Question>> getAllQuestions();
+    @Query("SELECT * FROM users WHERE name LIKE :name LIMIT 1")
+    Flowable<User> findByName(String name);
 
-    Flowable<List<Option>> getOptionsForQuestionId(Long questionId);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(User user);
 
-    Observable<Boolean> isQuestionEmpty();
+    @Insert
+    void insertAll(User... users);
 
-    Observable<Boolean> isOptionEmpty();
-
-    Observable<Boolean> saveQuestion(Question question);
-
-    Observable<Boolean> saveOption(Option option);
-
-    Observable<Boolean> saveQuestionList(List<Question> questionList);
-
-    Observable<Boolean> saveOptionList(List<Option> optionList);
+    @Delete
+    void delete(User user);
 
 }

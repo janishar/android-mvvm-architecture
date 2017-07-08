@@ -59,6 +59,10 @@ dependencies {
     // network
     compile "com.amitshekhar.android:rx2-android-networking:$rootProject.rx2FastAndroidNetworking"
 
+    // database
+    compile "android.arch.persistence.room:rxjava2:$rootProject.roomDatabase"
+    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomDatabase"
+
     // font
     compile "uk.co.chrisjenx:calligraphy:$rootProject.calligraphyVersion"
 

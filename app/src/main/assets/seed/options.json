@@ -2,12 +2,12 @@
   {
     "option_text": "MVVM",
     "question_id": 1,
-    "is_correct": false
+    "is_correct": true
   },
   {
     "option_text": "MVP",
     "question_id": 1,
-    "is_correct": true
+    "is_correct": false
   },
   {
     "option_text": "MVC",
@@ -25,39 +25,9 @@
     "is_correct": false
   },
   {
-    "option_text": "Presenter",
+    "option_text": "ViewModel",
     "question_id": 2,
     "is_correct": false
-  },
-  {
-    "option_text": "Yes",
-    "question_id": 3,
-    "is_correct": false
-  },
-  {
-    "option_text": "Never",
-    "question_id": 3,
-    "is_correct": true
-  },
-  {
-    "option_text": "Sometimes",
-    "question_id": 3,
-    "is_correct": false
-  },
-  {
-    "option_text": "It fetches the data from the database.",
-    "question_id": 4,
-    "is_correct": false
-  },
-  {
-    "option_text": "It delegates View's requirements to Data Manager.",
-    "question_id": 4,
-    "is_correct": true
-  },
-  {
-    "option_text": "It instructs the View to perform actions.",
-    "question_id": 4,
-    "is_correct": true
   },
   {
     "option_text": "It created a readable code.",

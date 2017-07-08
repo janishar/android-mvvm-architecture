@@ -16,39 +16,27 @@
 
 package com.mindorks.framework.mvvm.data.db;
 
+import android.arch.persistence.room.Database;
+import android.arch.persistence.room.RoomDatabase;
+
+import com.mindorks.framework.mvvm.data.db.dao.OptionDao;
+import com.mindorks.framework.mvvm.data.db.dao.QuestionDao;
+import com.mindorks.framework.mvvm.data.db.dao.UserDao;
 import com.mindorks.framework.mvvm.data.db.entity.Option;
 import com.mindorks.framework.mvvm.data.db.entity.Question;
 import com.mindorks.framework.mvvm.data.db.entity.User;
-
-import java.util.List;
-
-import io.reactivex.Flowable;
-import io.reactivex.Observable;
 
 /**
  * Created by amitshekhar on 07/07/17.
  */
 
-public interface DbHelper {
+@Database(entities = {User.class, Question.class, Option.class}, version = 1)
+public abstract class AppDatabase extends RoomDatabase {
 
-    Observable<Boolean> insertUser(final User user);
+    public abstract UserDao userDao();
 
-    Flowable<List<User>> getAllUsers();
+    public abstract QuestionDao questionDao();
 
-    Flowable<List<Question>> getAllQuestions();
-
-    Flowable<List<Option>> getOptionsForQuestionId(Long questionId);
-
-    Observable<Boolean> isQuestionEmpty();
-
-    Observable<Boolean> isOptionEmpty();
-
-    Observable<Boolean> saveQuestion(Question question);
-
-    Observable<Boolean> saveOption(Option option);
-
-    Observable<Boolean> saveQuestionList(List<Question> questionList);
-
-    Observable<Boolean> saveOptionList(List<Option> optionList);
+    public abstract OptionDao optionDao();
 
 }

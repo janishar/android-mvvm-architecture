@@ -17,6 +17,7 @@
 package com.mindorks.framework.mvvm.di.module;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.mindorks.framework.mvvm.BuildConfig;
@@ -25,6 +26,7 @@ import com.mindorks.framework.mvvm.data.AppDataManager;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.db.AppDbHelper;
 import com.mindorks.framework.mvvm.data.db.DbHelper;
+import com.mindorks.framework.mvvm.data.db.AppDatabase;
 import com.mindorks.framework.mvvm.data.network.ApiHeader;
 import com.mindorks.framework.mvvm.data.network.ApiHelper;
 import com.mindorks.framework.mvvm.data.network.AppApiHelper;
@@ -87,6 +89,13 @@ public class ApplicationModule {
     @Singleton
     DataManager provideDataManager(AppDataManager appDataManager) {
         return appDataManager;
+    }
+
+    @Provides
+    @Singleton
+    AppDatabase provideAppDatabase(@DatabaseInfo String dbName) {
+        return Room.databaseBuilder(mApplication, AppDatabase.class, dbName)
+                .build();
     }
 
     @Provides
