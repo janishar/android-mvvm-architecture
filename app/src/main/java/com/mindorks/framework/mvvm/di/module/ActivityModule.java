@@ -24,7 +24,7 @@ import com.mindorks.framework.mvvm.di.ActivityContext;
 import com.mindorks.framework.mvvm.di.PerActivity;
 import com.mindorks.framework.mvvm.utils.rx.AppSchedulerProvider;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
-import com.mindorks.framework.mvvm.viewmodel.main.MainViewModel;
+import com.mindorks.framework.mvvm.ui.main.MainViewModel;
 
 import dagger.Module;
 import dagger.Provides;

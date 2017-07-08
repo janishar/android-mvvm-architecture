@@ -14,7 +14,7 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.view.base;
+package com.mindorks.framework.mvvm.ui.base;
 
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;

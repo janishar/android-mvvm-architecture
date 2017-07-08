@@ -16,7 +16,7 @@
 
 package com.mindorks.framework.mvvm.di.component;
 
-import com.mindorks.framework.mvvm.view.main.MainActivity;
+import com.mindorks.framework.mvvm.ui.main.MainActivity;
 import com.mindorks.framework.mvvm.di.PerActivity;
 import com.mindorks.framework.mvvm.di.module.ActivityModule;
 

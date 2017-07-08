@@ -15,7 +15,7 @@
   -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.mindorks.framework.mvvm.view.main.MainActivity">
+    tools:context="com.mindorks.framework.mvvm.ui.main.MainActivity">
 
     <data>
 
@@ -23,11 +23,11 @@
 
         <variable
             name="view"
-            type="com.mindorks.framework.mvvm.view.main.MainActivity" />
+            type="com.mindorks.framework.mvvm.ui.main.MainActivity" />
 
         <variable
             name="viewmodel"
-            type="com.mindorks.framework.mvvm.viewmodel.main.MainViewModel" />
+            type="com.mindorks.framework.mvvm.ui.main.MainViewModel" />
 
     </data>
 

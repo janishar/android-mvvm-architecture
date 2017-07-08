@@ -14,7 +14,7 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.view.main;
+package com.mindorks.framework.mvvm.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,8 +23,7 @@ import android.os.Bundle;
 
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.ActivityMainBinding;
-import com.mindorks.framework.mvvm.view.base.BaseActivity;
-import com.mindorks.framework.mvvm.viewmodel.main.MainViewModel;
+import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 
 import javax.inject.Inject;
 
