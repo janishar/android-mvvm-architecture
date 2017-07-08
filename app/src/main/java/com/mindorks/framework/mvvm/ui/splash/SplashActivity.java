@@ -24,6 +24,7 @@ import android.os.Bundle;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.ActivitySplashBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
+import com.mindorks.framework.mvvm.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
@@ -33,7 +34,7 @@ import butterknife.ButterKnife;
  * Created by amitshekhar on 08/07/17.
  */
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseActivity implements SplashCallback {
 
     @Inject
     SplashViewModel mSplashViewModel;
@@ -55,5 +56,22 @@ public class SplashActivity extends BaseActivity {
         setUnBinder(ButterKnife.bind(this));
 
         binding.setViewmodel(mSplashViewModel);
+
+        mSplashViewModel.setCallback(this);
+
+        mSplashViewModel.startSeeding();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSplashViewModel.onDestroy();
+    }
+
+    @Override
+    public void onSeedingComplete() {
+        Intent intent = MainActivity.getStartIntent(SplashActivity.this);
+        startActivity(intent);
+        finish();
     }
 }

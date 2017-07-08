@@ -41,11 +41,11 @@ public abstract class BaseViewModel<V> {
         this.mCompositeDisposable = compositeDisposable;
     }
 
-    public void onAttach(V callback) {
+    public void setCallback(V callback) {
         this.mCallback = callback;
     }
 
-    public void onDetach() {
+    public void onDestroy() {
         mCompositeDisposable.dispose();
     }
 
