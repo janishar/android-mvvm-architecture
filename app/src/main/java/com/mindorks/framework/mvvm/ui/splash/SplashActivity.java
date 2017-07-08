@@ -14,7 +14,7 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.ui.main;
+package com.mindorks.framework.mvvm.ui.splash;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,39 +22,38 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
 import com.mindorks.framework.mvvm.R;
-import com.mindorks.framework.mvvm.databinding.ActivityMainBinding;
+import com.mindorks.framework.mvvm.databinding.ActivitySplashBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity {
+/**
+ * Created by amitshekhar on 08/07/17.
+ */
+
+public class SplashActivity extends BaseActivity {
 
     @Inject
-    MainViewModel mainViewModel;
+    SplashViewModel mSplashViewModel;
 
     public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, SplashActivity.class);
         return intent;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityMainBinding mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        ActivitySplashBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
 
         getActivityComponent().inject(this);
 
         setUnBinder(ButterKnife.bind(this));
 
-        mainBinding.setViewmodel(mainViewModel);
-    }
-
-    @Override
-    protected void onResume() {
-        mainViewModel.setText("Amit Shekhar");
-        super.onResume();
+        binding.setViewmodel(mSplashViewModel);
     }
 }

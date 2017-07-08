@@ -22,9 +22,10 @@ import android.support.v7.app.AppCompatActivity;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.di.ActivityContext;
 import com.mindorks.framework.mvvm.di.PerActivity;
+import com.mindorks.framework.mvvm.ui.main.MainViewModel;
+import com.mindorks.framework.mvvm.ui.splash.SplashViewModel;
 import com.mindorks.framework.mvvm.utils.rx.AppSchedulerProvider;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
-import com.mindorks.framework.mvvm.ui.main.MainViewModel;
 
 import dagger.Module;
 import dagger.Provides;
@@ -69,5 +70,13 @@ public class ActivityModule {
                                        SchedulerProvider schedulerProvider,
                                        CompositeDisposable compositeDisposable) {
         return new MainViewModel(dataManager, schedulerProvider, compositeDisposable);
+    }
+
+    @Provides
+    @PerActivity
+    SplashViewModel provideSplashViewModel(DataManager dataManager,
+                                           SchedulerProvider schedulerProvider,
+                                           CompositeDisposable compositeDisposable) {
+        return new SplashViewModel(dataManager, schedulerProvider, compositeDisposable);
     }
 }

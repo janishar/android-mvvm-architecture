@@ -14,24 +14,24 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.di.component;
+package com.mindorks.framework.mvvm.ui.splash;
 
-import com.mindorks.framework.mvvm.di.PerActivity;
-import com.mindorks.framework.mvvm.di.module.ActivityModule;
-import com.mindorks.framework.mvvm.ui.main.MainActivity;
-import com.mindorks.framework.mvvm.ui.splash.SplashActivity;
+import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
+import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
-import dagger.Component;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
- * Created by amitshekhar on 07/07/17.
+ * Created by amitshekhar on 08/07/17.
  */
-@PerActivity
-@Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
-public interface ActivityComponent {
 
-    void inject(SplashActivity activity);
+public class SplashViewModel extends BaseViewModel {
 
-    void inject(MainActivity activity);
+    public SplashViewModel(DataManager dataManager,
+                           SchedulerProvider schedulerProvider,
+                           CompositeDisposable compositeDisposable) {
+        super(dataManager, schedulerProvider, compositeDisposable);
+    }
 
 }
