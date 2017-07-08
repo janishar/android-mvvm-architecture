@@ -26,7 +26,7 @@
             type="com.mindorks.framework.mvvm.ui.main.MainActivity" />
 
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="com.mindorks.framework.mvvm.ui.main.MainViewModel" />
 
     </data>
@@ -39,7 +39,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewmodel.value}" />
+            android:text="@{viewModel.value}" />
 
     </LinearLayout>
 

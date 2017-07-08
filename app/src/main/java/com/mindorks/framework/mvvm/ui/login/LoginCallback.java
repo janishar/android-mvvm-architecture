@@ -21,4 +21,7 @@ package com.mindorks.framework.mvvm.ui.login;
  */
 
 public interface LoginCallback {
+
+    void openMainActivity();
+
 }

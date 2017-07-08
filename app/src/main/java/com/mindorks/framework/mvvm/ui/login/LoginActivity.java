@@ -24,6 +24,7 @@ import android.os.Bundle;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.ActivityLoginBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
+import com.mindorks.framework.mvvm.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
@@ -38,6 +39,8 @@ public class LoginActivity extends BaseActivity implements LoginCallback {
     @Inject
     LoginViewModel mLoginViewModel;
 
+    private ActivityLoginBinding binding;
+
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         return intent;
@@ -47,20 +50,28 @@ public class LoginActivity extends BaseActivity implements LoginCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
         getActivityComponent().inject(this);
 
         setUnBinder(ButterKnife.bind(this));
 
-        binding.setViewmodel(mLoginViewModel);
+        binding.setViewModel(mLoginViewModel);
 
         mLoginViewModel.setCallback(this);
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mLoginViewModel.onDestroy();
+    }
+
+    @Override
+    public void openMainActivity() {
+        Intent intent = MainActivity.getStartIntent(LoginActivity.this);
+        startActivity(intent);
+        finish();
     }
 }

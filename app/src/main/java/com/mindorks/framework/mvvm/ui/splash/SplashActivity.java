@@ -56,7 +56,7 @@ public class SplashActivity extends BaseActivity implements SplashCallback {
 
         setUnBinder(ButterKnife.bind(this));
 
-        binding.setViewmodel(mSplashViewModel);
+        binding.setViewModel(mSplashViewModel);
 
         mSplashViewModel.setCallback(this);
 

@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity {
 
         setUnBinder(ButterKnife.bind(this));
 
-        binding.setViewmodel(mMainViewModel);
+        binding.setViewModel(mMainViewModel);
 
     }
 

@@ -28,7 +28,7 @@
             type="com.mindorks.framework.mvvm.ui.splash.SplashActivity" />
 
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="com.mindorks.framework.mvvm.ui.splash.SplashViewModel" />
 
     </data>

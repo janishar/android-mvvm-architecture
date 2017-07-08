@@ -16,11 +16,15 @@
 
 package com.mindorks.framework.mvvm.ui.login;
 
+import com.androidnetworking.error.ANError;
 import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.network.model.LoginRequest;
+import com.mindorks.framework.mvvm.data.network.model.LoginResponse;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by amitshekhar on 08/07/17.
@@ -33,4 +37,68 @@ public class LoginViewModel extends BaseViewModel<LoginCallback> {
                           CompositeDisposable compositeDisposable) {
         super(dataManager, schedulerProvider, compositeDisposable);
     }
+
+    public void onServerLoginClick() {
+
+    }
+
+    public void onGoogleLoginClick() {
+        getCompositeDisposable().add(getDataManager()
+                .doGoogleLoginApiCall(new LoginRequest.GoogleLoginRequest("test1", "test1"))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<LoginResponse>() {
+                    @Override
+                    public void accept(LoginResponse response) throws Exception {
+                        getDataManager().updateUserInfo(
+                                response.getAccessToken(),
+                                response.getUserId(),
+                                DataManager.LoggedInMode.LOGGED_IN_MODE_GOOGLE,
+                                response.getUserName(),
+                                response.getUserEmail(),
+                                response.getGoogleProfilePicUrl());
+
+                        getCallback().openMainActivity();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                        // handle the login error here
+                        if (throwable instanceof ANError) {
+                            ANError anError = (ANError) throwable;
+                        }
+                    }
+                }));
+    }
+
+    public void onFbLoginClick() {
+        getCompositeDisposable().add(getDataManager()
+                .doFacebookLoginApiCall(new LoginRequest.FacebookLoginRequest("test3", "test4"))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<LoginResponse>() {
+                    @Override
+                    public void accept(LoginResponse response) throws Exception {
+                        getDataManager().updateUserInfo(
+                                response.getAccessToken(),
+                                response.getUserId(),
+                                DataManager.LoggedInMode.LOGGED_IN_MODE_FB,
+                                response.getUserName(),
+                                response.getUserEmail(),
+                                response.getGoogleProfilePicUrl());
+                        getCallback().openMainActivity();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                        // handle the login error here
+                        if (throwable instanceof ANError) {
+                            ANError anError = (ANError) throwable;
+                        }
+                    }
+                }));
+    }
+
 }
