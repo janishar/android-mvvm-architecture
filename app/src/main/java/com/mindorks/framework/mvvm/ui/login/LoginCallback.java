@@ -24,4 +24,10 @@ public interface LoginCallback {
 
     void openMainActivity();
 
+    void showLoading();
+
+    void hideLoading();
+
+    void handleError(Throwable throwable);
+
 }

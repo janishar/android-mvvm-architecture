@@ -156,6 +156,7 @@ public class MainActivity extends BaseActivity implements MainCallback {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
+                hideKeyboard();
             }
 
             @Override

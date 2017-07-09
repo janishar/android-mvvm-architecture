@@ -70,4 +70,9 @@ public class LoginActivity extends BaseActivity implements LoginCallback {
         startActivity(intent);
         finish();
     }
+
+    @Override
+    public void handleError(Throwable throwable) {
+        // handle error
+    }
 }

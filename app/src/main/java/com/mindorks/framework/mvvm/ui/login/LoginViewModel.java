@@ -16,7 +16,6 @@
 
 package com.mindorks.framework.mvvm.ui.login;
 
-import com.androidnetworking.error.ANError;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.api.LoginRequest;
 import com.mindorks.framework.mvvm.data.model.api.LoginResponse;
@@ -43,6 +42,7 @@ public class LoginViewModel extends BaseViewModel<LoginCallback> {
     }
 
     public void onGoogleLoginClick() {
+        getCallback().showLoading();
         getCompositeDisposable().add(getDataManager()
                 .doGoogleLoginApiCall(new LoginRequest.GoogleLoginRequest("test1", "test1"))
                 .subscribeOn(getSchedulerProvider().io())
@@ -57,22 +57,20 @@ public class LoginViewModel extends BaseViewModel<LoginCallback> {
                                 response.getUserName(),
                                 response.getUserEmail(),
                                 response.getGoogleProfilePicUrl());
-
+                        getCallback().hideLoading();
                         getCallback().openMainActivity();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-
-                        // handle the login error here
-                        if (throwable instanceof ANError) {
-                            ANError anError = (ANError) throwable;
-                        }
+                        getCallback().hideLoading();
+                        getCallback().handleError(throwable);
                     }
                 }));
     }
 
     public void onFbLoginClick() {
+        getCallback().showLoading();
         getCompositeDisposable().add(getDataManager()
                 .doFacebookLoginApiCall(new LoginRequest.FacebookLoginRequest("test3", "test4"))
                 .subscribeOn(getSchedulerProvider().io())
@@ -87,16 +85,14 @@ public class LoginViewModel extends BaseViewModel<LoginCallback> {
                                 response.getUserName(),
                                 response.getUserEmail(),
                                 response.getGoogleProfilePicUrl());
+                        getCallback().hideLoading();
                         getCallback().openMainActivity();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-
-                        // handle the login error here
-                        if (throwable instanceof ANError) {
-                            ANError anError = (ANError) throwable;
-                        }
+                        getCallback().hideLoading();
+                        getCallback().handleError(throwable);
                     }
                 }));
     }
