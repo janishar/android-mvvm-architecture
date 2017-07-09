@@ -44,6 +44,7 @@ import com.mindorks.framework.mvvm.databinding.ActivityMainBinding;
 import com.mindorks.framework.mvvm.databinding.NavHeaderMainBinding;
 import com.mindorks.framework.mvvm.ui.about.AboutFragment;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
+import com.mindorks.framework.mvvm.ui.login.LoginActivity;
 import com.mindorks.framework.mvvm.utils.ScreenUtils;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
@@ -231,7 +232,7 @@ public class MainActivity extends BaseActivity implements MainCallback {
                                 // TODO
                                 return true;
                             case R.id.navItemLogout:
-                                // TODO
+                                mMainViewModel.logout();
                                 return true;
                             default:
                                 return false;
@@ -297,5 +298,16 @@ public class MainActivity extends BaseActivity implements MainCallback {
                 .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
                 .add(R.id.clRootView, AboutFragment.newInstance(), AboutFragment.TAG)
                 .commit();
+    }
+
+    @Override
+    public void openLoginActivity() {
+        startActivity(LoginActivity.getStartIntent(this));
+        finish();
+    }
+
+    @Override
+    public void handleError(Throwable throwable) {
+        // handle error
     }
 }

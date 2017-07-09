@@ -19,6 +19,7 @@ package com.mindorks.framework.mvvm.ui.main;
 import android.databinding.ObservableField;
 
 import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.model.api.LogoutResponse;
 import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
@@ -93,6 +94,27 @@ public class MainViewModel extends BaseViewModel<MainCallback> {
                         if (questionList != null) {
                             getCallback().reloadQuestionnaire(questionList);
                         }
+                    }
+                }));
+    }
+
+    public void logout() {
+        getCallback().showLoading();
+        getCompositeDisposable().add(getDataManager().doLogoutApiCall()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<LogoutResponse>() {
+                    @Override
+                    public void accept(LogoutResponse response) throws Exception {
+                        getDataManager().setUserAsLoggedOut();
+                        getCallback().hideLoading();
+                        getCallback().openLoginActivity();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        getCallback().hideLoading();
+                        getCallback().handleError(throwable);
                     }
                 }));
     }

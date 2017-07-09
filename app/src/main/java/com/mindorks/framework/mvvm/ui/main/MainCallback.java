@@ -30,4 +30,12 @@ public interface MainCallback {
 
     void reloadQuestionnaire(List<QuestionCardData> questionList);
 
+    void openLoginActivity();
+
+    void showLoading();
+
+    void hideLoading();
+
+    void handleError(Throwable throwable);
+
 }
