@@ -29,8 +29,6 @@ import com.mindorks.framework.mvvm.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-
 /**
  * Created by amitshekhar on 08/07/17.
  */
@@ -53,8 +51,6 @@ public class SplashActivity extends BaseActivity implements SplashCallback {
         ActivitySplashBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
 
         getActivityComponent().inject(this);
-
-        setUnBinder(ButterKnife.bind(this));
 
         binding.setViewModel(mSplashViewModel);
 

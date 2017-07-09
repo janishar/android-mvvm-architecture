@@ -19,10 +19,14 @@ package com.mindorks.framework.mvvm.ui.main;
 import android.databinding.ObservableField;
 
 import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
+import com.mindorks.framework.mvvm.data.db.model.Question;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
+import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
+
+import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by amitshekhar on 07/07/17.
@@ -30,7 +34,10 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class MainViewModel extends BaseViewModel {
 
-    public final ObservableField<String> value = new ObservableField<>();
+    public final ObservableField<String> appVersion = new ObservableField<>();
+    public final ObservableField<String> userName = new ObservableField<>();
+    public final ObservableField<String> userEmail = new ObservableField<>();
+    public final ObservableField<String> userProfilePicUrl = new ObservableField<>();
 
     public MainViewModel(DataManager dataManager,
                          SchedulerProvider schedulerProvider,
@@ -38,8 +45,56 @@ public class MainViewModel extends BaseViewModel {
         super(dataManager, schedulerProvider, compositeDisposable);
     }
 
-    public void setText(String text) {
-        this.value.set(text);
+    public void updateAppVersion(String version) {
+        appVersion.set(version);
+    }
+
+    public void onNavMenuCreated() {
+
+        final String currentUserName = getDataManager().getCurrentUserName();
+        if (currentUserName != null && !currentUserName.isEmpty()) {
+            userName.set(currentUserName);
+        }
+
+        final String currentUserEmail = getDataManager().getCurrentUserEmail();
+        if (currentUserEmail != null && !currentUserEmail.isEmpty()) {
+            userEmail.set(currentUserEmail);
+        }
+
+        final String profilePicUrl = getDataManager().getCurrentUserProfilePicUrl();
+        if (profilePicUrl != null && !profilePicUrl.isEmpty()) {
+            userProfilePicUrl.set(profilePicUrl);
+        }
+    }
+
+    public void onViewInitialized() {
+        getCompositeDisposable().add(getDataManager()
+                .getAllQuestions()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<List<Question>>() {
+                    @Override
+                    public void accept(List<Question> questionList) throws Exception {
+                        if (questionList != null) {
+                            // TODO
+                        }
+                    }
+                }));
+    }
+
+    public void onCardExhausted() {
+        getCompositeDisposable().add(getDataManager()
+                .getAllQuestions()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<List<Question>>() {
+                    @Override
+                    public void accept(List<Question> questionList) throws Exception {
+                        if (questionList != null) {
+                            // TODO
+                        }
+                    }
+                }));
     }
 
 }

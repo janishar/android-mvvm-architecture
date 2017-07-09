@@ -58,7 +58,6 @@ ext {
     dagger2Version = '2.8'
     rxjava2Version = '2.0.6'
     rxandroidVersion = '2.0.1'
-    butterKnifeVersion = '8.6.0'
     placeholderviewVersion = '0.6.1'
     debugDBVersion = '1.0.0'
     timberVersion = '4.5.1'

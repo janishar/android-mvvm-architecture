@@ -28,8 +28,6 @@ import com.mindorks.framework.mvvm.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-
 /**
  * Created by amitshekhar on 08/07/17.
  */
@@ -39,7 +37,7 @@ public class LoginActivity extends BaseActivity implements LoginCallback {
     @Inject
     LoginViewModel mLoginViewModel;
 
-    private ActivityLoginBinding binding;
+    private ActivityLoginBinding mBinding;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -50,13 +48,11 @@ public class LoginActivity extends BaseActivity implements LoginCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
         getActivityComponent().inject(this);
 
-        setUnBinder(ButterKnife.bind(this));
-
-        binding.setViewModel(mLoginViewModel);
+        mBinding.setViewModel(mLoginViewModel);
 
         mLoginViewModel.setCallback(this);
 

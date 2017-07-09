@@ -85,10 +85,6 @@ dependencies {
     compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
 
-    // code generator for view
-    compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
-
     // swipe view
     compile "com.mindorks:placeholderview:$rootProject.placeholderviewVersion"
 

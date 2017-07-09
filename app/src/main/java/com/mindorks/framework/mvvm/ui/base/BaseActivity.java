@@ -28,8 +28,6 @@ import com.mindorks.framework.mvvm.di.component.ActivityComponent;
 import com.mindorks.framework.mvvm.di.component.DaggerActivityComponent;
 import com.mindorks.framework.mvvm.di.module.ActivityModule;
 
-import butterknife.Unbinder;
-
 /**
  * Created by amitshekhar on 07/07/17.
  */
@@ -37,8 +35,6 @@ import butterknife.Unbinder;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private ActivityComponent mActivityComponent;
-
-    private Unbinder mUnBinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,16 +62,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                 checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
     }
 
-    public void setUnBinder(Unbinder unBinder) {
-        mUnBinder = unBinder;
-    }
-
     @Override
     protected void onDestroy() {
-
-        if (mUnBinder != null) {
-            mUnBinder.unbind();
-        }
         super.onDestroy();
     }
 

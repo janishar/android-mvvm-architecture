@@ -14,6 +14,7 @@
   ~  limitations under the License
   -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.mindorks.framework.mvvm.ui.main.MainActivity">
 
@@ -32,15 +33,75 @@
     </data>
 
 
-    <LinearLayout
+    <android.support.v4.widget.DrawerLayout
+
+        android:id="@+id/drawerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
-        <TextView
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/clRootView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false">
+
+            <LinearLayout
+                android:id="@+id/activityMain"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.design.widget.AppBarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:elevation="5dp">
+
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        style="@style/Toolbar"
+                        app:subtitleTextColor="@color/white"
+                        app:title="@string/app_name"
+                        app:titleTextAppearance="@style/Toolbar.TitleText"
+                        app:titleTextColor="@color/white" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/light_gray" />
+
+                </android.support.design.widget.AppBarLayout>
+
+                <com.mindorks.placeholderview.SwipePlaceHolderView
+                    android:id="@+id/cardsContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+        </android.support.design.widget.CoordinatorLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/navigationView"
+            style="@style/Widget.Design.NavigationView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.value}" />
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/white"
+            app:headerLayout="@layout/drawer_header"
+            app:itemBackground="@color/white"
+            app:itemIconTint="@color/black_effective"
+            app:itemTextColor="@color/black_effective"
+            app:menu="@menu/drawer">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvAppVersion"
+                style="@style/TextStyle.Title.Sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:text="@{viewModel.appVersion}"
+                android:padding="5dp" />
+        </android.support.design.widget.NavigationView>
+    </android.support.v4.widget.DrawerLayout>
 
 </layout>
