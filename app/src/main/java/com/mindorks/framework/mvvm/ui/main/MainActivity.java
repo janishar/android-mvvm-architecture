@@ -25,6 +25,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -40,6 +42,7 @@ import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 import com.mindorks.framework.mvvm.databinding.ActivityMainBinding;
 import com.mindorks.framework.mvvm.databinding.NavHeaderMainBinding;
+import com.mindorks.framework.mvvm.ui.about.AboutFragment;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 import com.mindorks.framework.mvvm.utils.ScreenUtils;
 import com.mindorks.placeholderview.SwipeDecor;
@@ -83,6 +86,17 @@ public class MainActivity extends BaseActivity implements MainCallback {
         mMainViewModel.setCallback(this);
 
         setUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentByTag(AboutFragment.TAG);
+        if (fragment == null) {
+            super.onBackPressed();
+        } else {
+            onFragmentDetached(AboutFragment.TAG);
+        }
     }
 
     @Override
@@ -207,7 +221,7 @@ public class MainActivity extends BaseActivity implements MainCallback {
                         mDrawer.closeDrawer(GravityCompat.START);
                         switch (item.getItemId()) {
                             case R.id.navItemAbout:
-                                // TODO
+                                showAboutFragment();
                                 return true;
                             case R.id.navItemRateUs:
                                 // TODO
@@ -248,5 +262,39 @@ public class MainActivity extends BaseActivity implements MainCallback {
         mCardsContainerView.setAnimation(animation);
         animation.setDuration(100);
         animation.start();
+    }
+
+    public void onFragmentDetached(String tag) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentByTag(tag);
+        if (fragment != null) {
+            fragmentManager
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .remove(fragment)
+                    .commitNow();
+            unlockDrawer();
+        }
+    }
+
+    public void lockDrawer() {
+        if (mDrawer != null)
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    public void unlockDrawer() {
+        if (mDrawer != null)
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    }
+
+    public void showAboutFragment() {
+        lockDrawer();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                .add(R.id.clRootView, AboutFragment.newInstance(), AboutFragment.TAG)
+                .commit();
     }
 }

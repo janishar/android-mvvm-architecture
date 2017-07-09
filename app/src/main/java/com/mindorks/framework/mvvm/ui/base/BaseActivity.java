@@ -17,6 +17,7 @@
 package com.mindorks.framework.mvvm.ui.base;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,11 +29,13 @@ import com.mindorks.framework.mvvm.di.component.ActivityComponent;
 import com.mindorks.framework.mvvm.di.component.DaggerActivityComponent;
 import com.mindorks.framework.mvvm.di.module.ActivityModule;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 /**
  * Created by amitshekhar on 07/07/17.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements BaseFragment.Callback {
 
     private ActivityComponent mActivityComponent;
 
@@ -47,6 +50,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public ActivityComponent getActivityComponent() {
         return mActivityComponent;
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -65,6 +73,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onFragmentAttached() {
+
+    }
+
+    @Override
+    public void onFragmentDetached(String tag) {
+
     }
 
 }

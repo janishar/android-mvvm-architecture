@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.di.ActivityContext;
 import com.mindorks.framework.mvvm.di.PerActivity;
+import com.mindorks.framework.mvvm.ui.about.AboutViewModel;
 import com.mindorks.framework.mvvm.ui.login.LoginViewModel;
 import com.mindorks.framework.mvvm.ui.main.MainViewModel;
 import com.mindorks.framework.mvvm.ui.splash.SplashViewModel;
@@ -88,4 +89,13 @@ public class ActivityModule {
                                        CompositeDisposable compositeDisposable) {
         return new MainViewModel(dataManager, schedulerProvider, compositeDisposable);
     }
+
+    @Provides
+    @PerActivity
+    AboutViewModel provideAboutViewModel(DataManager dataManager,
+                                         SchedulerProvider schedulerProvider,
+                                         CompositeDisposable compositeDisposable) {
+        return new AboutViewModel(dataManager, schedulerProvider, compositeDisposable);
+    }
+
 }
