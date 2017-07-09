@@ -14,30 +14,20 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.data.local.db.dao;
+package com.mindorks.framework.mvvm.ui.main;
 
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.Query;
-
-import com.mindorks.framework.mvvm.data.model.db.Question;
+import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 
 import java.util.List;
 
 /**
- * Created by amitshekhar on 08/07/17.
+ * Created by amitshekhar on 09/07/17.
  */
-@Dao
-public interface QuestionDao {
 
-    @Query("SELECT * FROM questions")
-    List<Question> loadAll();
+public interface MainCallback {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Question question);
+    void refreshQuestionnaire(List<QuestionCardData> questionList);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<Question> questions);
+    void reloadQuestionnaire(List<QuestionCardData> questionList);
 
 }

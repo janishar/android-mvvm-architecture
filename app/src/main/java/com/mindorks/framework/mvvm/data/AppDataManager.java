@@ -23,17 +23,18 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.internal.$Gson$Types;
 import com.google.gson.reflect.TypeToken;
 import com.mindorks.framework.mvvm.data.local.db.DbHelper;
-import com.mindorks.framework.mvvm.data.model.db.Option;
-import com.mindorks.framework.mvvm.data.model.db.Question;
-import com.mindorks.framework.mvvm.data.model.db.User;
-import com.mindorks.framework.mvvm.data.remote.ApiHeader;
-import com.mindorks.framework.mvvm.data.remote.ApiHelper;
+import com.mindorks.framework.mvvm.data.local.prefs.PreferencesHelper;
 import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 import com.mindorks.framework.mvvm.data.model.api.LoginRequest;
 import com.mindorks.framework.mvvm.data.model.api.LoginResponse;
 import com.mindorks.framework.mvvm.data.model.api.LogoutResponse;
 import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
-import com.mindorks.framework.mvvm.data.local.prefs.PreferencesHelper;
+import com.mindorks.framework.mvvm.data.model.db.Option;
+import com.mindorks.framework.mvvm.data.model.db.Question;
+import com.mindorks.framework.mvvm.data.model.db.User;
+import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
+import com.mindorks.framework.mvvm.data.remote.ApiHeader;
+import com.mindorks.framework.mvvm.data.remote.ApiHelper;
 import com.mindorks.framework.mvvm.di.ApplicationContext;
 import com.mindorks.framework.mvvm.utils.AppConstants;
 import com.mindorks.framework.mvvm.utils.CommonUtils;
@@ -44,9 +45,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 
 /**
@@ -94,7 +95,7 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<List<User>> getAllUsers() {
+    public Observable<List<User>> getAllUsers() {
         return mDbHelper.getAllUsers();
     }
 
@@ -238,12 +239,12 @@ public class AppDataManager implements DataManager {
     }
 
     @Override
-    public Flowable<List<Question>> getAllQuestions() {
+    public Observable<List<Question>> getAllQuestions() {
         return mDbHelper.getAllQuestions();
     }
 
     @Override
-    public Flowable<List<Option>> getOptionsForQuestionId(Long questionId) {
+    public Observable<List<Option>> getOptionsForQuestionId(Long questionId) {
         return mDbHelper.getOptionsForQuestionId(questionId);
     }
 
@@ -309,5 +310,31 @@ public class AppDataManager implements DataManager {
     @Override
     public Observable<OpenSourceResponse> getOpenSourceApiCall() {
         return mApiHelper.getOpenSourceApiCall();
+    }
+
+    @Override
+    public Observable<List<QuestionCardData>> getQuestionCardData() {
+
+        return mDbHelper.getAllQuestions()
+                .flatMap(new Function<List<Question>, ObservableSource<Question>>() {
+                    @Override
+                    public ObservableSource<Question> apply(List<Question> questions) throws Exception {
+                        return Observable.fromIterable(questions);
+                    }
+                })
+                .flatMap(new Function<Question, ObservableSource<QuestionCardData>>() {
+                    @Override
+                    public ObservableSource<QuestionCardData> apply(Question question) throws Exception {
+                        return Observable.zip(mDbHelper.getOptionsForQuestionId(question.id), Observable.just(question),
+                                new BiFunction<List<Option>, Question, QuestionCardData>() {
+                                    @Override
+                                    public QuestionCardData apply(List<Option> options, Question question) throws Exception {
+                                        return new QuestionCardData(question, options);
+                                    }
+                                });
+                    }
+                })
+                .toList()
+                .toObservable();
     }
 }

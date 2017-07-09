@@ -32,9 +32,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 
 import com.mindorks.framework.mvvm.BuildConfig;
 import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 import com.mindorks.framework.mvvm.databinding.ActivityMainBinding;
 import com.mindorks.framework.mvvm.databinding.NavHeaderMainBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
@@ -43,9 +46,11 @@ import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.mindorks.placeholderview.listeners.ItemRemovedListener;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements MainCallback {
 
     @Inject
     MainViewModel mMainViewModel;
@@ -75,6 +80,7 @@ public class MainActivity extends BaseActivity {
 
         mBinding.setViewModel(mMainViewModel);
 
+        mMainViewModel.setCallback(this);
 
         setUp();
     }
@@ -217,5 +223,30 @@ public class MainActivity extends BaseActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void refreshQuestionnaire(List<QuestionCardData> questionList) {
+        for (QuestionCardData question : questionList) {
+            if (question != null
+                    && question.options != null
+                    && question.options.size() == 3) {
+                mCardsContainerView.addView(new QuestionCard(question));
+            }
+        }
+    }
+
+    @Override
+    public void reloadQuestionnaire(List<QuestionCardData> questionList) {
+        refreshQuestionnaire(questionList);
+        ScaleAnimation animation =
+                new ScaleAnimation(
+                        1.15f, 1, 1.15f, 1,
+                        Animation.RELATIVE_TO_SELF, 0.5f,
+                        Animation.RELATIVE_TO_SELF, 0.5f);
+
+        mCardsContainerView.setAnimation(animation);
+        animation.setDuration(100);
+        animation.start();
     }
 }

@@ -26,8 +26,6 @@ import com.mindorks.framework.mvvm.data.model.db.User;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
-
 /**
  * Created by amitshekhar on 07/07/17.
  */
@@ -36,19 +34,19 @@ import io.reactivex.Flowable;
 public interface UserDao {
 
     @Query("SELECT * FROM users")
-    Flowable<List<User>> loadAll();
+    List<User> loadAll();
 
     @Query("SELECT * FROM users WHERE id IN (:userIds)")
-    Flowable<List<User>> loadAllByIds(List<Integer> userIds);
+    List<User> loadAllByIds(List<Integer> userIds);
 
     @Query("SELECT * FROM users WHERE name LIKE :name LIMIT 1")
-    Flowable<User> findByName(String name);
+    User findByName(String name);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);
 
-    @Insert
-    void insertAll(User... users);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(List<User> users);
 
     @Delete
     void delete(User user);

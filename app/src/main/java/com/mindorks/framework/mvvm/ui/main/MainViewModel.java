@@ -19,7 +19,7 @@ package com.mindorks.framework.mvvm.ui.main;
 import android.databinding.ObservableField;
 
 import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.data.model.db.Question;
+import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
@@ -32,7 +32,7 @@ import io.reactivex.functions.Consumer;
  * Created by amitshekhar on 07/07/17.
  */
 
-public class MainViewModel extends BaseViewModel {
+public class MainViewModel extends BaseViewModel<MainCallback> {
 
     public final ObservableField<String> appVersion = new ObservableField<>();
     public final ObservableField<String> userName = new ObservableField<>();
@@ -69,14 +69,14 @@ public class MainViewModel extends BaseViewModel {
 
     public void onViewInitialized() {
         getCompositeDisposable().add(getDataManager()
-                .getAllQuestions()
+                .getQuestionCardData()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<List<Question>>() {
+                .subscribe(new Consumer<List<QuestionCardData>>() {
                     @Override
-                    public void accept(List<Question> questionList) throws Exception {
+                    public void accept(List<QuestionCardData> questionList) throws Exception {
                         if (questionList != null) {
-                            // TODO
+                            getCallback().refreshQuestionnaire(questionList);
                         }
                     }
                 }));
@@ -84,14 +84,14 @@ public class MainViewModel extends BaseViewModel {
 
     public void onCardExhausted() {
         getCompositeDisposable().add(getDataManager()
-                .getAllQuestions()
+                .getQuestionCardData()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<List<Question>>() {
+                .subscribe(new Consumer<List<QuestionCardData>>() {
                     @Override
-                    public void accept(List<Question> questionList) throws Exception {
+                    public void accept(List<QuestionCardData> questionList) throws Exception {
                         if (questionList != null) {
-                            // TODO
+                            getCallback().reloadQuestionnaire(questionList);
                         }
                     }
                 }));

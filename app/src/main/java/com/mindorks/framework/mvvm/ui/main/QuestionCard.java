@@ -23,14 +23,12 @@ import android.widget.TextView;
 import com.androidnetworking.widget.ANImageView;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.data.model.db.Option;
-import com.mindorks.framework.mvvm.data.model.db.Question;
+import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 import com.mindorks.placeholderview.annotations.Click;
 import com.mindorks.placeholderview.annotations.Layout;
 import com.mindorks.placeholderview.annotations.NonReusable;
 import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
-
-import java.util.List;
 
 /**
  * Created by amitshekhar on 08/07/17.
@@ -57,18 +55,16 @@ public class QuestionCard {
     @View(R.id.iv_pic)
     private ANImageView mPicImageView;
 
-    private Question mQuestion;
-    private List<Option> mOptions;
+    private QuestionCardData mQuestionCardData;
 
-    public QuestionCard(Question question, List<Option> options) {
-        mQuestion = question;
-        mOptions = options;
+    public QuestionCard(QuestionCardData questionCardData) {
+        mQuestionCardData = questionCardData;
     }
 
     @Resolve
     private void onResolved() {
 
-        mQuestionTextView.setText(mQuestion.questionText);
+        mQuestionTextView.setText(mQuestionCardData.question.questionText);
 
         for (int i = 0; i < 3; i++) {
             Button button = null;
@@ -85,17 +81,17 @@ public class QuestionCard {
             }
 
             if (button != null)
-                button.setText(mOptions.get(i).optionText);
+                button.setText(mQuestionCardData.options.get(i).optionText);
 
-            if (mQuestion.imgUrl != null) {
-                mPicImageView.setImageUrl(mQuestion.imgUrl);
+            if (mQuestionCardData.question.imgUrl != null) {
+                mPicImageView.setImageUrl(mQuestionCardData.question.imgUrl);
             }
         }
     }
 
     private void showCorrectOptions() {
         for (int i = 0; i < 3; i++) {
-            Option option = mOptions.get(i);
+            Option option = mQuestionCardData.options.get(i);
             Button button = null;
             switch (i) {
                 case 0:

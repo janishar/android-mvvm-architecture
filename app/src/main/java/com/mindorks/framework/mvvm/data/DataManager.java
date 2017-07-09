@@ -17,10 +17,14 @@
 package com.mindorks.framework.mvvm.data;
 
 import com.mindorks.framework.mvvm.data.local.db.DbHelper;
-import com.mindorks.framework.mvvm.data.remote.ApiHelper;
 import com.mindorks.framework.mvvm.data.local.prefs.PreferencesHelper;
+import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
+import com.mindorks.framework.mvvm.data.remote.ApiHelper;
+
+import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * Created by amitshekhar on 07/07/17.
@@ -35,6 +39,8 @@ public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
     Observable<Boolean> seedDatabaseQuestions();
 
     Observable<Boolean> seedDatabaseOptions();
+
+    Observable<List<QuestionCardData>> getQuestionCardData();
 
     void updateUserInfo(
             String accessToken,

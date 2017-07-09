@@ -26,7 +26,6 @@ import java.util.concurrent.Callable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 /**
@@ -44,13 +43,23 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<List<User>> getAllUsers() {
-        return mAppDatabase.userDao().loadAll();
+    public Observable<List<User>> getAllUsers() {
+        return Observable.fromCallable(new Callable<List<User>>() {
+            @Override
+            public List<User> call() throws Exception {
+                return mAppDatabase.userDao().loadAll();
+            }
+        });
     }
 
     @Override
-    public Flowable<List<Question>> getAllQuestions() {
-        return mAppDatabase.questionDao().loadAll();
+    public Observable<List<Question>> getAllQuestions() {
+        return Observable.fromCallable(new Callable<List<Question>>() {
+            @Override
+            public List<Question> call() throws Exception {
+                return mAppDatabase.questionDao().loadAll();
+            }
+        });
     }
 
     @Override
@@ -58,8 +67,7 @@ public class AppDbHelper implements DbHelper {
         return Observable.fromCallable(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
-                // TODO
-                return true;
+                return mAppDatabase.questionDao().loadAll().isEmpty();
             }
         });
     }
@@ -69,8 +77,7 @@ public class AppDbHelper implements DbHelper {
         return Observable.fromCallable(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
-                // TODO
-                return true;
+                return mAppDatabase.optionDao().loadAll().isEmpty();
             }
         });
     }
@@ -131,8 +138,13 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Flowable<List<Option>> getOptionsForQuestionId(Long questionId) {
-        return mAppDatabase.optionDao().loadAllByQuestionId(questionId);
+    public Observable<List<Option>> getOptionsForQuestionId(final Long questionId) {
+        return Observable.fromCallable(new Callable<List<Option>>() {
+            @Override
+            public List<Option> call() throws Exception {
+                return mAppDatabase.optionDao().loadAllByQuestionId(questionId);
+            }
+        });
     }
 
 }

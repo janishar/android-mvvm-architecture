@@ -22,7 +22,6 @@ import com.mindorks.framework.mvvm.data.model.db.User;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 /**
@@ -33,11 +32,11 @@ public interface DbHelper {
 
     Observable<Boolean> insertUser(final User user);
 
-    Flowable<List<User>> getAllUsers();
+    Observable<List<User>> getAllUsers();
 
-    Flowable<List<Question>> getAllQuestions();
+    Observable<List<Question>> getAllQuestions();
 
-    Flowable<List<Option>> getOptionsForQuestionId(Long questionId);
+    Observable<List<Option>> getOptionsForQuestionId(Long questionId);
 
     Observable<Boolean> isQuestionEmpty();
 

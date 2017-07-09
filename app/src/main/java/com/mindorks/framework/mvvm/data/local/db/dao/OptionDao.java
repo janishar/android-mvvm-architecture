@@ -25,8 +25,6 @@ import com.mindorks.framework.mvvm.data.model.db.Option;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
-
 /**
  * Created by amitshekhar on 08/07/17.
  */
@@ -35,10 +33,10 @@ import io.reactivex.Flowable;
 public interface OptionDao {
 
     @Query("SELECT * FROM options")
-    Flowable<List<Option>> loadAll();
+    List<Option> loadAll();
 
     @Query("SELECT * FROM options WHERE question_id = :questionId")
-    Flowable<List<Option>> loadAllByQuestionId(Long questionId);
+    List<Option> loadAllByQuestionId(Long questionId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Option option);
