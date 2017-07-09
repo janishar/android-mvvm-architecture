@@ -20,8 +20,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
             name="view"
             type="com.mindorks.framework.mvvm.ui.main.MainActivity" />
@@ -87,7 +85,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="@color/white"
-            app:headerLayout="@layout/drawer_header"
             app:itemBackground="@color/white"
             app:itemIconTint="@color/black_effective"
             app:itemTextColor="@color/black_effective"

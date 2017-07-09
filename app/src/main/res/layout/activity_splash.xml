@@ -21,8 +21,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
             name="view"
             type="com.mindorks.framework.mvvm.ui.splash.SplashActivity" />

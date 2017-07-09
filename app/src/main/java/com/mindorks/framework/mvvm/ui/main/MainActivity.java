@@ -32,13 +32,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.mindorks.framework.mvvm.BuildConfig;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.ActivityMainBinding;
+import com.mindorks.framework.mvvm.databinding.NavHeaderMainBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
-import com.mindorks.framework.mvvm.ui.custom.RoundedImageView;
 import com.mindorks.framework.mvvm.utils.ScreenUtils;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
@@ -75,6 +74,7 @@ public class MainActivity extends BaseActivity {
         getActivityComponent().inject(this);
 
         mBinding.setViewModel(mMainViewModel);
+
 
         setUp();
     }
@@ -186,10 +186,13 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setupNavMenu() {
-        View headerLayout = mNavigationView.getHeaderView(0);
-        RoundedImageView profileImageView = (RoundedImageView) headerLayout.findViewById(R.id.iv_profile_pic);
-        TextView nameTextView = (TextView) headerLayout.findViewById(R.id.tv_name);
-        TextView emailTextView = (TextView) headerLayout.findViewById(R.id.tv_email);
+
+        NavHeaderMainBinding navHeaderMainBinding = DataBindingUtil.inflate(getLayoutInflater(),
+                R.layout.nav_header_main, mBinding.navigationView, false);
+
+        mBinding.navigationView.addHeaderView(navHeaderMainBinding.getRoot());
+
+        navHeaderMainBinding.setViewModel(mMainViewModel);
 
         mNavigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
