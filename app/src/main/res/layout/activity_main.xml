@@ -21,10 +21,6 @@
     <data>
 
         <variable
-            name="view"
-            type="com.mindorks.framework.mvvm.ui.main.MainActivity" />
-
-        <variable
             name="viewModel"
             type="com.mindorks.framework.mvvm.ui.main.MainViewModel" />
 

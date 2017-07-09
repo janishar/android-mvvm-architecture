@@ -20,10 +20,6 @@
     <data>
 
         <variable
-            name="view"
-            type="com.mindorks.framework.mvvm.ui.about.AboutFragment" />
-
-        <variable
             name="viewModel"
             type="com.mindorks.framework.mvvm.ui.about.AboutViewModel" />
 

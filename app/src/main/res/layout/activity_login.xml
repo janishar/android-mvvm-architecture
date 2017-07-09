@@ -22,10 +22,6 @@
     <data>
 
         <variable
-            name="view"
-            type="com.mindorks.framework.mvvm.ui.login.LoginActivity" />
-
-        <variable
             name="viewModel"
             type="com.mindorks.framework.mvvm.ui.login.LoginViewModel" />
 
