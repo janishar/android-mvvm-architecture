@@ -75,6 +75,34 @@ public abstract class BaseFragment extends Fragment {
         super.onDestroy();
     }
 
+    public void showLoading() {
+        if (mActivity != null) {
+            mActivity.showLoading();
+        }
+    }
+
+    public void hideLoading() {
+        if (mActivity != null) {
+            mActivity.hideLoading();
+        }
+    }
+
+    public boolean isNetworkConnected() {
+        return mActivity != null && mActivity.isNetworkConnected();
+    }
+
+    public void hideKeyboard() {
+        if (mActivity != null) {
+            mActivity.hideKeyboard();
+        }
+    }
+
+    public void openActivityOnTokenExpire() {
+        if (mActivity != null) {
+            mActivity.openActivityOnTokenExpire();
+        }
+    }
+
     public interface Callback {
 
         void onFragmentAttached();
