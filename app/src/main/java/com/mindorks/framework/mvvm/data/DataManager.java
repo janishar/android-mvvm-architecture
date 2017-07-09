@@ -16,9 +16,9 @@
 
 package com.mindorks.framework.mvvm.data;
 
-import com.mindorks.framework.mvvm.data.db.DbHelper;
-import com.mindorks.framework.mvvm.data.network.ApiHelper;
-import com.mindorks.framework.mvvm.data.prefs.PreferencesHelper;
+import com.mindorks.framework.mvvm.data.local.db.DbHelper;
+import com.mindorks.framework.mvvm.data.remote.ApiHelper;
+import com.mindorks.framework.mvvm.data.local.prefs.PreferencesHelper;
 
 import io.reactivex.Observable;
 

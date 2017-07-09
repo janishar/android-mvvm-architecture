@@ -14,11 +14,11 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.data.db;
+package com.mindorks.framework.mvvm.data.local.db;
 
-import com.mindorks.framework.mvvm.data.db.model.Option;
-import com.mindorks.framework.mvvm.data.db.model.Question;
-import com.mindorks.framework.mvvm.data.db.model.User;
+import com.mindorks.framework.mvvm.data.model.db.Option;
+import com.mindorks.framework.mvvm.data.model.db.Question;
+import com.mindorks.framework.mvvm.data.model.db.User;
 
 import java.util.List;
 import java.util.concurrent.Callable;

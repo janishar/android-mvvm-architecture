@@ -14,38 +14,27 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.data.prefs;
+package com.mindorks.framework.mvvm.data.model.db;
 
-import com.mindorks.framework.mvvm.data.DataManager;
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
 /**
  * Created by amitshekhar on 07/07/17.
  */
+@Entity(tableName = "users")
+public class User {
 
-public interface PreferencesHelper {
+    @PrimaryKey
+    public Long id;
 
-    int getCurrentUserLoggedInMode();
+    public String name;
 
-    void setCurrentUserLoggedInMode(DataManager.LoggedInMode mode);
+    @ColumnInfo(name = "created_at")
+    public String createdAt;
 
-    Long getCurrentUserId();
-
-    void setCurrentUserId(Long userId);
-
-    String getCurrentUserName();
-
-    void setCurrentUserName(String userName);
-
-    String getCurrentUserEmail();
-
-    void setCurrentUserEmail(String email);
-
-    String getCurrentUserProfilePicUrl();
-
-    void setCurrentUserProfilePicUrl(String profilePicUrl);
-
-    String getAccessToken();
-
-    void setAccessToken(String accessToken);
+    @ColumnInfo(name = "updated_at")
+    public String updatedAt;
 
 }

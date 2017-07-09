@@ -14,7 +14,7 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.data.db.dao;
+package com.mindorks.framework.mvvm.data.local.db.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -22,7 +22,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.mindorks.framework.mvvm.data.db.model.User;
+import com.mindorks.framework.mvvm.data.model.db.User;
 
 import java.util.List;
 

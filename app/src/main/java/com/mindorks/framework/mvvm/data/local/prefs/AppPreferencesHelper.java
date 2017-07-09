@@ -14,7 +14,7 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.data.prefs;
+package com.mindorks.framework.mvvm.data.local.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;

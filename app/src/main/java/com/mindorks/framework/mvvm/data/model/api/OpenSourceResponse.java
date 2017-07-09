@@ -14,7 +14,7 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.data.network.model;
+package com.mindorks.framework.mvvm.data.model.api;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -25,7 +25,7 @@ import java.util.List;
  * Created by amitshekhar on 07/07/17.
  */
 
-public class BlogResponse {
+public class OpenSourceResponse {
 
     @Expose
     @SerializedName("status_code")
@@ -37,7 +37,7 @@ public class BlogResponse {
 
     @Expose
     @SerializedName("data")
-    private List<Blog> data;
+    private List<Repo> data;
 
     public String getStatusCode() {
         return statusCode;
@@ -55,24 +55,24 @@ public class BlogResponse {
         this.message = message;
     }
 
-    public List<Blog> getData() {
+    public List<Repo> getData() {
         return data;
     }
 
-    public void setData(List<Blog> data) {
+    public void setData(List<Repo> data) {
         this.data = data;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BlogResponse)) return false;
+        if (!(o instanceof OpenSourceResponse)) return false;
 
-        BlogResponse that = (BlogResponse) o;
+        OpenSourceResponse that = (OpenSourceResponse) o;
 
         if (!statusCode.equals(that.statusCode)) return false;
         if (!message.equals(that.message)) return false;
-        return data.equals(that.data);
+        return data != null ? data.equals(that.data) : that.data == null;
 
     }
 
@@ -80,15 +80,15 @@ public class BlogResponse {
     public int hashCode() {
         int result = statusCode.hashCode();
         result = 31 * result + message.hashCode();
-        result = 31 * result + data.hashCode();
+        result = 31 * result + (data != null ? data.hashCode() : 0);
         return result;
     }
 
-    public static class Blog {
+    public static class Repo {
 
         @Expose
-        @SerializedName("blog_url")
-        private String blogUrl;
+        @SerializedName("project_url")
+        private String projectUrl;
 
         @Expose
         @SerializedName("img_url")
@@ -102,20 +102,12 @@ public class BlogResponse {
         @SerializedName("description")
         private String description;
 
-        @Expose
-        @SerializedName("author")
-        private String author;
-
-        @Expose
-        @SerializedName("published_at")
-        private String date;
-
-        public String getBlogUrl() {
-            return blogUrl;
+        public String getProjectUrl() {
+            return projectUrl;
         }
 
-        public void setBlogUrl(String blogUrl) {
-            this.blogUrl = blogUrl;
+        public void setProjectUrl(String projectUrl) {
+            this.projectUrl = projectUrl;
         }
 
         public String getCoverImgUrl() {
@@ -142,46 +134,26 @@ public class BlogResponse {
             this.description = description;
         }
 
-        public String getAuthor() {
-            return author;
-        }
-
-        public void setAuthor(String author) {
-            this.author = author;
-        }
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
-
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof Blog)) return false;
+            if (!(o instanceof Repo)) return false;
 
-            Blog blog = (Blog) o;
+            Repo repo = (Repo) o;
 
-            if (!blogUrl.equals(blog.blogUrl)) return false;
-            if (!coverImgUrl.equals(blog.coverImgUrl)) return false;
-            if (!title.equals(blog.title)) return false;
-            if (!description.equals(blog.description)) return false;
-            if (!author.equals(blog.author)) return false;
-            return date.equals(blog.date);
+            if (!projectUrl.equals(repo.projectUrl)) return false;
+            if (!coverImgUrl.equals(repo.coverImgUrl)) return false;
+            if (!title.equals(repo.title)) return false;
+            return description.equals(repo.description);
 
         }
 
         @Override
         public int hashCode() {
-            int result = blogUrl.hashCode();
+            int result = projectUrl.hashCode();
             result = 31 * result + coverImgUrl.hashCode();
             result = 31 * result + title.hashCode();
             result = 31 * result + description.hashCode();
-            result = 31 * result + author.hashCode();
-            result = 31 * result + date.hashCode();
             return result;
         }
     }

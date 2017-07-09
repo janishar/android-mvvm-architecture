@@ -14,7 +14,7 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.data.network;
+package com.mindorks.framework.mvvm.data.remote;
 
 import com.mindorks.framework.mvvm.BuildConfig;
 

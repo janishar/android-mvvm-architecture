@@ -18,8 +18,8 @@ package com.mindorks.framework.mvvm.ui.login;
 
 import com.androidnetworking.error.ANError;
 import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.data.network.model.LoginRequest;
-import com.mindorks.framework.mvvm.data.network.model.LoginResponse;
+import com.mindorks.framework.mvvm.data.model.api.LoginRequest;
+import com.mindorks.framework.mvvm.data.model.api.LoginResponse;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 

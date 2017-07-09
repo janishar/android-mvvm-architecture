@@ -19,7 +19,7 @@ package com.mindorks.framework.mvvm.ui.main;
 import android.databinding.ObservableField;
 
 import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.data.db.model.Question;
+import com.mindorks.framework.mvvm.data.model.db.Question;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 

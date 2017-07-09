@@ -14,17 +14,17 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.data.db;
+package com.mindorks.framework.mvvm.data.local.db;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
-import com.mindorks.framework.mvvm.data.db.dao.OptionDao;
-import com.mindorks.framework.mvvm.data.db.dao.QuestionDao;
-import com.mindorks.framework.mvvm.data.db.dao.UserDao;
-import com.mindorks.framework.mvvm.data.db.model.Option;
-import com.mindorks.framework.mvvm.data.db.model.Question;
-import com.mindorks.framework.mvvm.data.db.model.User;
+import com.mindorks.framework.mvvm.data.local.db.dao.OptionDao;
+import com.mindorks.framework.mvvm.data.local.db.dao.QuestionDao;
+import com.mindorks.framework.mvvm.data.local.db.dao.UserDao;
+import com.mindorks.framework.mvvm.data.model.db.Option;
+import com.mindorks.framework.mvvm.data.model.db.Question;
+import com.mindorks.framework.mvvm.data.model.db.User;
 
 /**
  * Created by amitshekhar on 07/07/17.

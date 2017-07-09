@@ -22,8 +22,8 @@ import android.widget.TextView;
 
 import com.androidnetworking.widget.ANImageView;
 import com.mindorks.framework.mvvm.R;
-import com.mindorks.framework.mvvm.data.db.model.Option;
-import com.mindorks.framework.mvvm.data.db.model.Question;
+import com.mindorks.framework.mvvm.data.model.db.Option;
+import com.mindorks.framework.mvvm.data.model.db.Question;
 import com.mindorks.placeholderview.annotations.Click;
 import com.mindorks.placeholderview.annotations.Layout;
 import com.mindorks.placeholderview.annotations.NonReusable;
