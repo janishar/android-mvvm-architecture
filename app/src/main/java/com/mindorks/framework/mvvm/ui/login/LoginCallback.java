@@ -30,4 +30,6 @@ public interface LoginCallback {
 
     void handleError(Throwable throwable);
 
+    void login();
+
 }

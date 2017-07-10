@@ -20,6 +20,7 @@ import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.api.LoginRequest;
 import com.mindorks.framework.mvvm.data.model.api.LoginResponse;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
+import com.mindorks.framework.mvvm.utils.CommonUtils;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -38,7 +39,7 @@ public class LoginViewModel extends BaseViewModel<LoginCallback> {
     }
 
     public void onServerLoginClick() {
-
+        getCallback().login();
     }
 
     public void onGoogleLoginClick() {
@@ -95,6 +96,48 @@ public class LoginViewModel extends BaseViewModel<LoginCallback> {
                         getCallback().handleError(throwable);
                     }
                 }));
+    }
+
+    public void login(String email, String password) {
+        getCallback().showLoading();
+        getCompositeDisposable().add(getDataManager()
+                .doServerLoginApiCall(new LoginRequest.ServerLoginRequest(email, password))
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui())
+                .subscribe(new Consumer<LoginResponse>() {
+                    @Override
+                    public void accept(LoginResponse response) throws Exception {
+                        getDataManager().updateUserInfo(
+                                response.getAccessToken(),
+                                response.getUserId(),
+                                DataManager.LoggedInMode.LOGGED_IN_MODE_SERVER,
+                                response.getUserName(),
+                                response.getUserEmail(),
+                                response.getGoogleProfilePicUrl());
+                        getCallback().hideLoading();
+                        getCallback().openMainActivity();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        getCallback().hideLoading();
+                        getCallback().handleError(throwable);
+                    }
+                }));
+    }
+
+    public boolean isEmailAndPasswordValid(String email, String password) {
+        //validate email and password
+        if (email == null || email.isEmpty()) {
+            return false;
+        }
+        if (!CommonUtils.isEmailValid(email)) {
+            return false;
+        }
+        if (password == null || password.isEmpty()) {
+            return false;
+        }
+        return true;
     }
 
 }

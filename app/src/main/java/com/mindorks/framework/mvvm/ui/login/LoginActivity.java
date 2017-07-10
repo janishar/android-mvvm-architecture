@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.ActivityLoginBinding;
@@ -74,5 +75,17 @@ public class LoginActivity extends BaseActivity implements LoginCallback {
     @Override
     public void handleError(Throwable throwable) {
         // handle error
+    }
+
+    @Override
+    public void login() {
+        String email = mBinding.etEmail.getText().toString();
+        String password = mBinding.etPassword.getText().toString();
+        if (mLoginViewModel.isEmailAndPasswordValid(email, password)) {
+            hideKeyboard();
+            mLoginViewModel.login(email, password);
+        } else {
+            Toast.makeText(this, getString(R.string.invalid_email_password), Toast.LENGTH_SHORT).show();
+        }
     }
 }
