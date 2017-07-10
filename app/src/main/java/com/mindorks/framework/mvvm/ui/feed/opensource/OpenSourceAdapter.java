@@ -14,15 +14,15 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.ui.feed.blogs;
+package com.mindorks.framework.mvvm.ui.feed.opensource;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
-import com.mindorks.framework.mvvm.databinding.ItemBlogEmptyViewBinding;
-import com.mindorks.framework.mvvm.databinding.ItemBlogViewBinding;
+import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
+import com.mindorks.framework.mvvm.databinding.ItemOpenSourceEmptyViewBinding;
+import com.mindorks.framework.mvvm.databinding.ItemOpenSourceViewBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseViewHolder;
 
 import java.util.List;
@@ -31,15 +31,15 @@ import java.util.List;
  * Created by amitshekhar on 10/07/17.
  */
 
-public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
+public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public static final int VIEW_TYPE_EMPTY = 0;
     public static final int VIEW_TYPE_NORMAL = 1;
 
-    private List<BlogResponse.Blog> mBlogResponseList;
+    private List<OpenSourceResponse.Repo> mOpenSourceResponseList;
 
-    public BlogAdapter(List<BlogResponse.Blog> blogResponseList) {
-        mBlogResponseList = blogResponseList;
+    public OpenSourceAdapter(List<OpenSourceResponse.Repo> openSourceResponseList) {
+        mOpenSourceResponseList = openSourceResponseList;
     }
 
 
@@ -53,20 +53,20 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         switch (viewType) {
             case VIEW_TYPE_NORMAL:
-                ItemBlogViewBinding blogViewBinding = ItemBlogViewBinding.inflate(LayoutInflater.from(parent.getContext()),
-                        parent, false);
-                return new ViewHolder(blogViewBinding);
+                ItemOpenSourceViewBinding openSourceViewBinding = ItemOpenSourceViewBinding
+                        .inflate(LayoutInflater.from(parent.getContext()), parent, false);
+                return new ViewHolder(openSourceViewBinding);
             case VIEW_TYPE_EMPTY:
             default:
-                ItemBlogEmptyViewBinding emptyViewBinding = ItemBlogEmptyViewBinding.inflate(LayoutInflater.from(parent.getContext()),
-                        parent, false);
+                ItemOpenSourceEmptyViewBinding emptyViewBinding = ItemOpenSourceEmptyViewBinding
+                        .inflate(LayoutInflater.from(parent.getContext()), parent, false);
                 return new EmptyViewHolder(emptyViewBinding);
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (mBlogResponseList != null && mBlogResponseList.size() > 0) {
+        if (mOpenSourceResponseList != null && mOpenSourceResponseList.size() > 0) {
             return VIEW_TYPE_NORMAL;
         } else {
             return VIEW_TYPE_EMPTY;
@@ -75,23 +75,23 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (mBlogResponseList != null && mBlogResponseList.size() > 0) {
-            return mBlogResponseList.size();
+        if (mOpenSourceResponseList != null && mOpenSourceResponseList.size() > 0) {
+            return mOpenSourceResponseList.size();
         } else {
             return 1;
         }
     }
 
-    public void addItems(List<BlogResponse.Blog> blogList) {
-        mBlogResponseList.addAll(blogList);
+    public void addItems(List<OpenSourceResponse.Repo> repoList) {
+        mOpenSourceResponseList.addAll(repoList);
         notifyDataSetChanged();
     }
 
     public class ViewHolder extends BaseViewHolder {
 
-        ItemBlogViewBinding mBinding;
+        ItemOpenSourceViewBinding mBinding;
 
-        public ViewHolder(ItemBlogViewBinding binding) {
+        public ViewHolder(ItemOpenSourceViewBinding binding) {
             super(binding.getRoot());
             this.mBinding = binding;
         }
@@ -107,9 +107,9 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class EmptyViewHolder extends BaseViewHolder {
 
-        private ItemBlogEmptyViewBinding mBinding;
+        private ItemOpenSourceEmptyViewBinding mBinding;
 
-        public EmptyViewHolder(ItemBlogEmptyViewBinding binding) {
+        public EmptyViewHolder(ItemOpenSourceEmptyViewBinding binding) {
             super(binding.getRoot());
             this.mBinding = binding;
         }

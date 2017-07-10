@@ -16,15 +16,41 @@
 
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
+import com.mindorks.framework.mvvm.databinding.FragmentOpenSourceBinding;
+import com.mindorks.framework.mvvm.di.component.ActivityComponent;
 import com.mindorks.framework.mvvm.ui.base.BaseFragment;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by amitshekhar on 10/07/17.
  */
 
-public class OpenSourceFragment extends BaseFragment {
+public class OpenSourceFragment extends BaseFragment implements OpenSourceCallback {
+
+    @Inject
+    OpenSourceViewModel mOpenSourceViewModel;
+
+    @Inject
+    OpenSourceAdapter mOpenSourceAdapter;
+
+    @Inject
+    LinearLayoutManager mLayoutManager;
+
+    private FragmentOpenSourceBinding mBinding;
 
     public static OpenSourceFragment newInstance() {
         Bundle args = new Bundle();
@@ -33,4 +59,56 @@ public class OpenSourceFragment extends BaseFragment {
         return fragment;
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
+        mBinding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_open_source, container, false);
+        View view = mBinding.getRoot();
+
+        ActivityComponent component = getActivityComponent();
+        if (component != null) {
+            component.inject(this);
+        }
+
+        mBinding.setViewModel(mOpenSourceViewModel);
+
+        mOpenSourceViewModel.setCallback(this);
+
+        return view;
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setUp();
+    }
+
+    private void setUp() {
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mBinding.openSourceRecyclerView.setLayoutManager(mLayoutManager);
+        mBinding.openSourceRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mBinding.openSourceRecyclerView.setAdapter(mOpenSourceAdapter);
+
+        mOpenSourceViewModel.fetchRepos();
+    }
+
+    @Override
+    public void onDestroyView() {
+        mOpenSourceViewModel.onDestroy();
+        super.onDestroyView();
+    }
+
+    @Override
+    public void updateRepo(List<OpenSourceResponse.Repo> repoList) {
+        mOpenSourceAdapter.addItems(repoList);
+    }
+
+    @Override
+    public void handleError(Throwable throwable) {
+        // handle error
+    }
 }

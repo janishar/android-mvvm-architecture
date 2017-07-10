@@ -22,12 +22,15 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
+import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
 import com.mindorks.framework.mvvm.di.ActivityContext;
 import com.mindorks.framework.mvvm.di.PerActivity;
 import com.mindorks.framework.mvvm.ui.about.AboutViewModel;
 import com.mindorks.framework.mvvm.ui.feed.FeedPagerAdapter;
 import com.mindorks.framework.mvvm.ui.feed.blogs.BlogAdapter;
 import com.mindorks.framework.mvvm.ui.feed.blogs.BlogViewModel;
+import com.mindorks.framework.mvvm.ui.feed.opensource.OpenSourceAdapter;
+import com.mindorks.framework.mvvm.ui.feed.opensource.OpenSourceViewModel;
 import com.mindorks.framework.mvvm.ui.login.LoginViewModel;
 import com.mindorks.framework.mvvm.ui.main.MainViewModel;
 import com.mindorks.framework.mvvm.ui.main.rating.RateUsViewModel;
@@ -120,6 +123,13 @@ public class ActivityModule {
     }
 
     @Provides
+    OpenSourceViewModel provideOpenSourceViewModel(DataManager dataManager,
+                                                   SchedulerProvider schedulerProvider,
+                                                   CompositeDisposable compositeDisposable) {
+        return new OpenSourceViewModel(dataManager, schedulerProvider, compositeDisposable);
+    }
+
+    @Provides
     FeedPagerAdapter provideFeedPagerAdapter(AppCompatActivity activity) {
         return new FeedPagerAdapter(activity.getSupportFragmentManager());
     }
@@ -127,6 +137,11 @@ public class ActivityModule {
     @Provides
     BlogAdapter provideBlogAdapter() {
         return new BlogAdapter(new ArrayList<BlogResponse.Blog>());
+    }
+
+    @Provides
+    OpenSourceAdapter provideOpenSourceAdapter() {
+        return new OpenSourceAdapter(new ArrayList<OpenSourceResponse.Repo>());
     }
 
     @Provides
