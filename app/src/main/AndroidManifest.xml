@@ -44,6 +44,18 @@
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.mindorks.framework.mvvm.ui.feed.FeedActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".ui.main.MainActivity"
+            android:screenOrientation="portrait">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

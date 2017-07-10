@@ -44,6 +44,7 @@ import com.mindorks.framework.mvvm.databinding.ActivityMainBinding;
 import com.mindorks.framework.mvvm.databinding.NavHeaderMainBinding;
 import com.mindorks.framework.mvvm.ui.about.AboutFragment;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
+import com.mindorks.framework.mvvm.ui.feed.FeedActivity;
 import com.mindorks.framework.mvvm.ui.login.LoginActivity;
 import com.mindorks.framework.mvvm.ui.main.rating.RateUsDialog;
 import com.mindorks.framework.mvvm.utils.ScreenUtils;
@@ -230,7 +231,7 @@ public class MainActivity extends BaseActivity implements MainCallback {
                                 RateUsDialog.newInstance().show(getSupportFragmentManager());
                                 return true;
                             case R.id.navItemFeed:
-                                // TODO
+                                startActivity(FeedActivity.getStartIntent(MainActivity.this));
                                 return true;
                             case R.id.navItemLogout:
                                 mMainViewModel.logout();

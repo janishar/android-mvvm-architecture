@@ -18,17 +18,24 @@ package com.mindorks.framework.mvvm.di.module;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 
 import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 import com.mindorks.framework.mvvm.di.ActivityContext;
 import com.mindorks.framework.mvvm.di.PerActivity;
 import com.mindorks.framework.mvvm.ui.about.AboutViewModel;
+import com.mindorks.framework.mvvm.ui.feed.FeedPagerAdapter;
+import com.mindorks.framework.mvvm.ui.feed.blogs.BlogAdapter;
+import com.mindorks.framework.mvvm.ui.feed.blogs.BlogViewModel;
 import com.mindorks.framework.mvvm.ui.login.LoginViewModel;
 import com.mindorks.framework.mvvm.ui.main.MainViewModel;
 import com.mindorks.framework.mvvm.ui.main.rating.RateUsViewModel;
 import com.mindorks.framework.mvvm.ui.splash.SplashViewModel;
 import com.mindorks.framework.mvvm.utils.rx.AppSchedulerProvider;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
+
+import java.util.ArrayList;
 
 import dagger.Module;
 import dagger.Provides;
@@ -100,9 +107,31 @@ public class ActivityModule {
 
     @Provides
     RateUsViewModel provideRateUsViewModel(DataManager dataManager,
-                                          SchedulerProvider schedulerProvider,
-                                          CompositeDisposable compositeDisposable) {
+                                           SchedulerProvider schedulerProvider,
+                                           CompositeDisposable compositeDisposable) {
         return new RateUsViewModel(dataManager, schedulerProvider, compositeDisposable);
+    }
+
+    @Provides
+    BlogViewModel provideBlogViewModel(DataManager dataManager,
+                                       SchedulerProvider schedulerProvider,
+                                       CompositeDisposable compositeDisposable) {
+        return new BlogViewModel(dataManager, schedulerProvider, compositeDisposable);
+    }
+
+    @Provides
+    FeedPagerAdapter provideFeedPagerAdapter(AppCompatActivity activity) {
+        return new FeedPagerAdapter(activity.getSupportFragmentManager());
+    }
+
+    @Provides
+    BlogAdapter provideBlogAdapter() {
+        return new BlogAdapter(new ArrayList<BlogResponse.Blog>());
+    }
+
+    @Provides
+    LinearLayoutManager provideLinearLayoutManager(AppCompatActivity activity) {
+        return new LinearLayoutManager(activity);
     }
 
 }

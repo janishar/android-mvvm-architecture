@@ -43,7 +43,6 @@ public class SplashActivity extends BaseActivity implements SplashCallback {
         return intent;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

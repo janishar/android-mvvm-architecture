@@ -19,6 +19,8 @@ package com.mindorks.framework.mvvm.di.component;
 import com.mindorks.framework.mvvm.di.PerActivity;
 import com.mindorks.framework.mvvm.di.module.ActivityModule;
 import com.mindorks.framework.mvvm.ui.about.AboutFragment;
+import com.mindorks.framework.mvvm.ui.feed.FeedActivity;
+import com.mindorks.framework.mvvm.ui.feed.blogs.BlogFragment;
 import com.mindorks.framework.mvvm.ui.login.LoginActivity;
 import com.mindorks.framework.mvvm.ui.main.MainActivity;
 import com.mindorks.framework.mvvm.ui.main.rating.RateUsDialog;
@@ -39,7 +41,11 @@ public interface ActivityComponent {
 
     void inject(MainActivity activity);
 
+    void inject(FeedActivity activity);
+
     void inject(AboutFragment fragment);
+
+    void inject(BlogFragment fragment);
 
     void inject(RateUsDialog dialog);
 
