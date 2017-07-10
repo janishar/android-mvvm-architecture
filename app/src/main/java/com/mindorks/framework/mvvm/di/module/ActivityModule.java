@@ -25,6 +25,7 @@ import com.mindorks.framework.mvvm.di.PerActivity;
 import com.mindorks.framework.mvvm.ui.about.AboutViewModel;
 import com.mindorks.framework.mvvm.ui.login.LoginViewModel;
 import com.mindorks.framework.mvvm.ui.main.MainViewModel;
+import com.mindorks.framework.mvvm.ui.main.rating.RateUsViewModel;
 import com.mindorks.framework.mvvm.ui.splash.SplashViewModel;
 import com.mindorks.framework.mvvm.utils.rx.AppSchedulerProvider;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
@@ -91,11 +92,17 @@ public class ActivityModule {
     }
 
     @Provides
-    @PerActivity
     AboutViewModel provideAboutViewModel(DataManager dataManager,
                                          SchedulerProvider schedulerProvider,
                                          CompositeDisposable compositeDisposable) {
         return new AboutViewModel(dataManager, schedulerProvider, compositeDisposable);
+    }
+
+    @Provides
+    RateUsViewModel provideRateUsViewModel(DataManager dataManager,
+                                          SchedulerProvider schedulerProvider,
+                                          CompositeDisposable compositeDisposable) {
+        return new RateUsViewModel(dataManager, schedulerProvider, compositeDisposable);
     }
 
 }

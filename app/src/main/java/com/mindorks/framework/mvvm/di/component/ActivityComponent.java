@@ -21,6 +21,7 @@ import com.mindorks.framework.mvvm.di.module.ActivityModule;
 import com.mindorks.framework.mvvm.ui.about.AboutFragment;
 import com.mindorks.framework.mvvm.ui.login.LoginActivity;
 import com.mindorks.framework.mvvm.ui.main.MainActivity;
+import com.mindorks.framework.mvvm.ui.main.rating.RateUsDialog;
 import com.mindorks.framework.mvvm.ui.splash.SplashActivity;
 
 import dagger.Component;
@@ -39,5 +40,7 @@ public interface ActivityComponent {
     void inject(MainActivity activity);
 
     void inject(AboutFragment fragment);
+
+    void inject(RateUsDialog dialog);
 
 }

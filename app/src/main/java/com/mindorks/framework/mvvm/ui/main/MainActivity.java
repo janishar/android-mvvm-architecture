@@ -45,6 +45,7 @@ import com.mindorks.framework.mvvm.databinding.NavHeaderMainBinding;
 import com.mindorks.framework.mvvm.ui.about.AboutFragment;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 import com.mindorks.framework.mvvm.ui.login.LoginActivity;
+import com.mindorks.framework.mvvm.ui.main.rating.RateUsDialog;
 import com.mindorks.framework.mvvm.utils.ScreenUtils;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
@@ -226,7 +227,7 @@ public class MainActivity extends BaseActivity implements MainCallback {
                                 showAboutFragment();
                                 return true;
                             case R.id.navItemRateUs:
-                                // TODO
+                                RateUsDialog.newInstance().show(getSupportFragmentManager());
                                 return true;
                             case R.id.navItemFeed:
                                 // TODO
