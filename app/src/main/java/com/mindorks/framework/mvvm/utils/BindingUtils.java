@@ -14,21 +14,27 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.ui.base;
+package com.mindorks.framework.mvvm.utils;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.content.Context;
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 /**
  * Created by amitshekhar on 11/07/17.
  */
 
-public abstract class BaseViewHolder extends RecyclerView.ViewHolder {
+public final class BindingUtils {
 
-    public BaseViewHolder(View itemView) {
-        super(itemView);
+    private BindingUtils() {
+        // This class is not publicly instantiable
     }
 
-    public abstract void onBind(int position);
-
+    @BindingAdapter("imageUrl")
+    public static void setImageUrl(ImageView imageView, String url) {
+        Context context = imageView.getContext();
+        Glide.with(context).load(url).into(imageView);
+    }
 }

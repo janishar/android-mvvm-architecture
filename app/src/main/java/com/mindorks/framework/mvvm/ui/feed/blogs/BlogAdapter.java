@@ -89,19 +89,24 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
 
-        ItemBlogViewBinding mBinding;
+        private ItemBlogViewBinding mBinding;
+
+        private BlogItemViewModel mBlogItemViewModel;
 
         public ViewHolder(ItemBlogViewBinding binding) {
             super(binding.getRoot());
             this.mBinding = binding;
         }
 
-        protected void clear() {
-
-        }
-
+        @Override
         public void onBind(int position) {
-            super.onBind(position);
+
+            final BlogResponse.Blog blog = mBlogResponseList.get(position);
+
+            mBlogItemViewModel = new BlogItemViewModel(blog);
+
+            mBinding.setViewModel(mBlogItemViewModel);
+
         }
     }
 
@@ -114,10 +119,10 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             this.mBinding = binding;
         }
 
+
         @Override
-        protected void clear() {
+        public void onBind(int position) {
 
         }
-
     }
 }

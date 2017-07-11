@@ -96,12 +96,9 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             this.mBinding = binding;
         }
 
-        protected void clear() {
-
-        }
-
+        @Override
         public void onBind(int position) {
-            super.onBind(position);
+
         }
     }
 
@@ -115,9 +112,8 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
 
         @Override
-        protected void clear() {
+        public void onBind(int position) {
 
         }
-
     }
 }

@@ -16,22 +16,30 @@
 
 package com.mindorks.framework.mvvm.ui.feed.blogs;
 
-import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
-import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
+import android.databinding.ObservableField;
 
-import io.reactivex.disposables.CompositeDisposable;
+import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 
 /**
  * Created by amitshekhar on 10/07/17.
  */
 
-public class BlogItemViewModel extends BaseViewModel {
+public class BlogItemViewModel {
 
-    public BlogItemViewModel(DataManager dataManager,
-                             SchedulerProvider schedulerProvider,
-                             CompositeDisposable compositeDisposable) {
-        super(dataManager, schedulerProvider, compositeDisposable);
+    private BlogResponse.Blog mBlog;
+    public ObservableField<String> imageUrl;
+    public ObservableField<String> title;
+    public ObservableField<String> author;
+    public ObservableField<String> date;
+    public ObservableField<String> content;
+
+    public BlogItemViewModel(BlogResponse.Blog blog) {
+        this.mBlog = blog;
+        imageUrl = new ObservableField<>(mBlog.getCoverImgUrl());
+        title = new ObservableField<>(mBlog.getTitle());
+        author = new ObservableField<>(mBlog.getAuthor());
+        date = new ObservableField<>(mBlog.getDate());
+        content = new ObservableField<>(mBlog.getDescription());
     }
 
 }

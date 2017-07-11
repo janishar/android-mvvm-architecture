@@ -46,20 +46,22 @@
                 android:paddingBottom="30dp">
 
                 <ImageView
-                    android:id="@+id/cover_image_view"
+                    android:id="@+id/coverImageView"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:scaleType="fitCenter"
+                    app:imageUrl="@{viewModel.imageUrl}"
                     tools:src="@drawable/ic_rabbit" />
 
                 <TextView
-                    android:id="@+id/title_text_view"
+                    android:id="@+id/titleTextView"
                     style="@style/TextStyle.Heading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
+                    android:text="@{viewModel.title}"
                     tools:text="Android MVP Architecture" />
 
                 <RelativeLayout
@@ -71,29 +73,32 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/author_text_view"
+                        android:id="@+id/authorTextView"
                         style="@style/TextStyle.Title.Sub"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        tools:text="Janishar Ali" />
+                        android:text="@{viewModel.author}"
+                        tools:text="Amit Shekhar" />
 
                     <TextView
-                        android:id="@+id/date_text_view"
+                        android:id="@+id/dateTextView"
                         style="@style/TextStyle.Title.Sub"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:text="@{viewModel.date}"
                         tools:text="23 Jan 2017" />
                 </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/content_text_view"
+                    android:id="@+id/contentTextView"
                     style="@style/TextStyle.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
+                    android:text="@{viewModel.content}"
                     android:textStyle="normal"
                     tools:text="This repository contains a detailed sample app that implements MVP architecture using Dagger2, GreenDao, RxJava2, FastAndroidNetworking and PlaceholderView" />
             </LinearLayout>
