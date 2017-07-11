@@ -89,7 +89,9 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public class ViewHolder extends BaseViewHolder {
 
-        ItemOpenSourceViewBinding mBinding;
+        private ItemOpenSourceViewBinding mBinding;
+
+        private OpenSourceItemViewModel mOpenSourceItemViewModel;
 
         public ViewHolder(ItemOpenSourceViewBinding binding) {
             super(binding.getRoot());
@@ -98,7 +100,11 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
+            final OpenSourceResponse.Repo repo = mOpenSourceResponseList.get(position);
 
+            mOpenSourceItemViewModel = new OpenSourceItemViewModel(repo);
+
+            mBinding.setViewModel(mOpenSourceItemViewModel);
         }
     }
 

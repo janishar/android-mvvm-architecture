@@ -16,22 +16,26 @@
 
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
-import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
-import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
+import android.databinding.ObservableField;
 
-import io.reactivex.disposables.CompositeDisposable;
+import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
 
 /**
  * Created by amitshekhar on 10/07/17.
  */
 
-public class OpenSourceItemViewModel extends BaseViewModel {
+public class OpenSourceItemViewModel {
 
-    public OpenSourceItemViewModel(DataManager dataManager,
-                                   SchedulerProvider schedulerProvider,
-                                   CompositeDisposable compositeDisposable) {
-        super(dataManager, schedulerProvider, compositeDisposable);
+    private OpenSourceResponse.Repo mRepo;
+    public ObservableField<String> imageUrl;
+    public ObservableField<String> title;
+    public ObservableField<String> content;
+
+    public OpenSourceItemViewModel(OpenSourceResponse.Repo repo) {
+        this.mRepo = repo;
+        imageUrl = new ObservableField<>(repo.getCoverImgUrl());
+        title = new ObservableField<>(mRepo.getTitle());
+        content = new ObservableField<>(mRepo.getDescription());
     }
 
 }
