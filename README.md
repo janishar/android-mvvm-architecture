@@ -2,10 +2,6 @@
 [![Mindorks](https://img.shields.io/badge/mindorks-opensource-blue.svg)](https://mindorks.com/open-source-projects)
 [![Mindorks Community](https://img.shields.io/badge/join-community-blue.svg)](https://mindorks.com/join-community)
 
-
-## This project is under development.
-
-
 [Check out Mindorks awesome open source projects here](https://mindorks.com/open-source-projects)
 
 ### License
