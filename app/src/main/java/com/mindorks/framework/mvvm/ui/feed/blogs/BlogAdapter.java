@@ -107,6 +107,12 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             mBinding.setViewModel(mBlogItemViewModel);
 
+            // Immediate Binding
+            // When a variable or observable changes, the binding will be scheduled to change before
+            // the next frame. There are times, however, when binding must be executed immediately.
+            // To force execution, use the executePendingBindings() method.
+            mBinding.executePendingBindings();
+
         }
     }
 

@@ -105,6 +105,12 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             mOpenSourceItemViewModel = new OpenSourceItemViewModel(repo);
 
             mBinding.setViewModel(mOpenSourceItemViewModel);
+
+            // Immediate Binding
+            // When a variable or observable changes, the binding will be scheduled to change before
+            // the next frame. There are times, however, when binding must be executed immediately.
+            // To force execution, use the executePendingBindings() method.
+            mBinding.executePendingBindings();
         }
     }
 
