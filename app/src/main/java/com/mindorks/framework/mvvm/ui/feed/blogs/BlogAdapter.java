@@ -16,6 +16,8 @@
 
 package com.mindorks.framework.mvvm.ui.feed.blogs;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 import com.mindorks.framework.mvvm.databinding.ItemBlogEmptyViewBinding;
 import com.mindorks.framework.mvvm.databinding.ItemBlogViewBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseViewHolder;
+import com.mindorks.framework.mvvm.utils.AppLogger;
 
 import java.util.List;
 
@@ -55,7 +58,7 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             case VIEW_TYPE_NORMAL:
                 ItemBlogViewBinding blogViewBinding = ItemBlogViewBinding.inflate(LayoutInflater.from(parent.getContext()),
                         parent, false);
-                return new ViewHolder(blogViewBinding);
+                return new BlogViewHolder(blogViewBinding);
             case VIEW_TYPE_EMPTY:
             default:
                 ItemBlogEmptyViewBinding emptyViewBinding = ItemBlogEmptyViewBinding.inflate(LayoutInflater.from(parent.getContext()),
@@ -87,13 +90,13 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends BaseViewHolder {
+    public class BlogViewHolder extends BaseViewHolder implements BlogItemViewModel.BlogItemViewModelListener {
 
         private ItemBlogViewBinding mBinding;
 
         private BlogItemViewModel mBlogItemViewModel;
 
-        public ViewHolder(ItemBlogViewBinding binding) {
+        public BlogViewHolder(ItemBlogViewBinding binding) {
             super(binding.getRoot());
             this.mBinding = binding;
         }
@@ -103,7 +106,7 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
             final BlogResponse.Blog blog = mBlogResponseList.get(position);
 
-            mBlogItemViewModel = new BlogItemViewModel(blog);
+            mBlogItemViewModel = new BlogItemViewModel(blog, this);
 
             mBinding.setViewModel(mBlogItemViewModel);
 
@@ -113,6 +116,21 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             // To force execution, use the executePendingBindings() method.
             mBinding.executePendingBindings();
 
+        }
+
+        @Override
+        public void onItemClick(String blogUrl) {
+            if (blogUrl != null) {
+                try {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                    intent.setData(Uri.parse(blogUrl));
+                    itemView.getContext().startActivity(intent);
+                } catch (Exception e) {
+                    AppLogger.d("url error");
+                }
+            }
         }
     }
 

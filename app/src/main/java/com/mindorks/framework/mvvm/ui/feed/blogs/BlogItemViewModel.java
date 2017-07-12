@@ -33,8 +33,11 @@ public class BlogItemViewModel {
     public ObservableField<String> date;
     public ObservableField<String> content;
 
-    public BlogItemViewModel(BlogResponse.Blog blog) {
+    public BlogItemViewModelListener mListener;
+
+    public BlogItemViewModel(BlogResponse.Blog blog, BlogItemViewModelListener listener) {
         this.mBlog = blog;
+        this.mListener = listener;
         imageUrl = new ObservableField<>(mBlog.getCoverImgUrl());
         title = new ObservableField<>(mBlog.getTitle());
         author = new ObservableField<>(mBlog.getAuthor());
@@ -42,4 +45,11 @@ public class BlogItemViewModel {
         content = new ObservableField<>(mBlog.getDescription());
     }
 
+    public void onItemClick() {
+        mListener.onItemClick(mBlog.getBlogUrl());
+    }
+
+    public interface BlogItemViewModelListener {
+        void onItemClick(String blogUrl);
+    }
 }

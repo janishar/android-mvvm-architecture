@@ -31,11 +31,22 @@ public class OpenSourceItemViewModel {
     public ObservableField<String> title;
     public ObservableField<String> content;
 
-    public OpenSourceItemViewModel(OpenSourceResponse.Repo repo) {
+    public OpenSourceItemViewModelListener mListener;
+
+    public OpenSourceItemViewModel(OpenSourceResponse.Repo repo, OpenSourceItemViewModelListener listener) {
         this.mRepo = repo;
+        this.mListener = listener;
         imageUrl = new ObservableField<>(repo.getCoverImgUrl());
         title = new ObservableField<>(mRepo.getTitle());
         content = new ObservableField<>(mRepo.getDescription());
+    }
+
+    public void onItemClick() {
+        mListener.onItemClick(mRepo.getProjectUrl());
+    }
+
+    public interface OpenSourceItemViewModelListener {
+        void onItemClick(String projectUrl);
     }
 
 }
