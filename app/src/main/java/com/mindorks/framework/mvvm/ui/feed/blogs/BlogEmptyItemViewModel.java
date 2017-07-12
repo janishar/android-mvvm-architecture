@@ -16,22 +16,24 @@
 
 package com.mindorks.framework.mvvm.ui.feed.blogs;
 
-import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
-import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
-
-import io.reactivex.disposables.CompositeDisposable;
-
 /**
  * Created by amitshekhar on 10/07/17.
  */
 
-public class BlogEmptyItemViewModel extends BaseViewModel {
+public class BlogEmptyItemViewModel {
 
-    public BlogEmptyItemViewModel(DataManager dataManager,
-                                  SchedulerProvider schedulerProvider,
-                                  CompositeDisposable compositeDisposable) {
-        super(dataManager, schedulerProvider, compositeDisposable);
+    private BlogEmptyItemViewModelListener mListener;
+
+    public BlogEmptyItemViewModel(BlogEmptyItemViewModelListener listener) {
+        this.mListener = listener;
+    }
+
+    public void onRetryClick() {
+        mListener.onRetryClick();
+    }
+
+    public interface BlogEmptyItemViewModelListener {
+        void onRetryClick();
     }
 
 }

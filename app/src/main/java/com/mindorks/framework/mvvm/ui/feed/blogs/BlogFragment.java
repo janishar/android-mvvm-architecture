@@ -39,7 +39,7 @@ import javax.inject.Inject;
  * Created by amitshekhar on 10/07/17.
  */
 
-public class BlogFragment extends BaseFragment implements BlogCallback {
+public class BlogFragment extends BaseFragment implements BlogCallback, BlogAdapter.BlogAdapterListener {
 
     @Inject
     BlogViewModel mBlogViewModel;
@@ -77,6 +77,8 @@ public class BlogFragment extends BaseFragment implements BlogCallback {
 
         mBlogViewModel.setCallback(this);
 
+        mBlogAdapter.setListener(this);
+
         return view;
 
     }
@@ -110,5 +112,10 @@ public class BlogFragment extends BaseFragment implements BlogCallback {
     @Override
     public void handleError(Throwable throwable) {
         // handle error
+    }
+
+    @Override
+    public void onRetryClick() {
+        mBlogViewModel.fetchBlogs();
     }
 }

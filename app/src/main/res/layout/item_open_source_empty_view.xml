@@ -66,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
+            android:onClick="@{() -> viewModel.onRetryClick()}"
             android:text="@string/retry"
             android:textSize="20sp" />
     </LinearLayout>

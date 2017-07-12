@@ -40,11 +40,15 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public static final int VIEW_TYPE_NORMAL = 1;
 
     private List<OpenSourceResponse.Repo> mOpenSourceResponseList;
+    private OpenSourceAdapterListener mListener;
 
     public OpenSourceAdapter(List<OpenSourceResponse.Repo> openSourceResponseList) {
-        mOpenSourceResponseList = openSourceResponseList;
+        this.mOpenSourceResponseList = openSourceResponseList;
     }
 
+    public void setListener(OpenSourceAdapterListener listener) {
+        this.mListener = listener;
+    }
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
@@ -132,7 +136,7 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
     }
 
-    public class EmptyViewHolder extends BaseViewHolder {
+    public class EmptyViewHolder extends BaseViewHolder implements OpenSourceEmptyItemViewModel.OpenSourceEmptyItemViewModelListener {
 
         private ItemOpenSourceEmptyViewBinding mBinding;
 
@@ -143,7 +147,17 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-
+            OpenSourceEmptyItemViewModel emptyItemViewModel = new OpenSourceEmptyItemViewModel(this);
+            mBinding.setViewModel(emptyItemViewModel);
         }
+
+        @Override
+        public void onRetryClick() {
+            mListener.onRetryClick();
+        }
+    }
+
+    public interface OpenSourceAdapterListener {
+        void onRetryClick();
     }
 }

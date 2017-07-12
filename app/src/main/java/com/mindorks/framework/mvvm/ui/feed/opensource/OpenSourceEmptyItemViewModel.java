@@ -16,21 +16,23 @@
 
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
-import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
-import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
-
-import io.reactivex.disposables.CompositeDisposable;
-
 /**
  * Created by amitshekhar on 10/07/17.
  */
 
-public class OpenSourceEmptyItemViewModel extends BaseViewModel {
+public class OpenSourceEmptyItemViewModel {
 
-    public OpenSourceEmptyItemViewModel(DataManager dataManager,
-                                        SchedulerProvider schedulerProvider,
-                                        CompositeDisposable compositeDisposable) {
-        super(dataManager, schedulerProvider, compositeDisposable);
+    private OpenSourceEmptyItemViewModelListener mListener;
+
+    public OpenSourceEmptyItemViewModel(OpenSourceEmptyItemViewModelListener listener) {
+        this.mListener = listener;
+    }
+
+    public void onRetryClick() {
+        mListener.onRetryClick();
+    }
+
+    public interface OpenSourceEmptyItemViewModelListener {
+        void onRetryClick();
     }
 }

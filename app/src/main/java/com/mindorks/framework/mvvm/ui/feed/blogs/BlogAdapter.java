@@ -41,10 +41,15 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     private List<BlogResponse.Blog> mBlogResponseList;
 
+    private BlogAdapterListener mListener;
+
     public BlogAdapter(List<BlogResponse.Blog> blogResponseList) {
-        mBlogResponseList = blogResponseList;
+        this.mBlogResponseList = blogResponseList;
     }
 
+    public void setListener(BlogAdapterListener listener) {
+        this.mListener = listener;
+    }
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
@@ -134,7 +139,7 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
     }
 
-    public class EmptyViewHolder extends BaseViewHolder {
+    public class EmptyViewHolder extends BaseViewHolder implements BlogEmptyItemViewModel.BlogEmptyItemViewModelListener {
 
         private ItemBlogEmptyViewBinding mBinding;
 
@@ -143,10 +148,19 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             this.mBinding = binding;
         }
 
-
         @Override
         public void onBind(int position) {
-
+            BlogEmptyItemViewModel emptyItemViewModel = new BlogEmptyItemViewModel(this);
+            mBinding.setViewModel(emptyItemViewModel);
         }
+
+        @Override
+        public void onRetryClick() {
+            mListener.onRetryClick();
+        }
+    }
+
+    public interface BlogAdapterListener {
+        void onRetryClick();
     }
 }
