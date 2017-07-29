@@ -53,7 +53,7 @@ public class SplashActivity extends BaseActivity implements SplashCallback {
 
         binding.setViewModel(mSplashViewModel);
 
-        mSplashViewModel.setCallback(this);
+        mSplashViewModel.setNavigator(this);
 
         mSplashViewModel.startSeeding();
     }

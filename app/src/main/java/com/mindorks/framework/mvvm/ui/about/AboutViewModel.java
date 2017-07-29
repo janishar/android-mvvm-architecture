@@ -35,6 +35,6 @@ public class AboutViewModel extends BaseViewModel<AboutCallback> {
     }
 
     public void onNavBackClick() {
-        getCallback().goBack();
+        getNavigator().goBack();
     }
 }

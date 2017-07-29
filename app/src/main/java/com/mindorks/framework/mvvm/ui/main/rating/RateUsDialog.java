@@ -63,7 +63,7 @@ public class RateUsDialog extends BaseDialog implements RateUsCallback {
 
         binding.setViewModel(mRateUsViewModel);
 
-        mRateUsViewModel.setCallback(this);
+        mRateUsViewModel.setNavigator(this);
 
         return view;
     }

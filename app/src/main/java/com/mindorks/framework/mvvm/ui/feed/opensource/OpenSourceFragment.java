@@ -75,7 +75,7 @@ public class OpenSourceFragment extends BaseFragment implements OpenSourceCallba
 
         mBinding.setViewModel(mOpenSourceViewModel);
 
-        mOpenSourceViewModel.setCallback(this);
+        mOpenSourceViewModel.setNavigator(this);
 
         mOpenSourceAdapter.setListener(this);
 

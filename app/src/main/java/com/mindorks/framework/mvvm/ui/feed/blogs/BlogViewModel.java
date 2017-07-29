@@ -38,7 +38,7 @@ public class BlogViewModel extends BaseViewModel<BlogCallback> {
     }
 
     public void fetchBlogs() {
-        getCallback().showLoading();
+        getNavigator().showLoading();
         getCompositeDisposable().add(getDataManager()
                 .getBlogApiCall()
                 .subscribeOn(getSchedulerProvider().io())
@@ -48,16 +48,16 @@ public class BlogViewModel extends BaseViewModel<BlogCallback> {
                     public void accept(@NonNull BlogResponse blogResponse)
                             throws Exception {
                         if (blogResponse != null && blogResponse.getData() != null) {
-                            getCallback().updateBlog(blogResponse.getData());
+                            getNavigator().updateBlog(blogResponse.getData());
                         }
-                        getCallback().hideLoading();
+                        getNavigator().hideLoading();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable)
                             throws Exception {
-                        getCallback().hideLoading();
-                        getCallback().handleError(throwable);
+                        getNavigator().hideLoading();
+                        getNavigator().handleError(throwable);
                     }
                 }));
     }

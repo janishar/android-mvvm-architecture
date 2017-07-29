@@ -77,7 +77,7 @@ public class MainViewModel extends BaseViewModel<MainCallback> {
                     @Override
                     public void accept(List<QuestionCardData> questionList) throws Exception {
                         if (questionList != null) {
-                            getCallback().refreshQuestionnaire(questionList);
+                            getNavigator().refreshQuestionnaire(questionList);
                         }
                     }
                 }));
@@ -92,14 +92,14 @@ public class MainViewModel extends BaseViewModel<MainCallback> {
                     @Override
                     public void accept(List<QuestionCardData> questionList) throws Exception {
                         if (questionList != null) {
-                            getCallback().reloadQuestionnaire(questionList);
+                            getNavigator().reloadQuestionnaire(questionList);
                         }
                     }
                 }));
     }
 
     public void logout() {
-        getCallback().showLoading();
+        getNavigator().showLoading();
         getCompositeDisposable().add(getDataManager().doLogoutApiCall()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
@@ -107,14 +107,14 @@ public class MainViewModel extends BaseViewModel<MainCallback> {
                     @Override
                     public void accept(LogoutResponse response) throws Exception {
                         getDataManager().setUserAsLoggedOut();
-                        getCallback().hideLoading();
-                        getCallback().openLoginActivity();
+                        getNavigator().hideLoading();
+                        getNavigator().openLoginActivity();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        getCallback().hideLoading();
-                        getCallback().handleError(throwable);
+                        getNavigator().hideLoading();
+                        getNavigator().handleError(throwable);
                     }
                 }));
     }

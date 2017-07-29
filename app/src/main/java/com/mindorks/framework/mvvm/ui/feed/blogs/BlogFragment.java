@@ -75,7 +75,7 @@ public class BlogFragment extends BaseFragment implements BlogCallback, BlogAdap
 
         mBinding.setViewModel(mBlogViewModel);
 
-        mBlogViewModel.setCallback(this);
+        mBlogViewModel.setNavigator(this);
 
         mBlogAdapter.setListener(this);
 

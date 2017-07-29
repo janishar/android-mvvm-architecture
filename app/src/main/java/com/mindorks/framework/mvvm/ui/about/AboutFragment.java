@@ -64,7 +64,7 @@ public class AboutFragment extends BaseFragment implements AboutCallback {
 
         binding.setViewModel(mAboutViewModel);
 
-        mAboutViewModel.setCallback(this);
+        mAboutViewModel.setNavigator(this);
 
         return view;
 

@@ -55,7 +55,7 @@ public class LoginActivity extends BaseActivity implements LoginCallback {
 
         mBinding.setViewModel(mLoginViewModel);
 
-        mLoginViewModel.setCallback(this);
+        mLoginViewModel.setNavigator(this);
 
     }
 

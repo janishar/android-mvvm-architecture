@@ -63,7 +63,7 @@ public class LoginViewModelTest {
                 mMockDataManager,
                 testSchedulerProvider,
                 compositeDisposable);
-        mLoginViewModel.setCallback(mLoginCallback);
+        mLoginViewModel.setNavigator(mLoginCallback);
     }
 
     @Test

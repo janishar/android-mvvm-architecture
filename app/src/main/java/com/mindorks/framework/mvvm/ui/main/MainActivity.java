@@ -86,7 +86,7 @@ public class MainActivity extends BaseActivity implements MainCallback {
 
         mBinding.setViewModel(mMainViewModel);
 
-        mMainViewModel.setCallback(this);
+        mMainViewModel.setNavigator(this);
 
         setUp();
     }

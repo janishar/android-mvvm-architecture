@@ -25,9 +25,9 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by amitshekhar on 07/07/17.
  */
 
-public abstract class BaseViewModel<V> {
+public abstract class BaseViewModel<N> {
 
-    private V mCallback;
+    private N mNavigator;
 
     private final DataManager mDataManager;
     private final SchedulerProvider mSchedulerProvider;
@@ -41,16 +41,16 @@ public abstract class BaseViewModel<V> {
         this.mCompositeDisposable = compositeDisposable;
     }
 
-    public void setCallback(V callback) {
-        this.mCallback = callback;
+    public void setNavigator(N navigator) {
+        this.mNavigator = navigator;
     }
 
     public void onDestroy() {
         mCompositeDisposable.dispose();
     }
 
-    public V getCallback() {
-        return mCallback;
+    public N getNavigator() {
+        return mNavigator;
     }
 
     public DataManager getDataManager() {

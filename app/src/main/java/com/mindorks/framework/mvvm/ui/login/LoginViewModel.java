@@ -39,11 +39,11 @@ public class LoginViewModel extends BaseViewModel<LoginCallback> {
     }
 
     public void onServerLoginClick() {
-        getCallback().login();
+        getNavigator().login();
     }
 
     public void onGoogleLoginClick() {
-        getCallback().showLoading();
+        getNavigator().showLoading();
         getCompositeDisposable().add(getDataManager()
                 .doGoogleLoginApiCall(new LoginRequest.GoogleLoginRequest("test1", "test1"))
                 .subscribeOn(getSchedulerProvider().io())
@@ -58,20 +58,20 @@ public class LoginViewModel extends BaseViewModel<LoginCallback> {
                                 response.getUserName(),
                                 response.getUserEmail(),
                                 response.getGoogleProfilePicUrl());
-                        getCallback().hideLoading();
-                        getCallback().openMainActivity();
+                        getNavigator().hideLoading();
+                        getNavigator().openMainActivity();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        getCallback().hideLoading();
-                        getCallback().handleError(throwable);
+                        getNavigator().hideLoading();
+                        getNavigator().handleError(throwable);
                     }
                 }));
     }
 
     public void onFbLoginClick() {
-        getCallback().showLoading();
+        getNavigator().showLoading();
         getCompositeDisposable().add(getDataManager()
                 .doFacebookLoginApiCall(new LoginRequest.FacebookLoginRequest("test3", "test4"))
                 .subscribeOn(getSchedulerProvider().io())
@@ -86,20 +86,20 @@ public class LoginViewModel extends BaseViewModel<LoginCallback> {
                                 response.getUserName(),
                                 response.getUserEmail(),
                                 response.getGoogleProfilePicUrl());
-                        getCallback().hideLoading();
-                        getCallback().openMainActivity();
+                        getNavigator().hideLoading();
+                        getNavigator().openMainActivity();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        getCallback().hideLoading();
-                        getCallback().handleError(throwable);
+                        getNavigator().hideLoading();
+                        getNavigator().handleError(throwable);
                     }
                 }));
     }
 
     public void login(String email, String password) {
-        getCallback().showLoading();
+        getNavigator().showLoading();
         getCompositeDisposable().add(getDataManager()
                 .doServerLoginApiCall(new LoginRequest.ServerLoginRequest(email, password))
                 .subscribeOn(getSchedulerProvider().io())
@@ -114,14 +114,14 @@ public class LoginViewModel extends BaseViewModel<LoginCallback> {
                                 response.getUserName(),
                                 response.getUserEmail(),
                                 response.getGoogleProfilePicUrl());
-                        getCallback().hideLoading();
-                        getCallback().openMainActivity();
+                        getNavigator().hideLoading();
+                        getNavigator().openMainActivity();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        getCallback().hideLoading();
-                        getCallback().handleError(throwable);
+                        getNavigator().hideLoading();
+                        getNavigator().handleError(throwable);
                     }
                 }));
     }

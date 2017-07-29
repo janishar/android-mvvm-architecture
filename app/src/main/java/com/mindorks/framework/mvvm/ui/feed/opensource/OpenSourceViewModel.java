@@ -38,7 +38,7 @@ public class OpenSourceViewModel extends BaseViewModel<OpenSourceCallback> {
     }
 
     public void fetchRepos() {
-        getCallback().showLoading();
+        getNavigator().showLoading();
         getCompositeDisposable().add(getDataManager()
                 .getOpenSourceApiCall()
                 .subscribeOn(getSchedulerProvider().io())
@@ -48,16 +48,16 @@ public class OpenSourceViewModel extends BaseViewModel<OpenSourceCallback> {
                     public void accept(@NonNull OpenSourceResponse openSourceResponse)
                             throws Exception {
                         if (openSourceResponse != null && openSourceResponse.getData() != null) {
-                            getCallback().updateRepo(openSourceResponse.getData());
+                            getNavigator().updateRepo(openSourceResponse.getData());
                         }
-                        getCallback().hideLoading();
+                        getNavigator().hideLoading();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable)
                             throws Exception {
-                        getCallback().hideLoading();
-                        getCallback().handleError(throwable);
+                        getNavigator().hideLoading();
+                        getNavigator().handleError(throwable);
                     }
                 }));
     }

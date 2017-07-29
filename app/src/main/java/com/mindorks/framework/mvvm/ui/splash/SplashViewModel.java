@@ -65,9 +65,9 @@ public class SplashViewModel extends BaseViewModel<SplashCallback> {
     private void decideNextActivity() {
         if (getDataManager().getCurrentUserLoggedInMode()
                 == DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType()) {
-            getCallback().openLoginActivity();
+            getNavigator().openLoginActivity();
         } else {
-            getCallback().openMainActivity();
+            getNavigator().openMainActivity();
         }
     }
 

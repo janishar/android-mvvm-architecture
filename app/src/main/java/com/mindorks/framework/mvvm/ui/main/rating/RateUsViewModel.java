@@ -35,11 +35,11 @@ public class RateUsViewModel extends BaseViewModel<RateUsCallback> {
     }
 
     public void onLaterClick() {
-        getCallback().dismissDialog();
+        getNavigator().dismissDialog();
     }
 
     public void onSubmitClick() {
-        getCallback().dismissDialog();
+        getNavigator().dismissDialog();
     }
 
 }
