@@ -17,10 +17,16 @@
 package com.mindorks.framework.mvvm.ui.base;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.mindorks.framework.mvvm.di.component.ActivityComponent;
 
@@ -28,19 +34,31 @@ import com.mindorks.framework.mvvm.di.component.ActivityComponent;
  * Created by amitshekhar on 09/07/17.
  */
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment {
 
     private BaseActivity mActivity;
+    public T viewDataBinding;
+    public V mViewModel;
+    private View mRootView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(false);
     }
-
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
+        mRootView = viewDataBinding.getRoot();
+        return mRootView;
+    }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mViewModel = getViewModel();
+        viewDataBinding.setVariable(getBindingVariable(), mViewModel);
+        viewDataBinding.executePendingBindings();
     }
 
     @Override
@@ -109,4 +127,24 @@ public abstract class BaseFragment extends Fragment {
 
         void onFragmentDetached(String tag);
     }
+    /**
+     * Override for set view model
+     * @return view model instance
+     */
+    public abstract V getViewModel();
+
+    /**
+     * Override for set binding variable
+     * @return variable id
+     */
+    public abstract
+    @IdRes
+    int getBindingVariable();
+
+    /**
+     * @return layout resource id
+     */
+    public abstract
+    @LayoutRes
+    int getLayoutId();
 }

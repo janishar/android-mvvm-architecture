@@ -16,13 +16,10 @@
 
 package com.mindorks.framework.mvvm.ui.about;
 
-import android.databinding.DataBindingUtil;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
+import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.FragmentAboutBinding;
 import com.mindorks.framework.mvvm.di.component.ActivityComponent;
@@ -34,7 +31,7 @@ import javax.inject.Inject;
  * Created by amitshekhar on 09/07/17.
  */
 
-public class AboutFragment extends BaseFragment implements AboutNavigator {
+public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewModel> implements AboutNavigator {
 
     public static final String TAG = "AboutFragment";
 
@@ -48,26 +45,26 @@ public class AboutFragment extends BaseFragment implements AboutNavigator {
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-
-        FragmentAboutBinding binding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_about, container, false);
-        View view = binding.getRoot();
-
-        ActivityComponent component = getActivityComponent();
-        if (component != null) {
-            component.inject(this);
-        }
-
-        binding.setViewModel(mAboutViewModel);
-
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        performDependencyInjection();
         mAboutViewModel.setNavigator(this);
+    }
 
-        return view;
+    @Override
+    public AboutViewModel getViewModel() {
+        return mAboutViewModel;
+    }
 
+    @Override
+    public int getBindingVariable() {
+        return BR.viewModel;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_about;
     }
 
     @Override
@@ -79,6 +76,12 @@ public class AboutFragment extends BaseFragment implements AboutNavigator {
     public void onDestroyView() {
         mAboutViewModel.onDestroy();
         super.onDestroyView();
+    }
+    private void performDependencyInjection(){
+        ActivityComponent component = getActivityComponent();
+        if (getActivityComponent() != null) {
+            component.inject(this);
+        }
     }
 
 }

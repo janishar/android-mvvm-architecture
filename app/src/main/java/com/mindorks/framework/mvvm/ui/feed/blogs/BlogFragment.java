@@ -16,15 +16,12 @@
 
 package com.mindorks.framework.mvvm.ui.feed.blogs;
 
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
+import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 import com.mindorks.framework.mvvm.databinding.FragmentBlogBinding;
@@ -39,7 +36,7 @@ import javax.inject.Inject;
  * Created by amitshekhar on 10/07/17.
  */
 
-public class BlogFragment extends BaseFragment implements BlogNavigator, BlogAdapter.BlogAdapterListener {
+public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewModel> implements BlogNavigator, BlogAdapter.BlogAdapterListener {
 
     @Inject
     BlogViewModel mBlogViewModel;
@@ -50,8 +47,6 @@ public class BlogFragment extends BaseFragment implements BlogNavigator, BlogAda
     @Inject
     LinearLayoutManager mLayoutManager;
 
-    private FragmentBlogBinding mBinding;
-
     public static BlogFragment newInstance() {
         Bundle args = new Bundle();
         BlogFragment fragment = new BlogFragment();
@@ -59,29 +54,14 @@ public class BlogFragment extends BaseFragment implements BlogNavigator, BlogAda
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-
-        mBinding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_blog, container, false);
-        View view = mBinding.getRoot();
-
-        ActivityComponent component = getActivityComponent();
-        if (component != null) {
-            component.inject(this);
-        }
-
-        mBinding.setViewModel(mBlogViewModel);
-
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        performDependencyInjection();
         mBlogViewModel.setNavigator(this);
-
         mBlogAdapter.setListener(this);
-
-        return view;
-
     }
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -89,12 +69,28 @@ public class BlogFragment extends BaseFragment implements BlogNavigator, BlogAda
         setUp();
     }
 
+    @Override
+    public BlogViewModel getViewModel() {
+        return mBlogViewModel;
+    }
+
+
+    @Override
+    public int getBindingVariable() {
+        return BR.viewModel;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_blog;
+    }
+
     private void setUp() {
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mBinding.blogRecyclerView.setLayoutManager(mLayoutManager);
-        mBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mBinding.blogRecyclerView.setAdapter(mBlogAdapter);
-
+        viewDataBinding.blogRecyclerView.setLayoutManager(mLayoutManager);
+        viewDataBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        viewDataBinding.blogRecyclerView.setAdapter(mBlogAdapter);
+        //One method one responsibility.May be we can move fetchBlogs() outside this function.
         mBlogViewModel.fetchBlogs();
     }
 
@@ -117,5 +113,12 @@ public class BlogFragment extends BaseFragment implements BlogNavigator, BlogAda
     @Override
     public void onRetryClick() {
         mBlogViewModel.fetchBlogs();
+    }
+
+    private void performDependencyInjection() {
+        ActivityComponent component = getActivityComponent();
+        if (getActivityComponent() != null) {
+            component.inject(this);
+        }
     }
 }
