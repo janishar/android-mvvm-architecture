@@ -103,7 +103,8 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
 
     @Override
     public void updateRepo(List<OpenSourceResponse.Repo> repoList) {
-        mOpenSourceAdapter.addItems(repoList);
+        mOpenSourceViewModel.populateViewModel(repoList);
+        mOpenSourceAdapter.addItems(mOpenSourceViewModel.openSourceItemViewModels);
     }
 
     @Override
