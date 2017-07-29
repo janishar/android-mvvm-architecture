@@ -18,10 +18,10 @@ package com.mindorks.framework.mvvm.ui.login;
 
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.ActivityLoginBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
@@ -33,12 +33,10 @@ import javax.inject.Inject;
  * Created by amitshekhar on 08/07/17.
  */
 
-public class LoginActivity extends BaseActivity implements LoginNavigator {
+public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator {
 
     @Inject
     LoginViewModel mLoginViewModel;
-
-    private ActivityLoginBinding mBinding;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -48,13 +46,6 @@ public class LoginActivity extends BaseActivity implements LoginNavigator {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-
-        getActivityComponent().inject(this);
-
-        mBinding.setViewModel(mLoginViewModel);
-
         mLoginViewModel.setNavigator(this);
 
     }
@@ -79,8 +70,8 @@ public class LoginActivity extends BaseActivity implements LoginNavigator {
 
     @Override
     public void login() {
-        String email = mBinding.etEmail.getText().toString();
-        String password = mBinding.etPassword.getText().toString();
+        String email = viewDataBinding.etEmail.getText().toString();
+        String password = viewDataBinding.etPassword.getText().toString();
         if (mLoginViewModel.isEmailAndPasswordValid(email, password)) {
             hideKeyboard();
             mLoginViewModel.login(email, password);
@@ -88,4 +79,25 @@ public class LoginActivity extends BaseActivity implements LoginNavigator {
             Toast.makeText(this, getString(R.string.invalid_email_password), Toast.LENGTH_SHORT).show();
         }
     }
+    @Override
+    public LoginViewModel getViewModel() {
+        return mLoginViewModel;
+    }
+
+    @Override
+    public int getBindingVariable() {
+        return BR.viewModel;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    public void performDependencyInjection() {
+        getActivityComponent().inject(this);
+
+    }
+
 }
