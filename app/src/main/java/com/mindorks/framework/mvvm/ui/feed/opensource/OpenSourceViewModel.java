@@ -16,11 +16,18 @@
 
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
+import android.databinding.ObservableArrayList;
+
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+
+import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -30,6 +37,8 @@ import io.reactivex.functions.Consumer;
  */
 
 public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
+    public ObservableArrayList<OpenSourceItemViewModel> openSourceItemViewModels = new ObservableArrayList<>();
+
 
     public OpenSourceViewModel(DataManager dataManager,
                                SchedulerProvider schedulerProvider,
@@ -60,5 +69,13 @@ public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
                         getNavigator().handleError(throwable);
                     }
                 }));
+    }
+
+
+    public void populateViewModel(List<OpenSourceResponse.Repo> repoList){
+        for(int i = 0; i < repoList.size();i++){
+            openSourceItemViewModels.add(new OpenSourceItemViewModel(repoList.get(i).getCoverImgUrl(),repoList.get(i).getTitle(),repoList.get(i).getDescription(),repoList.get(i).getProjectUrl()));
+        }
+
     }
 }

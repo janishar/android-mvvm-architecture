@@ -142,7 +142,7 @@ public class ActivityModule {
 
     @Provides
     OpenSourceAdapter provideOpenSourceAdapter() {
-        return new OpenSourceAdapter(new ArrayList<OpenSourceResponse.Repo>());
+        return new OpenSourceAdapter();
     }
 
     @Provides
