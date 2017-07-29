@@ -34,7 +34,7 @@ import javax.inject.Inject;
  * Created by amitshekhar on 09/07/17.
  */
 
-public class AboutFragment extends BaseFragment implements AboutCallback {
+public class AboutFragment extends BaseFragment implements AboutNavigator {
 
     public static final String TAG = "AboutFragment";
 

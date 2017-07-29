@@ -39,7 +39,7 @@ import javax.inject.Inject;
  * Created by amitshekhar on 10/07/17.
  */
 
-public class OpenSourceFragment extends BaseFragment implements OpenSourceCallback, OpenSourceAdapter.OpenSourceAdapterListener {
+public class OpenSourceFragment extends BaseFragment implements OpenSourceNavigator, OpenSourceAdapter.OpenSourceAdapterListener {
 
     @Inject
     OpenSourceViewModel mOpenSourceViewModel;

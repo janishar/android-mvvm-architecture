@@ -14,14 +14,16 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.ui.about;
+package com.mindorks.framework.mvvm.ui.splash;
 
 /**
- * Created by amitshekhar on 09/07/17.
+ * Created by amitshekhar on 08/07/17.
  */
 
-public interface AboutCallback {
+public interface SplashNavigator {
 
-    void goBack();
+    void openLoginActivity();
+
+    void openMainActivity();
 
 }

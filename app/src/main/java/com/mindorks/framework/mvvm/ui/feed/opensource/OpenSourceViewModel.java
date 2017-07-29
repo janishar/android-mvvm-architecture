@@ -29,7 +29,7 @@ import io.reactivex.functions.Consumer;
  * Created by amitshekhar on 10/07/17.
  */
 
-public class OpenSourceViewModel extends BaseViewModel<OpenSourceCallback> {
+public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
 
     public OpenSourceViewModel(DataManager dataManager,
                                SchedulerProvider schedulerProvider,

@@ -14,24 +14,14 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.ui.feed.opensource;
-
-import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
-
-import java.util.List;
+package com.mindorks.framework.mvvm.ui.about;
 
 /**
- * Created by amitshekhar on 10/07/17.
+ * Created by amitshekhar on 09/07/17.
  */
 
-public interface OpenSourceCallback {
+public interface AboutNavigator {
 
-    void updateRepo(List<OpenSourceResponse.Repo> repoList);
-
-    void handleError(Throwable throwable);
-
-    void showLoading();
-
-    void hideLoading();
+    void goBack();
 
 }

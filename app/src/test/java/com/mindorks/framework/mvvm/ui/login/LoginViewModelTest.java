@@ -43,7 +43,7 @@ import static org.mockito.Mockito.verify;
 public class LoginViewModelTest {
 
     @Mock
-    LoginCallback mLoginCallback;
+    LoginNavigator mLoginCallback;
     @Mock
     DataManager mMockDataManager;
 

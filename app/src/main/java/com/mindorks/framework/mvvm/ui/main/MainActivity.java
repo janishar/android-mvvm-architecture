@@ -56,7 +56,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity implements MainCallback {
+public class MainActivity extends BaseActivity implements MainNavigator {
 
     @Inject
     MainViewModel mMainViewModel;

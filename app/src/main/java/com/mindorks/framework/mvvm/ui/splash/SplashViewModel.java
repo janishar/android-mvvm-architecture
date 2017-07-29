@@ -29,7 +29,7 @@ import io.reactivex.functions.Function;
  * Created by amitshekhar on 08/07/17.
  */
 
-public class SplashViewModel extends BaseViewModel<SplashCallback> {
+public class SplashViewModel extends BaseViewModel<SplashNavigator> {
 
     public SplashViewModel(DataManager dataManager,
                            SchedulerProvider schedulerProvider,

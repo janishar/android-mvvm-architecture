@@ -33,7 +33,7 @@ import javax.inject.Inject;
  * Created by amitshekhar on 08/07/17.
  */
 
-public class SplashActivity extends BaseActivity implements SplashCallback {
+public class SplashActivity extends BaseActivity implements SplashNavigator {
 
     @Inject
     SplashViewModel mSplashViewModel;

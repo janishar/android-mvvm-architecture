@@ -33,7 +33,7 @@ import javax.inject.Inject;
  * Created by amitshekhar on 08/07/17.
  */
 
-public class LoginActivity extends BaseActivity implements LoginCallback {
+public class LoginActivity extends BaseActivity implements LoginNavigator {
 
     @Inject
     LoginViewModel mLoginViewModel;

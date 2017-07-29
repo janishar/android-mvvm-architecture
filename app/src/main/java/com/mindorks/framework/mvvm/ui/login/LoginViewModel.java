@@ -30,7 +30,7 @@ import io.reactivex.functions.Consumer;
  * Created by amitshekhar on 08/07/17.
  */
 
-public class LoginViewModel extends BaseViewModel<LoginCallback> {
+public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
     public LoginViewModel(DataManager dataManager,
                           SchedulerProvider schedulerProvider,

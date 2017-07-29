@@ -33,7 +33,7 @@ import io.reactivex.functions.Consumer;
  * Created by amitshekhar on 07/07/17.
  */
 
-public class MainViewModel extends BaseViewModel<MainCallback> {
+public class MainViewModel extends BaseViewModel<MainNavigator> {
 
     public final ObservableField<String> appVersion = new ObservableField<>();
     public final ObservableField<String> userName = new ObservableField<>();

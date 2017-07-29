@@ -24,7 +24,7 @@ import java.util.List;
  * Created by amitshekhar on 10/07/17.
  */
 
-public interface BlogCallback {
+public interface BlogNavigator {
 
     void updateBlog(List<BlogResponse.Blog> blogList);
 

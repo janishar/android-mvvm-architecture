@@ -14,16 +14,24 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.ui.splash;
+package com.mindorks.framework.mvvm.ui.feed.opensource;
+
+import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
+
+import java.util.List;
 
 /**
- * Created by amitshekhar on 08/07/17.
+ * Created by amitshekhar on 10/07/17.
  */
 
-public interface SplashCallback {
+public interface OpenSourceNavigator {
 
-    void openLoginActivity();
+    void updateRepo(List<OpenSourceResponse.Repo> repoList);
 
-    void openMainActivity();
+    void handleError(Throwable throwable);
+
+    void showLoading();
+
+    void hideLoading();
 
 }

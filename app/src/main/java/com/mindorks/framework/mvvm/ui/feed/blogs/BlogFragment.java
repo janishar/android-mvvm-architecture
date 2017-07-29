@@ -39,7 +39,7 @@ import javax.inject.Inject;
  * Created by amitshekhar on 10/07/17.
  */
 
-public class BlogFragment extends BaseFragment implements BlogCallback, BlogAdapter.BlogAdapterListener {
+public class BlogFragment extends BaseFragment implements BlogNavigator, BlogAdapter.BlogAdapterListener {
 
     @Inject
     BlogViewModel mBlogViewModel;

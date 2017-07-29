@@ -26,7 +26,7 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by amitshekhar on 09/07/17.
  */
 
-public class AboutViewModel extends BaseViewModel<AboutCallback> {
+public class AboutViewModel extends BaseViewModel<AboutNavigator> {
 
     public AboutViewModel(DataManager dataManager,
                           SchedulerProvider schedulerProvider,

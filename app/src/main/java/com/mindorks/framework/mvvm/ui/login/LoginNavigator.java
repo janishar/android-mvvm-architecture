@@ -14,28 +14,22 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.ui.main;
-
-import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
-
-import java.util.List;
+package com.mindorks.framework.mvvm.ui.login;
 
 /**
- * Created by amitshekhar on 09/07/17.
+ * Created by amitshekhar on 08/07/17.
  */
 
-public interface MainCallback {
+public interface LoginNavigator {
 
-    void refreshQuestionnaire(List<QuestionCardData> questionList);
-
-    void reloadQuestionnaire(List<QuestionCardData> questionList);
-
-    void openLoginActivity();
+    void openMainActivity();
 
     void showLoading();
 
     void hideLoading();
 
     void handleError(Throwable throwable);
+
+    void login();
 
 }

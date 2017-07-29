@@ -29,7 +29,7 @@ import io.reactivex.functions.Consumer;
  * Created by amitshekhar on 10/07/17.
  */
 
-public class BlogViewModel extends BaseViewModel<BlogCallback> {
+public class BlogViewModel extends BaseViewModel<BlogNavigator> {
 
     public BlogViewModel(DataManager dataManager,
                          SchedulerProvider schedulerProvider,
