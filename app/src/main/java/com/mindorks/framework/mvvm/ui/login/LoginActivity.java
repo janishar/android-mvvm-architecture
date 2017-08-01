@@ -37,6 +37,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Inject
     LoginViewModel mLoginViewModel;
+    ActivityLoginBinding mActivityLoginBinding;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -46,6 +47,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mActivityLoginBinding = getViewDataBinding();
         mLoginViewModel.setNavigator(this);
 
     }
@@ -70,8 +72,8 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void login() {
-        String email = viewDataBinding.etEmail.getText().toString();
-        String password = viewDataBinding.etPassword.getText().toString();
+        String email = mActivityLoginBinding.etEmail.getText().toString();
+        String password = mActivityLoginBinding.etPassword.getText().toString();
         if (mLoginViewModel.isEmailAndPasswordValid(email, password)) {
             hideKeyboard();
             mLoginViewModel.login(email, password);

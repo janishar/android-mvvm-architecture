@@ -46,6 +46,7 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
 
     @Inject
     LinearLayoutManager mLayoutManager;
+    FragmentBlogBinding mFragmentBlogBinding;
 
     public static BlogFragment newInstance() {
         Bundle args = new Bundle();
@@ -66,6 +67,7 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mFragmentBlogBinding = getViewDataBinding();
         setUp();
     }
 
@@ -87,9 +89,9 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
 
     private void setUp() {
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        viewDataBinding.blogRecyclerView.setLayoutManager(mLayoutManager);
-        viewDataBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        viewDataBinding.blogRecyclerView.setAdapter(mBlogAdapter);
+        mFragmentBlogBinding.blogRecyclerView.setLayoutManager(mLayoutManager);
+        mFragmentBlogBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mFragmentBlogBinding.blogRecyclerView.setAdapter(mBlogAdapter);
         //One method one responsibility.May be we can move fetchBlogs() outside this function.
         mBlogViewModel.fetchBlogs();
     }

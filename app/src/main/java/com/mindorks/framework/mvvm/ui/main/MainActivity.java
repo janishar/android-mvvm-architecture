@@ -70,6 +70,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding,MainViewModel
     private NavigationView mNavigationView;
 
     private SwipePlaceHolderView mCardsContainerView;
+    ActivityMainBinding mActivityMainBinding;
 
 
     public static Intent getStartIntent(Context context) {
@@ -80,6 +81,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding,MainViewModel
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mActivityMainBinding = getViewDataBinding();
         mMainViewModel.setNavigator(this);
         setUp();
     }
@@ -137,10 +139,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding,MainViewModel
 
     private void setUp() {
 
-        mDrawer = viewDataBinding.drawerView;
-        mToolbar = viewDataBinding.toolbar;
-        mNavigationView = viewDataBinding.navigationView;
-        mCardsContainerView = viewDataBinding.cardsContainer;
+        mDrawer = mActivityMainBinding.drawerView;
+        mToolbar = mActivityMainBinding.toolbar;
+        mNavigationView = mActivityMainBinding.navigationView;
+        mCardsContainerView = mActivityMainBinding.cardsContainer;
 
         setSupportActionBar(mToolbar);
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
@@ -203,12 +205,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding,MainViewModel
     }
 
     private void setupNavMenu() {
-
         NavHeaderMainBinding navHeaderMainBinding = DataBindingUtil.inflate(getLayoutInflater(),
-                R.layout.nav_header_main, viewDataBinding.navigationView, false);
-
-        viewDataBinding.navigationView.addHeaderView(navHeaderMainBinding.getRoot());
-
+                R.layout.nav_header_main, mActivityMainBinding.navigationView, false);
+        mActivityMainBinding.navigationView.addHeaderView(navHeaderMainBinding.getRoot());
         navHeaderMainBinding.setViewModel(mMainViewModel);
 
         mNavigationView.setNavigationItemSelectedListener(

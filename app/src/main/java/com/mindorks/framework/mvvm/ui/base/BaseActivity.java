@@ -53,7 +53,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     // since its going to be common for all the activities
     private ProgressDialog mProgressDialog;
 
-    public T viewDataBinding;
+    private T mViewDataBinding;
     private V mViewModel;
 
     @Override
@@ -73,10 +73,10 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
 
     private void performDataBinding() {
-        viewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
+        mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         this.mViewModel = mViewModel == null ? getViewModel() : mViewModel;
-        viewDataBinding.setVariable(getBindingVariable(), mViewModel);
-        viewDataBinding.executePendingBindings();
+        mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
+        mViewDataBinding.executePendingBindings();
     }
 
     public ActivityComponent getActivityComponent() {
@@ -145,14 +145,20 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         }
     }
 
+    public T getViewDataBinding() {
+        return mViewDataBinding;
+    }
+
     /**
      * Override for set view model
+     *
      * @return view model instance
      */
     public abstract V getViewModel();
 
     /**
      * Override for set binding variable
+     *
      * @return variable id
      */
     public abstract
@@ -167,7 +173,6 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     int getLayoutId();
 
     public abstract void performDependencyInjection();
-
 
 
 }

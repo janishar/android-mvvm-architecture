@@ -48,6 +48,7 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
 
     @Inject
     LinearLayoutManager mLayoutManager;
+    FragmentOpenSourceBinding mFragmentOpenSourceBinding;
 
     public static OpenSourceFragment newInstance() {
         Bundle args = new Bundle();
@@ -68,6 +69,7 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mFragmentOpenSourceBinding = getViewDataBinding();
         setUp();
     }
 
@@ -88,9 +90,9 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
 
     private void setUp() {
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        viewDataBinding.openSourceRecyclerView.setLayoutManager(mLayoutManager);
-        viewDataBinding.openSourceRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        viewDataBinding.openSourceRecyclerView.setAdapter(mOpenSourceAdapter);
+        mFragmentOpenSourceBinding.openSourceRecyclerView.setLayoutManager(mLayoutManager);
+        mFragmentOpenSourceBinding.openSourceRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mFragmentOpenSourceBinding.openSourceRecyclerView.setAdapter(mOpenSourceAdapter);
 
         mOpenSourceViewModel.fetchRepos();
     }

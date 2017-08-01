@@ -37,8 +37,8 @@ import com.mindorks.framework.mvvm.di.component.ActivityComponent;
 public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment {
 
     private BaseActivity mActivity;
-    public T viewDataBinding;
-    public V mViewModel;
+    private T mViewDataBinding;
+    private V mViewModel;
     private View mRootView;
 
     @Override
@@ -49,16 +49,16 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        viewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-        mRootView = viewDataBinding.getRoot();
+        mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
+        mRootView = mViewDataBinding.getRoot();
         return mRootView;
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = getViewModel();
-        viewDataBinding.setVariable(getBindingVariable(), mViewModel);
-        viewDataBinding.executePendingBindings();
+        mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
+        mViewDataBinding.executePendingBindings();
     }
 
     @Override
@@ -86,6 +86,10 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
     public BaseActivity getBaseActivity() {
         return mActivity;
+    }
+
+    public T getViewDataBinding(){
+        return mViewDataBinding;
     }
 
     @Override

@@ -40,6 +40,7 @@ public class FeedActivity extends BaseActivity<ActivityFeedBinding, FeedViewMode
     FeedPagerAdapter mPagerAdapter;
     @Inject
     FeedViewModel mFeedViewModel;
+    ActivityFeedBinding mActivityFeedBinding;
 
 
 
@@ -51,12 +52,13 @@ public class FeedActivity extends BaseActivity<ActivityFeedBinding, FeedViewMode
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mActivityFeedBinding = getViewDataBinding();
         setUp();
     }
 
     private void setUp() {
 
-        setSupportActionBar(viewDataBinding.toolbar);
+        setSupportActionBar(mActivityFeedBinding.toolbar);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -65,19 +67,19 @@ public class FeedActivity extends BaseActivity<ActivityFeedBinding, FeedViewMode
 
         mPagerAdapter.setCount(2);
 
-        viewDataBinding.feedViewPager.setAdapter(mPagerAdapter);
+        mActivityFeedBinding.feedViewPager.setAdapter(mPagerAdapter);
 
-        viewDataBinding.tabLayout.addTab(viewDataBinding.tabLayout.newTab().setText(getString(R.string.blog)));
-        viewDataBinding.tabLayout.addTab(viewDataBinding.tabLayout.newTab().setText(getString(R.string.open_source)));
+        mActivityFeedBinding.tabLayout.addTab(mActivityFeedBinding.tabLayout.newTab().setText(getString(R.string.blog)));
+        mActivityFeedBinding.tabLayout.addTab(mActivityFeedBinding.tabLayout.newTab().setText(getString(R.string.open_source)));
 
-        viewDataBinding.feedViewPager.setOffscreenPageLimit(viewDataBinding.tabLayout.getTabCount());
+        mActivityFeedBinding.feedViewPager.setOffscreenPageLimit(mActivityFeedBinding.tabLayout.getTabCount());
 
-        viewDataBinding.feedViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(viewDataBinding.tabLayout));
+        mActivityFeedBinding.feedViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mActivityFeedBinding.tabLayout));
 
-        viewDataBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mActivityFeedBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewDataBinding.feedViewPager.setCurrentItem(tab.getPosition());
+                mActivityFeedBinding.feedViewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override
