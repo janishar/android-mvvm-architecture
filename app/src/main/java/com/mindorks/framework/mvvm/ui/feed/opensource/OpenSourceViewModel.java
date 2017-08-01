@@ -47,7 +47,7 @@ public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
     }
 
     public void fetchRepos() {
-        isLoading.set(true);
+        setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
                 .getOpenSourceApiCall()
                 .subscribeOn(getSchedulerProvider().io())
@@ -59,13 +59,13 @@ public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
                         if (openSourceResponse != null && openSourceResponse.getData() != null) {
                             getNavigator().updateRepo(openSourceResponse.getData());
                         }
-                        isLoading.set(false);
+                        setIsLoading(false);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable)
                             throws Exception {
-                        isLoading.set(false);
+                        setIsLoading(false);
                         getNavigator().handleError(throwable);
                     }
                 }));

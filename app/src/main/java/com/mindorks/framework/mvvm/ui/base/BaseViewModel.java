@@ -33,7 +33,7 @@ public abstract class BaseViewModel<N> {
     private final DataManager mDataManager;
     private final SchedulerProvider mSchedulerProvider;
     private final CompositeDisposable mCompositeDisposable;
-    public final ObservableBoolean isLoading = new ObservableBoolean(false);
+    private final ObservableBoolean mIsLoading = new ObservableBoolean(false);
 
     public BaseViewModel(DataManager dataManager,
                          SchedulerProvider schedulerProvider,
@@ -65,6 +65,14 @@ public abstract class BaseViewModel<N> {
 
     public CompositeDisposable getCompositeDisposable() {
         return mCompositeDisposable;
+    }
+
+    public ObservableBoolean getIsLoading() {
+        return mIsLoading;
+    }
+
+    public void setIsLoading(boolean isLoading) {
+        mIsLoading.set(isLoading);
     }
 
 }

@@ -99,7 +99,7 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
     }
 
     public void logout() {
-        isLoading.set(true);
+        setIsLoading(true);
         getCompositeDisposable().add(getDataManager().doLogoutApiCall()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
@@ -107,13 +107,13 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
                     @Override
                     public void accept(LogoutResponse response) throws Exception {
                         getDataManager().setUserAsLoggedOut();
-                        isLoading.set(false);
+                        setIsLoading(false);
                         getNavigator().openLoginActivity();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        isLoading.set(false);
+                        setIsLoading(false);
                         getNavigator().handleError(throwable);
                     }
                 }));
