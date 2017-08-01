@@ -30,8 +30,4 @@ public interface BlogNavigator {
 
     void handleError(Throwable throwable);
 
-    void showLoading();
-
-    void hideLoading();
-
 }

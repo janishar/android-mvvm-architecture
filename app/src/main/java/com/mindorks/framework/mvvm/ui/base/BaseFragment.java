@@ -97,18 +97,6 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         super.onDestroy();
     }
 
-    public void showLoading() {
-        if (mActivity != null) {
-            mActivity.showLoading();
-        }
-    }
-
-    public void hideLoading() {
-        if (mActivity != null) {
-            mActivity.hideLoading();
-        }
-    }
-
     public boolean isNetworkConnected() {
         return mActivity != null && mActivity.isNetworkConnected();
     }

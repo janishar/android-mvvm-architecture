@@ -20,6 +20,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.mindorks.framework.mvvm.ui.main.MainViewModel" />
@@ -27,74 +29,89 @@
     </data>
 
 
-    <android.support.v4.widget.DrawerLayout
-
-        android:id="@+id/drawerView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/clRootView"
+        <android.support.v4.widget.DrawerLayout
+
+            android:id="@+id/drawerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipChildren="false">
+            android:fitsSystemWindows="true">
 
-            <LinearLayout
-                android:id="@+id/activityMain"
+            <android.support.design.widget.CoordinatorLayout
+                android:id="@+id/clRootView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:clipChildren="false">
 
-                <android.support.design.widget.AppBarLayout
+                <LinearLayout
+                    android:id="@+id/activityMain"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:elevation="5dp">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <android.support.v7.widget.Toolbar
-                        android:id="@+id/toolbar"
-                        style="@style/Toolbar"
-                        app:subtitleTextColor="@color/white"
-                        app:title="@string/app_name"
-                        app:titleTextAppearance="@style/Toolbar.TitleText"
-                        app:titleTextColor="@color/white" />
-
-                    <View
+                    <android.support.design.widget.AppBarLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/light_gray" />
+                        android:layout_height="wrap_content"
+                        app:elevation="5dp">
 
-                </android.support.design.widget.AppBarLayout>
+                        <android.support.v7.widget.Toolbar
+                            android:id="@+id/toolbar"
+                            style="@style/Toolbar"
+                            app:subtitleTextColor="@color/white"
+                            app:title="@string/app_name"
+                            app:titleTextAppearance="@style/Toolbar.TitleText"
+                            app:titleTextColor="@color/white" />
 
-                <com.mindorks.placeholderview.SwipePlaceHolderView
-                    android:id="@+id/cardsContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/light_gray" />
 
-            </LinearLayout>
-        </android.support.design.widget.CoordinatorLayout>
+                    </android.support.design.widget.AppBarLayout>
 
-        <android.support.design.widget.NavigationView
-            android:id="@+id/navigationView"
-            style="@style/Widget.Design.NavigationView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="@color/white"
-            app:itemBackground="@color/white"
-            app:itemIconTint="@color/black_effective"
-            app:itemTextColor="@color/black_effective"
-            app:menu="@menu/drawer">
+                    <com.mindorks.placeholderview.SwipePlaceHolderView
+                        android:id="@+id/cardsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
 
-            <TextView
-                android:id="@+id/tvAppVersion"
-                style="@style/TextStyle.Title.Sub"
+                </LinearLayout>
+            </android.support.design.widget.CoordinatorLayout>
+
+            <android.support.design.widget.NavigationView
+                android:id="@+id/navigationView"
+                style="@style/Widget.Design.NavigationView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:text="@{viewModel.appVersion}"
-                android:padding="5dp" />
-        </android.support.design.widget.NavigationView>
-    </android.support.v4.widget.DrawerLayout>
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="@color/white"
+                app:itemBackground="@color/white"
+                app:itemIconTint="@color/black_effective"
+                app:itemTextColor="@color/black_effective"
+                app:menu="@menu/drawer">
+
+                <TextView
+                    android:id="@+id/tvAppVersion"
+                    style="@style/TextStyle.Title.Sub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:padding="5dp"
+                    android:text="@{viewModel.appVersion}" />
+            </android.support.design.widget.NavigationView>
+
+        </android.support.v4.widget.DrawerLayout>
+
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/address_looking_up"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"/>
+
+    </FrameLayout>
 
 </layout>

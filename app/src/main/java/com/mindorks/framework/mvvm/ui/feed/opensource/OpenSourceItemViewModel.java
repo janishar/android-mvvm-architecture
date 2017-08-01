@@ -42,8 +42,4 @@ public class OpenSourceItemViewModel {
     }
 
 
-    public interface OpenSourceItemViewModelListener {
-        void onItemClick(String projectUrl);
-    }
-
 }

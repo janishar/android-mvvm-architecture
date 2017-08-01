@@ -32,10 +32,6 @@ public interface MainNavigator {
 
     void openLoginActivity();
 
-    void showLoading();
-
-    void hideLoading();
-
     void handleError(Throwable throwable);
 
 }
