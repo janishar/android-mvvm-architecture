@@ -18,9 +18,8 @@ package com.mindorks.framework.mvvm.ui.splash;
 
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-
+import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.ActivitySplashBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
@@ -33,10 +32,11 @@ import javax.inject.Inject;
  * Created by amitshekhar on 08/07/17.
  */
 
-public class SplashActivity extends BaseActivity implements SplashNavigator {
+public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> implements SplashNavigator {
 
     @Inject
     SplashViewModel mSplashViewModel;
+
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SplashActivity.class);
@@ -46,15 +46,7 @@ public class SplashActivity extends BaseActivity implements SplashNavigator {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ActivitySplashBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
-
-        getActivityComponent().inject(this);
-
-        binding.setViewModel(mSplashViewModel);
-
         mSplashViewModel.setNavigator(this);
-
         mSplashViewModel.startSeeding();
     }
 
@@ -77,5 +69,26 @@ public class SplashActivity extends BaseActivity implements SplashNavigator {
         startActivity(intent);
         finish();
     }
+    @Override
+    public SplashViewModel getViewModel() {
+        return mSplashViewModel;
+    }
+
+    @Override
+    public int getBindingVariable() {
+        return BR.viewModel;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_splash;
+    }
+
+    @Override
+    public void performDependencyInjection() {
+        getActivityComponent().inject(this);
+
+    }
+
 
 }

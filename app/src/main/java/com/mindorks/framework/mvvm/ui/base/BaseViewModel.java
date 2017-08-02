@@ -16,6 +16,8 @@
 
 package com.mindorks.framework.mvvm.ui.base;
 
+import android.databinding.ObservableBoolean;
+
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
@@ -28,10 +30,10 @@ import io.reactivex.disposables.CompositeDisposable;
 public abstract class BaseViewModel<N> {
 
     private N mNavigator;
-
     private final DataManager mDataManager;
     private final SchedulerProvider mSchedulerProvider;
     private final CompositeDisposable mCompositeDisposable;
+    private final ObservableBoolean mIsLoading = new ObservableBoolean(false);
 
     public BaseViewModel(DataManager dataManager,
                          SchedulerProvider schedulerProvider,
@@ -63,6 +65,14 @@ public abstract class BaseViewModel<N> {
 
     public CompositeDisposable getCompositeDisposable() {
         return mCompositeDisposable;
+    }
+
+    public ObservableBoolean getIsLoading() {
+        return mIsLoading;
+    }
+
+    public void setIsLoading(boolean isLoading) {
+        mIsLoading.set(isLoading);
     }
 
 }

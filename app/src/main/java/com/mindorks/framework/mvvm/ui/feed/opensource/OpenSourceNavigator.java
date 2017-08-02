@@ -30,8 +30,5 @@ public interface OpenSourceNavigator {
 
     void handleError(Throwable throwable);
 
-    void showLoading();
-
-    void hideLoading();
 
 }

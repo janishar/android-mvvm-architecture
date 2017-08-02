@@ -37,6 +37,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 
+import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.BuildConfig;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
@@ -56,12 +57,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity implements MainNavigator {
+public class MainActivity extends BaseActivity<ActivityMainBinding,MainViewModel> implements MainNavigator {
 
     @Inject
     MainViewModel mMainViewModel;
 
-    private ActivityMainBinding mBinding;
 
     private DrawerLayout mDrawer;
 
@@ -70,6 +70,8 @@ public class MainActivity extends BaseActivity implements MainNavigator {
     private NavigationView mNavigationView;
 
     private SwipePlaceHolderView mCardsContainerView;
+    ActivityMainBinding mActivityMainBinding;
+
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -79,15 +81,8 @@ public class MainActivity extends BaseActivity implements MainNavigator {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
-        getActivityComponent().inject(this);
-
-        mBinding.setViewModel(mMainViewModel);
-
+        mActivityMainBinding = getViewDataBinding();
         mMainViewModel.setNavigator(this);
-
         setUp();
     }
 
@@ -144,10 +139,10 @@ public class MainActivity extends BaseActivity implements MainNavigator {
 
     private void setUp() {
 
-        mDrawer = mBinding.drawerView;
-        mToolbar = mBinding.toolbar;
-        mNavigationView = mBinding.navigationView;
-        mCardsContainerView = mBinding.cardsContainer;
+        mDrawer = mActivityMainBinding.drawerView;
+        mToolbar = mActivityMainBinding.toolbar;
+        mNavigationView = mActivityMainBinding.navigationView;
+        mCardsContainerView = mActivityMainBinding.cardsContainer;
 
         setSupportActionBar(mToolbar);
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
@@ -210,12 +205,9 @@ public class MainActivity extends BaseActivity implements MainNavigator {
     }
 
     private void setupNavMenu() {
-
         NavHeaderMainBinding navHeaderMainBinding = DataBindingUtil.inflate(getLayoutInflater(),
-                R.layout.nav_header_main, mBinding.navigationView, false);
-
-        mBinding.navigationView.addHeaderView(navHeaderMainBinding.getRoot());
-
+                R.layout.nav_header_main, mActivityMainBinding.navigationView, false);
+        mActivityMainBinding.navigationView.addHeaderView(navHeaderMainBinding.getRoot());
         navHeaderMainBinding.setViewModel(mMainViewModel);
 
         mNavigationView.setNavigationItemSelectedListener(
@@ -312,4 +304,26 @@ public class MainActivity extends BaseActivity implements MainNavigator {
     public void handleError(Throwable throwable) {
         // handle error
     }
+    @Override
+    public MainViewModel getViewModel() {
+        return mMainViewModel;
+    }
+
+    @Override
+    public int getBindingVariable() {
+        return BR.viewModel;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void performDependencyInjection() {
+        getActivityComponent().inject(this);
+
+    }
+
+
 }

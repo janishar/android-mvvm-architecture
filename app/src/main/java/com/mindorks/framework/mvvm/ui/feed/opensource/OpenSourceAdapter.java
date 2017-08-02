@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
@@ -28,6 +29,7 @@ import com.mindorks.framework.mvvm.databinding.ItemOpenSourceViewBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseViewHolder;
 import com.mindorks.framework.mvvm.utils.AppLogger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,11 +41,11 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     public static final int VIEW_TYPE_EMPTY = 0;
     public static final int VIEW_TYPE_NORMAL = 1;
 
-    private List<OpenSourceResponse.Repo> mOpenSourceResponseList;
+    private List<OpenSourceItemViewModel> mOpenSourceResponseList;
     private OpenSourceAdapterListener mListener;
 
-    public OpenSourceAdapter(List<OpenSourceResponse.Repo> openSourceResponseList) {
-        this.mOpenSourceResponseList = openSourceResponseList;
+    public OpenSourceAdapter() {
+        this.mOpenSourceResponseList = new ArrayList<>();
     }
 
     public void setListener(OpenSourceAdapterListener listener) {
@@ -89,16 +91,15 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
     }
 
-    public void addItems(List<OpenSourceResponse.Repo> repoList) {
+    public void addItems(List<OpenSourceItemViewModel> repoList) {
         mOpenSourceResponseList.addAll(repoList);
         notifyDataSetChanged();
     }
 
-    public class OpenSourceViewHolder extends BaseViewHolder implements OpenSourceItemViewModel.OpenSourceItemViewModelListener {
+    public class OpenSourceViewHolder extends BaseViewHolder implements View.OnClickListener {
 
         private ItemOpenSourceViewBinding mBinding;
 
-        private OpenSourceItemViewModel mOpenSourceItemViewModel;
 
         public OpenSourceViewHolder(ItemOpenSourceViewBinding binding) {
             super(binding.getRoot());
@@ -107,10 +108,7 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-            final OpenSourceResponse.Repo repo = mOpenSourceResponseList.get(position);
-
-            mOpenSourceItemViewModel = new OpenSourceItemViewModel(repo, this);
-
+            final OpenSourceItemViewModel mOpenSourceItemViewModel = mOpenSourceResponseList.get(position);
             mBinding.setViewModel(mOpenSourceItemViewModel);
 
             // Immediate Binding
@@ -120,14 +118,15 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             mBinding.executePendingBindings();
         }
 
+
         @Override
-        public void onItemClick(String projectUrl) {
-            if (projectUrl != null) {
+        public void onClick(View view) {
+            if (mOpenSourceResponseList.get(0).projectUrl.get() != null) {
                 try {
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_VIEW);
                     intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                    intent.setData(Uri.parse(projectUrl));
+                    intent.setData(Uri.parse(mOpenSourceResponseList.get(0).projectUrl.get()));
                     itemView.getContext().startActivity(intent);
                 } catch (Exception e) {
                     AppLogger.d("url error");

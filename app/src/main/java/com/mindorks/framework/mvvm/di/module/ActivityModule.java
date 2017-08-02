@@ -27,6 +27,7 @@ import com.mindorks.framework.mvvm.di.ActivityContext;
 import com.mindorks.framework.mvvm.di.PerActivity;
 import com.mindorks.framework.mvvm.ui.about.AboutViewModel;
 import com.mindorks.framework.mvvm.ui.feed.FeedPagerAdapter;
+import com.mindorks.framework.mvvm.ui.feed.FeedViewModel;
 import com.mindorks.framework.mvvm.ui.feed.blogs.BlogAdapter;
 import com.mindorks.framework.mvvm.ui.feed.blogs.BlogViewModel;
 import com.mindorks.framework.mvvm.ui.feed.opensource.OpenSourceAdapter;
@@ -141,12 +142,19 @@ public class ActivityModule {
 
     @Provides
     OpenSourceAdapter provideOpenSourceAdapter() {
-        return new OpenSourceAdapter(new ArrayList<OpenSourceResponse.Repo>());
+        return new OpenSourceAdapter();
     }
 
     @Provides
     LinearLayoutManager provideLinearLayoutManager(AppCompatActivity activity) {
         return new LinearLayoutManager(activity);
+    }
+    @Provides
+    @PerActivity
+    FeedViewModel provideFeedViewModel(DataManager dataManager,
+                                           SchedulerProvider schedulerProvider,
+                                           CompositeDisposable compositeDisposable) {
+        return new FeedViewModel(dataManager, schedulerProvider, compositeDisposable);
     }
 
 }

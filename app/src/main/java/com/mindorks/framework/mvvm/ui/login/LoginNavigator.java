@@ -24,10 +24,6 @@ public interface LoginNavigator {
 
     void openMainActivity();
 
-    void showLoading();
-
-    void hideLoading();
-
     void handleError(Throwable throwable);
 
     void login();

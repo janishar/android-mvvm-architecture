@@ -43,7 +43,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
     }
 
     public void onGoogleLoginClick() {
-        getNavigator().showLoading();
+        setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
                 .doGoogleLoginApiCall(new LoginRequest.GoogleLoginRequest("test1", "test1"))
                 .subscribeOn(getSchedulerProvider().io())
@@ -58,20 +58,20 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                                 response.getUserName(),
                                 response.getUserEmail(),
                                 response.getGoogleProfilePicUrl());
-                        getNavigator().hideLoading();
+                        setIsLoading(false);
                         getNavigator().openMainActivity();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        getNavigator().hideLoading();
+                        setIsLoading(false);
                         getNavigator().handleError(throwable);
                     }
                 }));
     }
 
     public void onFbLoginClick() {
-        getNavigator().showLoading();
+        setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
                 .doFacebookLoginApiCall(new LoginRequest.FacebookLoginRequest("test3", "test4"))
                 .subscribeOn(getSchedulerProvider().io())
@@ -86,20 +86,20 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                                 response.getUserName(),
                                 response.getUserEmail(),
                                 response.getGoogleProfilePicUrl());
-                        getNavigator().hideLoading();
+                        setIsLoading(false);
                         getNavigator().openMainActivity();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        getNavigator().hideLoading();
+                        setIsLoading(false);
                         getNavigator().handleError(throwable);
                     }
                 }));
     }
 
     public void login(String email, String password) {
-        getNavigator().showLoading();
+        setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
                 .doServerLoginApiCall(new LoginRequest.ServerLoginRequest(email, password))
                 .subscribeOn(getSchedulerProvider().io())
@@ -114,13 +114,13 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                                 response.getUserName(),
                                 response.getUserEmail(),
                                 response.getGoogleProfilePicUrl());
-                        getNavigator().hideLoading();
+                        setIsLoading(false);
                         getNavigator().openMainActivity();
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        getNavigator().hideLoading();
+                        setIsLoading(false);
                         getNavigator().handleError(throwable);
                     }
                 }));

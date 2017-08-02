@@ -20,33 +20,26 @@ import android.databinding.ObservableField;
 
 import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
 
+import io.reactivex.Single;
+
 /**
  * Created by amitshekhar on 10/07/17.
  */
 
 public class OpenSourceItemViewModel {
 
-    private OpenSourceResponse.Repo mRepo;
     public ObservableField<String> imageUrl;
     public ObservableField<String> title;
     public ObservableField<String> content;
+    public ObservableField<String> projectUrl;
 
-    public OpenSourceItemViewModelListener mListener;
 
-    public OpenSourceItemViewModel(OpenSourceResponse.Repo repo, OpenSourceItemViewModelListener listener) {
-        this.mRepo = repo;
-        this.mListener = listener;
-        imageUrl = new ObservableField<>(repo.getCoverImgUrl());
-        title = new ObservableField<>(mRepo.getTitle());
-        content = new ObservableField<>(mRepo.getDescription());
+    public OpenSourceItemViewModel(String imageUrl, String title, String content, String projectUrl) {
+        this.imageUrl.set(imageUrl);
+        this.title.set(title);
+        this.content.set(content);
+        this.projectUrl.set(projectUrl);
     }
 
-    public void onItemClick() {
-        mListener.onItemClick(mRepo.getProjectUrl());
-    }
-
-    public interface OpenSourceItemViewModelListener {
-        void onItemClick(String projectUrl);
-    }
 
 }

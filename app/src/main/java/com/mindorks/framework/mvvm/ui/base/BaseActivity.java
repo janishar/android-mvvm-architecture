@@ -20,8 +20,12 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -41,19 +45,38 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by amitshekhar on 07/07/17.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements BaseFragment.Callback {
+public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseViewModel> extends AppCompatActivity implements BaseFragment.Callback {
 
     private ActivityComponent mActivityComponent;
-
+    // TODO
+    // this can probably depend on isLoading variable of BaseViewModel,
+    // since its going to be common for all the activities
     private ProgressDialog mProgressDialog;
+
+    private T mViewDataBinding;
+    private V mViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initializeActivityComponent();
+        performDependencyInjection();
+        performDataBinding();
+    }
+
+    private void initializeActivityComponent() {
         mActivityComponent = DaggerActivityComponent.builder()
                 .activityModule(new ActivityModule(this))
                 .applicationComponent(((MvvmApp) getApplication()).getComponent())
                 .build();
+    }
+
+
+    private void performDataBinding() {
+        mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
+        this.mViewModel = mViewModel == null ? getViewModel() : mViewModel;
+        mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
+        mViewDataBinding.executePendingBindings();
     }
 
     public ActivityComponent getActivityComponent() {
@@ -121,6 +144,36 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseFrag
             mProgressDialog.cancel();
         }
     }
+
+    public T getViewDataBinding() {
+        return mViewDataBinding;
+    }
+
+    /**
+     * Override for set view model
+     *
+     * @return view model instance
+     */
+    public abstract V getViewModel();
+
+    /**
+     * Override for set binding variable
+     *
+     * @return variable id
+     */
+    public abstract
+    @IdRes
+    int getBindingVariable();
+
+    /**
+     * @return layout resource id
+     */
+    public abstract
+    @LayoutRes
+    int getLayoutId();
+
+    public abstract void performDependencyInjection();
+
 
 }
 

@@ -38,7 +38,7 @@ public class BlogViewModel extends BaseViewModel<BlogNavigator> {
     }
 
     public void fetchBlogs() {
-        getNavigator().showLoading();
+        setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
                 .getBlogApiCall()
                 .subscribeOn(getSchedulerProvider().io())
@@ -50,13 +50,13 @@ public class BlogViewModel extends BaseViewModel<BlogNavigator> {
                         if (blogResponse != null && blogResponse.getData() != null) {
                             getNavigator().updateBlog(blogResponse.getData());
                         }
-                        getNavigator().hideLoading();
+                        setIsLoading(false);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable)
                             throws Exception {
-                        getNavigator().hideLoading();
+                        setIsLoading(false);
                         getNavigator().handleError(throwable);
                     }
                 }));

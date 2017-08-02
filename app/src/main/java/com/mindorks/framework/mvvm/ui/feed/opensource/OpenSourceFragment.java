@@ -16,15 +16,14 @@
 
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
-import android.databinding.DataBindingUtil;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
 import com.mindorks.framework.mvvm.databinding.FragmentOpenSourceBinding;
@@ -39,7 +38,7 @@ import javax.inject.Inject;
  * Created by amitshekhar on 10/07/17.
  */
 
-public class OpenSourceFragment extends BaseFragment implements OpenSourceNavigator, OpenSourceAdapter.OpenSourceAdapterListener {
+public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, OpenSourceViewModel> implements OpenSourceNavigator, OpenSourceAdapter.OpenSourceAdapterListener {
 
     @Inject
     OpenSourceViewModel mOpenSourceViewModel;
@@ -49,8 +48,7 @@ public class OpenSourceFragment extends BaseFragment implements OpenSourceNaviga
 
     @Inject
     LinearLayoutManager mLayoutManager;
-
-    private FragmentOpenSourceBinding mBinding;
+    FragmentOpenSourceBinding mFragmentOpenSourceBinding;
 
     public static OpenSourceFragment newInstance() {
         Bundle args = new Bundle();
@@ -59,41 +57,42 @@ public class OpenSourceFragment extends BaseFragment implements OpenSourceNaviga
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-
-        mBinding = DataBindingUtil.inflate(
-                inflater, R.layout.fragment_open_source, container, false);
-        View view = mBinding.getRoot();
-
-        ActivityComponent component = getActivityComponent();
-        if (component != null) {
-            component.inject(this);
-        }
-
-        mBinding.setViewModel(mOpenSourceViewModel);
-
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        performDependencyInjection();
         mOpenSourceViewModel.setNavigator(this);
-
         mOpenSourceAdapter.setListener(this);
-
-        return view;
-
     }
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mFragmentOpenSourceBinding = getViewDataBinding();
         setUp();
+    }
+
+    @Override
+    public OpenSourceViewModel getViewModel() {
+        return mOpenSourceViewModel;
+    }
+
+    @Override
+    public int getBindingVariable() {
+        return BR.viewModel;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_open_source;
     }
 
     private void setUp() {
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mBinding.openSourceRecyclerView.setLayoutManager(mLayoutManager);
-        mBinding.openSourceRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mBinding.openSourceRecyclerView.setAdapter(mOpenSourceAdapter);
+        mFragmentOpenSourceBinding.openSourceRecyclerView.setLayoutManager(mLayoutManager);
+        mFragmentOpenSourceBinding.openSourceRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mFragmentOpenSourceBinding.openSourceRecyclerView.setAdapter(mOpenSourceAdapter);
 
         mOpenSourceViewModel.fetchRepos();
     }
@@ -106,7 +105,8 @@ public class OpenSourceFragment extends BaseFragment implements OpenSourceNaviga
 
     @Override
     public void updateRepo(List<OpenSourceResponse.Repo> repoList) {
-        mOpenSourceAdapter.addItems(repoList);
+        mOpenSourceViewModel.populateViewModel(repoList);
+        mOpenSourceAdapter.addItems(mOpenSourceViewModel.openSourceItemViewModels);
     }
 
     @Override
@@ -117,5 +117,12 @@ public class OpenSourceFragment extends BaseFragment implements OpenSourceNaviga
     @Override
     public void onRetryClick() {
         mOpenSourceViewModel.fetchRepos();
+    }
+
+    private void performDependencyInjection() {
+        ActivityComponent component = getActivityComponent();
+        if (getActivityComponent() != null) {
+            component.inject(this);
+        }
     }
 }
