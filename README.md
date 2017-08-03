@@ -2,6 +2,22 @@
 [![Mindorks](https://img.shields.io/badge/mindorks-opensource-blue.svg)](https://mindorks.com/open-source-projects)
 [![Mindorks Community](https://img.shields.io/badge/join-community-blue.svg)](https://mindorks.com/join-community)
 
+This repository contains a detailed sample app that implements MVP architecture using Dagger2, Room, RxJava, FastAndroidNetworking, PlaceHolderView and AndroidDebugDatabase
+<p align="center">
+  <img src="https://janishar.github.io/images/mvp-app-pics/mvp-login.png" width="250">
+  <img src="https://janishar.github.io/images/mvp-app-pics/main-view.png" width="250">
+  <img src="https://janishar.github.io/gifs/mvp-app.gif" width="250">
+</p>
+<br>
+<p align="center">
+  <img src="https://janishar.github.io/images/mvp-app-pics/mvp-drawer.png" width="200">
+  <img src="https://janishar.github.io/images/mvp-app-pics/mvp-rating.png" width="200">
+  <img src="https://janishar.github.io/images/mvp-app-pics/mvp-feed.png" width="200">
+  <img src="https://janishar.github.io/images/mvp-app-pics/mvp-empty-state.png" width="200">
+</p>
+<br>
+<br>
+
 #### The app has following packages:
 1. **data**: It contains all the data accessing and manipulating components.
 2. **di**: Dependency providing classes using Dagger2.
