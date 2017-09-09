@@ -99,7 +99,6 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
 
     @Override
     public void onDestroyView() {
-        mOpenSourceViewModel.onDestroy();
         super.onDestroyView();
     }
 

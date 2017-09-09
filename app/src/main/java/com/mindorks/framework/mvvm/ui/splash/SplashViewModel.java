@@ -32,9 +32,8 @@ import io.reactivex.functions.Function;
 public class SplashViewModel extends BaseViewModel<SplashNavigator> {
 
     public SplashViewModel(DataManager dataManager,
-                           SchedulerProvider schedulerProvider,
-                           CompositeDisposable compositeDisposable) {
-        super(dataManager, schedulerProvider, compositeDisposable);
+                           SchedulerProvider schedulerProvider) {
+        super(dataManager, schedulerProvider);
     }
 
 

@@ -75,7 +75,6 @@ public class RateUsDialog extends BaseDialog implements RateUsCallback {
 
     @Override
     public void onDestroyView() {
-        mRateUsViewModel.onDestroy();
         super.onDestroyView();
     }
 
