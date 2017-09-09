@@ -29,6 +29,7 @@ public class QuestionCardData {
 
     public Question question;
     public List<Option> options;
+    public boolean mShowCorrectOptions;
 
     public QuestionCardData(Question question, List<Option> options) {
         this.question = question;

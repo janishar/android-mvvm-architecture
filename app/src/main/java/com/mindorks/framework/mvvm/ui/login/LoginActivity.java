@@ -55,7 +55,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mLoginViewModel.onDestroy();
     }
 
     @Override

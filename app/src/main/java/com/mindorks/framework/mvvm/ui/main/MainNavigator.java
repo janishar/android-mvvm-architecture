@@ -26,10 +26,6 @@ import java.util.List;
 
 public interface MainNavigator {
 
-    void refreshQuestionnaire(List<QuestionCardData> questionList);
-
-    void reloadQuestionnaire(List<QuestionCardData> questionList);
-
     void openLoginActivity();
 
     void handleError(Throwable throwable);

@@ -74,7 +74,6 @@ public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewM
 
     @Override
     public void onDestroyView() {
-        mAboutViewModel.onDestroy();
         super.onDestroyView();
     }
     private void performDependencyInjection(){

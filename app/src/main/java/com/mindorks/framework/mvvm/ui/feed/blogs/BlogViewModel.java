@@ -32,9 +32,8 @@ import io.reactivex.functions.Consumer;
 public class BlogViewModel extends BaseViewModel<BlogNavigator> {
 
     public BlogViewModel(DataManager dataManager,
-                         SchedulerProvider schedulerProvider,
-                         CompositeDisposable compositeDisposable) {
-        super(dataManager, schedulerProvider, compositeDisposable);
+                         SchedulerProvider schedulerProvider) {
+        super(dataManager, schedulerProvider);
     }
 
     public void fetchBlogs() {

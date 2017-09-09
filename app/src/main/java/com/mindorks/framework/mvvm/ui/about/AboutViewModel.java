@@ -29,9 +29,8 @@ import io.reactivex.disposables.CompositeDisposable;
 public class AboutViewModel extends BaseViewModel<AboutNavigator> {
 
     public AboutViewModel(DataManager dataManager,
-                          SchedulerProvider schedulerProvider,
-                          CompositeDisposable compositeDisposable) {
-        super(dataManager, schedulerProvider, compositeDisposable);
+                          SchedulerProvider schedulerProvider) {
+        super(dataManager, schedulerProvider);
     }
 
     public void onNavBackClick() {
