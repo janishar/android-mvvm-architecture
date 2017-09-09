@@ -53,7 +53,6 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mSplashViewModel.onDestroy();
     }
 
     @Override

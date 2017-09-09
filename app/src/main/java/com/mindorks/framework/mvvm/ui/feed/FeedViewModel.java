@@ -11,7 +11,7 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 
 public class FeedViewModel extends BaseViewModel {
-    public FeedViewModel(DataManager dataManager, SchedulerProvider schedulerProvider, CompositeDisposable compositeDisposable) {
-        super(dataManager, schedulerProvider, compositeDisposable);
+    public FeedViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+        super(dataManager, schedulerProvider);
     }
 }

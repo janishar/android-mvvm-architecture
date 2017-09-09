@@ -45,8 +45,7 @@
 
         <activity
             android:name=".ui.main.MainActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name="com.mindorks.framework.mvvm.ui.feed.FeedActivity"

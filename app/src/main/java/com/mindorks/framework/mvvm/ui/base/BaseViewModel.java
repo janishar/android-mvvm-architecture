@@ -16,6 +16,7 @@
 
 package com.mindorks.framework.mvvm.ui.base;
 
+import android.arch.lifecycle.ViewModel;
 import android.databinding.ObservableBoolean;
 
 import com.mindorks.framework.mvvm.data.DataManager;
@@ -27,29 +28,34 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by amitshekhar on 07/07/17.
  */
 
-public abstract class BaseViewModel<N> {
+public abstract class BaseViewModel<N> extends ViewModel {
 
     private N mNavigator;
     private final DataManager mDataManager;
     private final SchedulerProvider mSchedulerProvider;
-    private final CompositeDisposable mCompositeDisposable;
     private final ObservableBoolean mIsLoading = new ObservableBoolean(false);
 
+    private CompositeDisposable mCompositeDisposable;
+
     public BaseViewModel(DataManager dataManager,
-                         SchedulerProvider schedulerProvider,
-                         CompositeDisposable compositeDisposable) {
+                         SchedulerProvider schedulerProvider) {
         this.mDataManager = dataManager;
         this.mSchedulerProvider = schedulerProvider;
-        this.mCompositeDisposable = compositeDisposable;
     }
+
 
     public void setNavigator(N navigator) {
         this.mNavigator = navigator;
     }
 
-    public void onDestroy() {
+    public void onViewCreated() {
+        this.mCompositeDisposable = new CompositeDisposable();
+    }
+
+    public void onDestroyView() {
         mCompositeDisposable.dispose();
     }
+
 
     public N getNavigator() {
         return mNavigator;

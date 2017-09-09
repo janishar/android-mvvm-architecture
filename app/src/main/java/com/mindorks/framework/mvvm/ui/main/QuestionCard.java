@@ -57,6 +57,7 @@ public class QuestionCard {
 
     private QuestionCardData mQuestionCardData;
 
+
     public QuestionCard(QuestionCardData questionCardData) {
         mQuestionCardData = questionCardData;
     }
@@ -65,6 +66,9 @@ public class QuestionCard {
     private void onResolved() {
 
         mQuestionTextView.setText(mQuestionCardData.question.questionText);
+        if (mQuestionCardData.mShowCorrectOptions) {
+            showCorrectOptions();
+        }
 
         for (int i = 0; i < 3; i++) {
             Button button = null;
@@ -90,6 +94,7 @@ public class QuestionCard {
     }
 
     private void showCorrectOptions() {
+        mQuestionCardData.mShowCorrectOptions = true;
         for (int i = 0; i < 3; i++) {
             Option option = mQuestionCardData.options.get(i);
             Button button = null;
