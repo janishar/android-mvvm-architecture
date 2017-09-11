@@ -41,9 +41,8 @@ public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
 
 
     public OpenSourceViewModel(DataManager dataManager,
-                               SchedulerProvider schedulerProvider,
-                               CompositeDisposable compositeDisposable) {
-        super(dataManager, schedulerProvider, compositeDisposable);
+                               SchedulerProvider schedulerProvider) {
+        super(dataManager, schedulerProvider);
     }
 
     public void fetchRepos() {

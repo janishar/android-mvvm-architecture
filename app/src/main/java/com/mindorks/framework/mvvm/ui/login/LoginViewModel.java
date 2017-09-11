@@ -33,9 +33,8 @@ import io.reactivex.functions.Consumer;
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
     public LoginViewModel(DataManager dataManager,
-                          SchedulerProvider schedulerProvider,
-                          CompositeDisposable compositeDisposable) {
-        super(dataManager, schedulerProvider, compositeDisposable);
+                          SchedulerProvider schedulerProvider) {
+        super(dataManager, schedulerProvider);
     }
 
     public void onServerLoginClick() {

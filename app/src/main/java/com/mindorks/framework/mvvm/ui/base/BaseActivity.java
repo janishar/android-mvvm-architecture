@@ -62,6 +62,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         initializeActivityComponent();
         performDependencyInjection();
         performDataBinding();
+        mViewModel.onViewCreated();
     }
 
     private void initializeActivityComponent() {
@@ -103,6 +104,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     @Override
     protected void onDestroy() {
+        mViewModel.onDestroyView();
         super.onDestroy();
     }
 

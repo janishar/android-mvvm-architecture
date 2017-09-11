@@ -16,13 +16,14 @@
 
 package com.mindorks.framework.mvvm.di.module;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
-import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
 import com.mindorks.framework.mvvm.di.ActivityContext;
 import com.mindorks.framework.mvvm.di.PerActivity;
 import com.mindorks.framework.mvvm.ui.about.AboutViewModel;
@@ -69,11 +70,6 @@ public class ActivityModule {
     }
 
     @Provides
-    CompositeDisposable provideCompositeDisposable() {
-        return new CompositeDisposable();
-    }
-
-    @Provides
     SchedulerProvider provideSchedulerProvider() {
         return new AppSchedulerProvider();
     }
@@ -81,53 +77,52 @@ public class ActivityModule {
     @Provides
     @PerActivity
     SplashViewModel provideSplashViewModel(DataManager dataManager,
-                                           SchedulerProvider schedulerProvider,
-                                           CompositeDisposable compositeDisposable) {
-        return new SplashViewModel(dataManager, schedulerProvider, compositeDisposable);
+                                           SchedulerProvider schedulerProvider) {
+        return new SplashViewModel(dataManager, schedulerProvider);
     }
 
     @Provides
     @PerActivity
     LoginViewModel provideLoginViewModel(DataManager dataManager,
-                                         SchedulerProvider schedulerProvider,
-                                         CompositeDisposable compositeDisposable) {
-        return new LoginViewModel(dataManager, schedulerProvider, compositeDisposable);
+                                         SchedulerProvider schedulerProvider) {
+        return new LoginViewModel(dataManager, schedulerProvider);
     }
 
     @Provides
     @PerActivity
     MainViewModel provideMainViewModel(DataManager dataManager,
-                                       SchedulerProvider schedulerProvider,
-                                       CompositeDisposable compositeDisposable) {
-        return new MainViewModel(dataManager, schedulerProvider, compositeDisposable);
+                                       SchedulerProvider schedulerProvider) {
+        return new MainViewModel(dataManager, schedulerProvider);
+    }
+
+    @Provides
+    @PerActivity
+    ViewModelProvider.Factory mainViewModelProvider(MainViewModel mainViewModel) {
+        return new ViewModelProviderFactory<MainViewModel>(mainViewModel);
     }
 
     @Provides
     AboutViewModel provideAboutViewModel(DataManager dataManager,
-                                         SchedulerProvider schedulerProvider,
-                                         CompositeDisposable compositeDisposable) {
-        return new AboutViewModel(dataManager, schedulerProvider, compositeDisposable);
+                                         SchedulerProvider schedulerProvider) {
+        return new AboutViewModel(dataManager, schedulerProvider);
     }
 
     @Provides
     RateUsViewModel provideRateUsViewModel(DataManager dataManager,
-                                           SchedulerProvider schedulerProvider,
-                                           CompositeDisposable compositeDisposable) {
-        return new RateUsViewModel(dataManager, schedulerProvider, compositeDisposable);
+                                           SchedulerProvider schedulerProvider) {
+        return new RateUsViewModel(dataManager, schedulerProvider);
     }
 
     @Provides
     BlogViewModel provideBlogViewModel(DataManager dataManager,
-                                       SchedulerProvider schedulerProvider,
-                                       CompositeDisposable compositeDisposable) {
-        return new BlogViewModel(dataManager, schedulerProvider, compositeDisposable);
+                                       SchedulerProvider schedulerProvider) {
+        return new BlogViewModel(dataManager, schedulerProvider);
     }
 
     @Provides
     OpenSourceViewModel provideOpenSourceViewModel(DataManager dataManager,
-                                                   SchedulerProvider schedulerProvider,
-                                                   CompositeDisposable compositeDisposable) {
-        return new OpenSourceViewModel(dataManager, schedulerProvider, compositeDisposable);
+                                                   SchedulerProvider schedulerProvider) {
+        return new OpenSourceViewModel(dataManager, schedulerProvider);
     }
 
     @Provides
@@ -152,9 +147,8 @@ public class ActivityModule {
     @Provides
     @PerActivity
     FeedViewModel provideFeedViewModel(DataManager dataManager,
-                                           SchedulerProvider schedulerProvider,
-                                           CompositeDisposable compositeDisposable) {
-        return new FeedViewModel(dataManager, schedulerProvider, compositeDisposable);
+                                           SchedulerProvider schedulerProvider) {
+        return new FeedViewModel(dataManager, schedulerProvider);
     }
 
 }

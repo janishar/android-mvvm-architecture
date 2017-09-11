@@ -75,7 +75,9 @@
                     <com.mindorks.placeholderview.SwipePlaceHolderView
                         android:id="@+id/cardsContainer"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        app:adapter="@{viewModel.questionDataList}"
+                        app:action="@{viewModel.mAction}"/>
 
                 </LinearLayout>
             </android.support.design.widget.CoordinatorLayout>

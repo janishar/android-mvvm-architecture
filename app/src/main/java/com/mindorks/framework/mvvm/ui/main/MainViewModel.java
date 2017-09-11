@@ -16,6 +16,7 @@
 
 package com.mindorks.framework.mvvm.ui.main;
 
+import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 
 import com.mindorks.framework.mvvm.data.DataManager;
@@ -24,6 +25,7 @@ import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -39,11 +41,15 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
     public final ObservableField<String> userName = new ObservableField<>();
     public final ObservableField<String> userEmail = new ObservableField<>();
     public final ObservableField<String> userProfilePicUrl = new ObservableField<>();
+    public ObservableArrayList<QuestionCardData> questionDataList = new ObservableArrayList<>();
+
+    public int mAction = NO_ACTION;
+    public static final int NO_ACTION = -1, ACTION_ADD_ALL = 0, ACTION_DELETE_SINGLE = 1;
+
 
     public MainViewModel(DataManager dataManager,
-                         SchedulerProvider schedulerProvider,
-                         CompositeDisposable compositeDisposable) {
-        super(dataManager, schedulerProvider, compositeDisposable);
+                         SchedulerProvider schedulerProvider) {
+        super(dataManager, schedulerProvider);
     }
 
     public void updateAppVersion(String version) {
@@ -69,18 +75,26 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
     }
 
     public void onViewInitialized() {
-        getCompositeDisposable().add(getDataManager()
-                .getQuestionCardData()
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<List<QuestionCardData>>() {
-                    @Override
-                    public void accept(List<QuestionCardData> questionList) throws Exception {
-                        if (questionList != null) {
-                            getNavigator().refreshQuestionnaire(questionList);
+        if (mAction == NO_ACTION) {
+            getCompositeDisposable().add(getDataManager()
+                    .getQuestionCardData()
+                    .subscribeOn(getSchedulerProvider().io())
+                    .observeOn(getSchedulerProvider().ui())
+                    .subscribe(new Consumer<List<QuestionCardData>>() {
+                        @Override
+                        public void accept(List<QuestionCardData> questionList) throws Exception {
+                            if (questionList != null) {
+                                mAction = ACTION_ADD_ALL;
+                                questionDataList.addAll(questionList);
+                            }
                         }
-                    }
-                }));
+                    }));
+        } else {
+            ArrayList<QuestionCardData> arrayList = (ArrayList<QuestionCardData>)questionDataList.clone();
+            questionDataList.clear();
+            mAction = ACTION_ADD_ALL;
+            questionDataList.addAll(arrayList);
+        }
     }
 
     public void onCardExhausted() {
@@ -92,7 +106,9 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
                     @Override
                     public void accept(List<QuestionCardData> questionList) throws Exception {
                         if (questionList != null) {
-                            getNavigator().reloadQuestionnaire(questionList);
+                            mAction = ACTION_ADD_ALL;
+                            questionDataList.clear();
+                            questionDataList.addAll(questionList);
                         }
                     }
                 }));
@@ -119,4 +135,8 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
                 }));
     }
 
+    public void removeQuestionCard() {
+        mAction = ACTION_DELETE_SINGLE;
+        questionDataList.remove(0);
+    }
 }

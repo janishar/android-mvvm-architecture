@@ -59,6 +59,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         mViewModel = getViewModel();
         mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
         mViewDataBinding.executePendingBindings();
+        mViewModel.onViewCreated();
     }
 
     @Override
@@ -92,9 +93,11 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         return mViewDataBinding;
     }
 
+
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        mViewModel.onDestroyView();
+        super.onDestroyView();
     }
 
     public boolean isNetworkConnected() {

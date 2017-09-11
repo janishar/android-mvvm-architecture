@@ -16,8 +16,11 @@
 
 package com.mindorks.framework.mvvm.ui.main;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
@@ -49,19 +52,23 @@ import com.mindorks.framework.mvvm.ui.feed.FeedActivity;
 import com.mindorks.framework.mvvm.ui.login.LoginActivity;
 import com.mindorks.framework.mvvm.ui.main.rating.RateUsDialog;
 import com.mindorks.framework.mvvm.utils.ScreenUtils;
+import com.mindorks.framework.mvvm.utils.ViewAnimationUtils;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.mindorks.placeholderview.listeners.ItemRemovedListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding,MainViewModel> implements MainNavigator {
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator {
+
 
     @Inject
-    MainViewModel mMainViewModel;
+    ViewModelProvider.Factory mViewModelFactory;
 
+    private MainViewModel mMainViewModel;
 
     private DrawerLayout mDrawer;
 
@@ -100,7 +107,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding,MainViewModel
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mMainViewModel.onDestroy();
     }
 
     @Override
@@ -199,6 +205,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding,MainViewModel
                             mMainViewModel.onCardExhausted();
                         }
                     }, 800);
+                } else {
+                    mMainViewModel.removeQuestionCard();
                 }
             }
         });
@@ -235,30 +243,26 @@ public class MainActivity extends BaseActivity<ActivityMainBinding,MainViewModel
                 });
     }
 
-    @Override
-    public void refreshQuestionnaire(List<QuestionCardData> questionList) {
-        for (QuestionCardData question : questionList) {
-            if (question != null
-                    && question.options != null
-                    && question.options.size() == 3) {
-                mCardsContainerView.addView(new QuestionCard(question));
+
+    @BindingAdapter({"adapter", "action"})
+    public static void setAdapter(SwipePlaceHolderView mCardsContainerView, ArrayList<QuestionCardData> mQuestionList, int mAction) {
+        if (mAction == MainViewModel.ACTION_ADD_ALL) {
+            if (mQuestionList != null) {
+                mCardsContainerView.removeAllViews();
+                for (QuestionCardData question : mQuestionList) {
+                    if (question != null
+                            && question.options != null
+                            && question.options.size() == 3) {
+                        mCardsContainerView.addView(new QuestionCard(question));
+                    }
+                }
+                ViewAnimationUtils.scaleAnimateView(mCardsContainerView);
             }
         }
+
+
     }
 
-    @Override
-    public void reloadQuestionnaire(List<QuestionCardData> questionList) {
-        refreshQuestionnaire(questionList);
-        ScaleAnimation animation =
-                new ScaleAnimation(
-                        1.15f, 1, 1.15f, 1,
-                        Animation.RELATIVE_TO_SELF, 0.5f,
-                        Animation.RELATIVE_TO_SELF, 0.5f);
-
-        mCardsContainerView.setAnimation(animation);
-        animation.setDuration(100);
-        animation.start();
-    }
 
     public void onFragmentDetached(String tag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -304,8 +308,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding,MainViewModel
     public void handleError(Throwable throwable) {
         // handle error
     }
+
     @Override
     public MainViewModel getViewModel() {
+        mMainViewModel = ViewModelProviders.of(this, mViewModelFactory).get(MainViewModel.class);
         return mMainViewModel;
     }
 
@@ -322,7 +328,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding,MainViewModel
     @Override
     public void performDependencyInjection() {
         getActivityComponent().inject(this);
-
     }
 
 

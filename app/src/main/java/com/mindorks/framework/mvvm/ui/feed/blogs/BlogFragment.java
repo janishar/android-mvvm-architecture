@@ -98,7 +98,6 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
 
     @Override
     public void onDestroyView() {
-        mBlogViewModel.onDestroy();
         super.onDestroyView();
     }
 
