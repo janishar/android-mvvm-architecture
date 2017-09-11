@@ -80,6 +80,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             Toast.makeText(this, getString(R.string.invalid_email_password), Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     public LoginViewModel getViewModel() {
         return mLoginViewModel;

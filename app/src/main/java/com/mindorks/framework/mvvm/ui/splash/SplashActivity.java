@@ -19,6 +19,7 @@ package com.mindorks.framework.mvvm.ui.splash;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.ActivitySplashBinding;
@@ -36,7 +37,6 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
     @Inject
     SplashViewModel mSplashViewModel;
-
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, SplashActivity.class);
@@ -68,6 +68,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         startActivity(intent);
         finish();
     }
+
     @Override
     public SplashViewModel getViewModel() {
         return mSplashViewModel;
@@ -88,6 +89,5 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         getActivityComponent().inject(this);
 
     }
-
 
 }

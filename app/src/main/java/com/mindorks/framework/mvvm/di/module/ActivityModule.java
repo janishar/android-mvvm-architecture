@@ -44,7 +44,6 @@ import java.util.ArrayList;
 
 import dagger.Module;
 import dagger.Provides;
-import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by amitshekhar on 07/07/17.
@@ -98,7 +97,7 @@ public class ActivityModule {
     @Provides
     @PerActivity
     ViewModelProvider.Factory mainViewModelProvider(MainViewModel mainViewModel) {
-        return new ViewModelProviderFactory<MainViewModel>(mainViewModel);
+        return new ViewModelProviderFactory<>(mainViewModel);
     }
 
     @Provides
@@ -144,10 +143,11 @@ public class ActivityModule {
     LinearLayoutManager provideLinearLayoutManager(AppCompatActivity activity) {
         return new LinearLayoutManager(activity);
     }
+
     @Provides
     @PerActivity
     FeedViewModel provideFeedViewModel(DataManager dataManager,
-                                           SchedulerProvider schedulerProvider) {
+                                       SchedulerProvider schedulerProvider) {
         return new FeedViewModel(dataManager, schedulerProvider);
     }
 

@@ -28,7 +28,6 @@ import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -45,7 +44,6 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
 
     public int mAction = NO_ACTION;
     public static final int NO_ACTION = -1, ACTION_ADD_ALL = 0, ACTION_DELETE_SINGLE = 1;
-
 
     public MainViewModel(DataManager dataManager,
                          SchedulerProvider schedulerProvider) {
@@ -90,7 +88,7 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
                         }
                     }));
         } else {
-            ArrayList<QuestionCardData> arrayList = (ArrayList<QuestionCardData>)questionDataList.clone();
+            ArrayList<QuestionCardData> arrayList = (ArrayList<QuestionCardData>) questionDataList.clone();
             questionDataList.clear();
             mAction = ACTION_ADD_ALL;
             questionDataList.addAll(arrayList);

@@ -21,7 +21,6 @@ import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 import io.reactivex.ObservableSource;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
@@ -35,7 +34,6 @@ public class SplashViewModel extends BaseViewModel<SplashNavigator> {
                            SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
-
 
     public void startSeeding() {
         getCompositeDisposable().add(getDataManager()

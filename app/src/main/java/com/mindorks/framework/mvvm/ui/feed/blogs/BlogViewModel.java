@@ -22,7 +22,6 @@ import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -60,4 +59,5 @@ public class BlogViewModel extends BaseViewModel<BlogNavigator> {
                     }
                 }));
     }
+
 }

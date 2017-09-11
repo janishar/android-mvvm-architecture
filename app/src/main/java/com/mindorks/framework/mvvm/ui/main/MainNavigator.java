@@ -16,10 +16,6 @@
 
 package com.mindorks.framework.mvvm.ui.main;
 
-import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
-
-import java.util.List;
-
 /**
  * Created by amitshekhar on 09/07/17.
  */

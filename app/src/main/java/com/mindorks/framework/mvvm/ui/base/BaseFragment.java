@@ -46,6 +46,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(false);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         mRootView = mViewDataBinding.getRoot();
         return mRootView;
     }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -89,7 +91,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         return mActivity;
     }
 
-    public T getViewDataBinding(){
+    public T getViewDataBinding() {
         return mViewDataBinding;
     }
 
@@ -122,14 +124,17 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
         void onFragmentDetached(String tag);
     }
+
     /**
      * Override for set view model
+     *
      * @return view model instance
      */
     public abstract V getViewModel();
 
     /**
      * Override for set binding variable
+     *
      * @return variable id
      */
     public abstract

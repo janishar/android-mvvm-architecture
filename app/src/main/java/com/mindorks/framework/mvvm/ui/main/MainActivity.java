@@ -37,8 +37,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.BuildConfig;
@@ -58,7 +56,6 @@ import com.mindorks.placeholderview.SwipePlaceHolderView;
 import com.mindorks.placeholderview.listeners.ItemRemovedListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -245,7 +242,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
 
     @BindingAdapter({"adapter", "action"})
-    public static void setAdapter(SwipePlaceHolderView mCardsContainerView, ArrayList<QuestionCardData> mQuestionList, int mAction) {
+    public static void setAdapter(SwipePlaceHolderView mCardsContainerView,
+                                  ArrayList<QuestionCardData> mQuestionList,
+                                  int mAction) {
         if (mAction == MainViewModel.ACTION_ADD_ALL) {
             if (mQuestionList != null) {
                 mCardsContainerView.removeAllViews();

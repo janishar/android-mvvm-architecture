@@ -20,8 +20,6 @@ import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
-import io.reactivex.disposables.CompositeDisposable;
-
 /**
  * Created by amitshekhar on 09/07/17.
  */

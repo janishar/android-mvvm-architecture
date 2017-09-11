@@ -124,4 +124,5 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
             component.inject(this);
         }
     }
+
 }
