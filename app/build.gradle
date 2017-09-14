@@ -78,6 +78,7 @@ dependencies {
     // dependency injection
     compile "com.google.dagger:dagger:$rootProject.dagger2Version"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.dagger2Version"
     compile "com.google.dagger:dagger-android-support:$rootProject.dagger2Version"
 
     // reactive
