@@ -16,20 +16,35 @@
 
 package com.mindorks.framework.mvvm.di.component;
 
-import com.mindorks.framework.mvvm.di.PerService;
-import com.mindorks.framework.mvvm.di.module.ServiceModule;
-import com.mindorks.framework.mvvm.service.SyncService;
+import android.app.Application;
 
+import com.mindorks.framework.mvvm.MvvmApp;
+import com.mindorks.framework.mvvm.di.builder.ActivityBuilder;
+import com.mindorks.framework.mvvm.di.module.AppModule;
+
+import javax.inject.Singleton;
+
+import dagger.BindsInstance;
 import dagger.Component;
+import dagger.android.AndroidInjectionModule;
 
 /**
- * Created by amitshekhar on 11/07/17.
+ * Created by amitshekhar on 07/07/17.
  */
+@Singleton
+@Component(modules = {AndroidInjectionModule.class, AppModule.class, ActivityBuilder.class})
+public interface AppComponent {
 
-@PerService
-@Component(dependencies = ApplicationComponent.class, modules = ServiceModule.class)
-public interface ServiceComponent {
+    @Component.Builder
+    interface Builder {
 
-    void inject(SyncService service);
+        @BindsInstance
+        Builder application(Application application);
+
+        AppComponent build();
+
+    }
+
+    void inject(MvvmApp app);
 
 }

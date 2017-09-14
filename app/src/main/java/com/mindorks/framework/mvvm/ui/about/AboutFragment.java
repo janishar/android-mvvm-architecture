@@ -19,13 +19,15 @@ package com.mindorks.framework.mvvm.ui.about;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.FragmentAboutBinding;
-import com.mindorks.framework.mvvm.di.component.ActivityComponent;
 import com.mindorks.framework.mvvm.ui.base.BaseFragment;
 
 import javax.inject.Inject;
+
+import dagger.android.support.AndroidSupportInjection;
 
 /**
  * Created by amitshekhar on 09/07/17.
@@ -76,11 +78,9 @@ public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewM
     public void onDestroyView() {
         super.onDestroyView();
     }
-    private void performDependencyInjection(){
-        ActivityComponent component = getActivityComponent();
-        if (getActivityComponent() != null) {
-            component.inject(this);
-        }
+
+    private void performDependencyInjection() {
+        AndroidSupportInjection.inject(this);
     }
 
 }

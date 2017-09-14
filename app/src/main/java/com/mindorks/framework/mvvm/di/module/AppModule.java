@@ -24,19 +24,20 @@ import com.mindorks.framework.mvvm.BuildConfig;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.data.AppDataManager;
 import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.local.db.AppDatabase;
 import com.mindorks.framework.mvvm.data.local.db.AppDbHelper;
 import com.mindorks.framework.mvvm.data.local.db.DbHelper;
-import com.mindorks.framework.mvvm.data.local.db.AppDatabase;
+import com.mindorks.framework.mvvm.data.local.prefs.AppPreferencesHelper;
+import com.mindorks.framework.mvvm.data.local.prefs.PreferencesHelper;
 import com.mindorks.framework.mvvm.data.remote.ApiHeader;
 import com.mindorks.framework.mvvm.data.remote.ApiHelper;
 import com.mindorks.framework.mvvm.data.remote.AppApiHelper;
-import com.mindorks.framework.mvvm.data.local.prefs.AppPreferencesHelper;
-import com.mindorks.framework.mvvm.data.local.prefs.PreferencesHelper;
 import com.mindorks.framework.mvvm.di.ApiInfo;
-import com.mindorks.framework.mvvm.di.ApplicationContext;
 import com.mindorks.framework.mvvm.di.DatabaseInfo;
 import com.mindorks.framework.mvvm.di.PreferenceInfo;
 import com.mindorks.framework.mvvm.utils.AppConstants;
+import com.mindorks.framework.mvvm.utils.rx.AppSchedulerProvider;
+import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 import javax.inject.Singleton;
 
@@ -48,23 +49,17 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  * Created by amitshekhar on 07/07/17.
  */
 @Module
-public class ApplicationModule {
+public class AppModule {
 
-    private final Application mApplication;
-
-    public ApplicationModule(Application application) {
-        mApplication = application;
+    @Provides
+    @Singleton
+    Context provideContext(Application application) {
+        return application;
     }
 
     @Provides
-    @ApplicationContext
-    Context provideContext() {
-        return mApplication;
-    }
-
-    @Provides
-    Application provideApplication() {
-        return mApplication;
+    SchedulerProvider provideSchedulerProvider() {
+        return new AppSchedulerProvider();
     }
 
     @Provides
@@ -93,8 +88,8 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    AppDatabase provideAppDatabase(@DatabaseInfo String dbName) {
-        return Room.databaseBuilder(mApplication, AppDatabase.class, dbName)
+    AppDatabase provideAppDatabase(@DatabaseInfo String dbName, Context context) {
+        return Room.databaseBuilder(context, AppDatabase.class, dbName)
                 .build();
     }
 

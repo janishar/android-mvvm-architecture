@@ -31,10 +31,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.mindorks.framework.mvvm.MvvmApp;
-import com.mindorks.framework.mvvm.di.component.ActivityComponent;
-import com.mindorks.framework.mvvm.di.component.DaggerActivityComponent;
-import com.mindorks.framework.mvvm.di.module.ActivityModule;
 import com.mindorks.framework.mvvm.ui.login.LoginActivity;
 import com.mindorks.framework.mvvm.utils.CommonUtils;
 import com.mindorks.framework.mvvm.utils.NetworkUtils;
@@ -47,7 +43,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseViewModel> extends AppCompatActivity implements BaseFragment.Callback {
 
-    private ActivityComponent mActivityComponent;
     // TODO
     // this can probably depend on isLoading variable of BaseViewModel,
     // since its going to be common for all the activities
@@ -59,29 +54,16 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initializeActivityComponent();
         performDependencyInjection();
         performDataBinding();
         mViewModel.onViewCreated();
     }
-
-    private void initializeActivityComponent() {
-        mActivityComponent = DaggerActivityComponent.builder()
-                .activityModule(new ActivityModule(this))
-                .applicationComponent(((MvvmApp) getApplication()).getComponent())
-                .build();
-    }
-
 
     private void performDataBinding() {
         mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
         this.mViewModel = mViewModel == null ? getViewModel() : mViewModel;
         mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
         mViewDataBinding.executePendingBindings();
-    }
-
-    public ActivityComponent getActivityComponent() {
-        return mActivityComponent;
     }
 
     @Override
@@ -175,7 +157,6 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     int getLayoutId();
 
     public abstract void performDependencyInjection();
-
 
 }
 

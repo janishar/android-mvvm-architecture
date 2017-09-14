@@ -35,7 +35,6 @@ import com.mindorks.framework.mvvm.data.model.db.User;
 import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 import com.mindorks.framework.mvvm.data.remote.ApiHeader;
 import com.mindorks.framework.mvvm.data.remote.ApiHelper;
-import com.mindorks.framework.mvvm.di.ApplicationContext;
 import com.mindorks.framework.mvvm.utils.AppConstants;
 import com.mindorks.framework.mvvm.utils.CommonUtils;
 
@@ -62,7 +61,7 @@ public class AppDataManager implements DataManager {
     private final ApiHelper mApiHelper;
 
     @Inject
-    public AppDataManager(@ApplicationContext Context context,
+    public AppDataManager(Context context,
                           DbHelper dbHelper,
                           PreferencesHelper preferencesHelper,
                           ApiHelper apiHelper) {
@@ -71,7 +70,6 @@ public class AppDataManager implements DataManager {
         mPreferencesHelper = preferencesHelper;
         mApiHelper = apiHelper;
     }
-
 
     @Override
     public ApiHeader getApiHeader() {

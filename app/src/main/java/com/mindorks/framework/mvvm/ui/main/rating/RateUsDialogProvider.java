@@ -14,18 +14,18 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.di;
+package com.mindorks.framework.mvvm.ui.main.rating;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-import javax.inject.Scope;
+import dagger.Module;
+import dagger.android.ContributesAndroidInjector;
 
 /**
- * Created by amitshekhar on 11/07/17.
+ * Created by amitshekhar on 14/09/17.
  */
+@Module
+public abstract class RateUsDialogProvider {
 
-@Scope
-@Retention(RetentionPolicy.RUNTIME)
-public @interface PerService {
+    @ContributesAndroidInjector(modules = RateUsDialogModule.class)
+    abstract RateUsDialog provideRateUsDialogFactory();
+
 }

@@ -33,8 +33,8 @@ import io.reactivex.functions.Consumer;
  */
 
 public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
-    public ObservableArrayList<OpenSourceItemViewModel> openSourceItemViewModels = new ObservableArrayList<>();
 
+    public ObservableArrayList<OpenSourceItemViewModel> openSourceItemViewModels = new ObservableArrayList<>();
 
     public OpenSourceViewModel(DataManager dataManager,
                                SchedulerProvider schedulerProvider) {

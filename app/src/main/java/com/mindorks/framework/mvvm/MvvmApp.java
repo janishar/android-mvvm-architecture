@@ -16,42 +16,40 @@
 
 package com.mindorks.framework.mvvm;
 
+import android.app.Activity;
 import android.app.Application;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.interceptors.HttpLoggingInterceptor;
-import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.di.component.ApplicationComponent;
-import com.mindorks.framework.mvvm.di.component.DaggerApplicationComponent;
-import com.mindorks.framework.mvvm.di.module.ApplicationModule;
+import com.mindorks.framework.mvvm.di.component.DaggerAppComponent;
 import com.mindorks.framework.mvvm.utils.AppLogger;
 
 import javax.inject.Inject;
 
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by amitshekhar on 07/07/17.
  */
 
-public class MvvmApp extends Application {
-
-    @Inject
-    DataManager mDataManager;
+public class MvvmApp extends Application implements HasActivityInjector {
 
     @Inject
     CalligraphyConfig mCalligraphyConfig;
 
-    private ApplicationComponent mApplicationComponent;
+    @Inject
+    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        mApplicationComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this)).build();
-
-        mApplicationComponent.inject(this);
+        DaggerAppComponent.builder()
+                .application(this)
+                .build()
+                .inject(this);
 
         AppLogger.init();
 
@@ -63,13 +61,9 @@ public class MvvmApp extends Application {
         CalligraphyConfig.initDefault(mCalligraphyConfig);
     }
 
-    public ApplicationComponent getComponent() {
-        return mApplicationComponent;
-    }
-
-    // Needed to replace the component with a test specific one
-    public void setComponent(ApplicationComponent applicationComponent) {
-        mApplicationComponent = applicationComponent;
+    @Override
+    public DispatchingAndroidInjector<Activity> activityInjector() {
+        return activityDispatchingAndroidInjector;
     }
 
 }

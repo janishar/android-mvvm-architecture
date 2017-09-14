@@ -32,8 +32,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
-import com.mindorks.framework.mvvm.di.component.ActivityComponent;
-
 /**
  * Created by amitshekhar on 10/07/17.
  */
@@ -60,13 +58,6 @@ public abstract class BaseDialog extends DialogFragment {
 
     public BaseActivity getBaseActivity() {
         return mActivity;
-    }
-
-    public ActivityComponent getActivityComponent() {
-        if (mActivity != null) {
-            return mActivity.getActivityComponent();
-        }
-        return null;
     }
 
     @NonNull

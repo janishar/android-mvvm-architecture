@@ -14,22 +14,18 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.di.module;
-
-import android.app.Service;
+package com.mindorks.framework.mvvm.ui.about;
 
 import dagger.Module;
+import dagger.android.ContributesAndroidInjector;
 
 /**
- * Created by amitshekhar on 11/07/17.
+ * Created by amitshekhar on 14/09/17.
  */
-
 @Module
-public class ServiceModule {
+public abstract class AboutFragmentProvider {
 
-    private final Service mService;
+    @ContributesAndroidInjector(modules = AboutFragmentModule.class)
+    abstract AboutFragment provideAboutFragmentFactory();
 
-    public ServiceModule(Service service) {
-        mService = service;
-    }
 }

@@ -26,12 +26,13 @@ import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 import com.mindorks.framework.mvvm.databinding.FragmentBlogBinding;
-import com.mindorks.framework.mvvm.di.component.ActivityComponent;
 import com.mindorks.framework.mvvm.ui.base.BaseFragment;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import dagger.android.support.AndroidSupportInjection;
 
 /**
  * Created by amitshekhar on 10/07/17.
@@ -47,6 +48,7 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
 
     @Inject
     LinearLayoutManager mLayoutManager;
+
     FragmentBlogBinding mFragmentBlogBinding;
 
     public static BlogFragment newInstance() {
@@ -118,9 +120,6 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
     }
 
     private void performDependencyInjection() {
-        ActivityComponent component = getActivityComponent();
-        if (getActivityComponent() != null) {
-            component.inject(this);
-        }
+        AndroidSupportInjection.inject(this);
     }
 }

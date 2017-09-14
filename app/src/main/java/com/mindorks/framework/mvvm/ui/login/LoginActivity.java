@@ -29,6 +29,8 @@ import com.mindorks.framework.mvvm.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
+
 /**
  * Created by amitshekhar on 08/07/17.
  */
@@ -37,6 +39,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Inject
     LoginViewModel mLoginViewModel;
+
     ActivityLoginBinding mActivityLoginBinding;
 
     public static Intent getStartIntent(Context context) {
@@ -98,8 +101,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public void performDependencyInjection() {
-        getActivityComponent().inject(this);
-
+        AndroidInjection.inject(this);
     }
 
 }

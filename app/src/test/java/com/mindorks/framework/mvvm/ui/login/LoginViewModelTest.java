@@ -30,7 +30,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import io.reactivex.Observable;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.TestScheduler;
 
 import static org.mockito.Mockito.doReturn;
@@ -56,13 +55,12 @@ public class LoginViewModelTest {
 
     @Before
     public void setUp() throws Exception {
-        CompositeDisposable compositeDisposable = new CompositeDisposable();
         mTestScheduler = new TestScheduler();
         TestSchedulerProvider testSchedulerProvider = new TestSchedulerProvider(mTestScheduler);
         mLoginViewModel = new LoginViewModel(
                 mMockDataManager,
-                testSchedulerProvider,
-                compositeDisposable);
+                testSchedulerProvider);
+        mLoginViewModel.onViewCreated();
         mLoginViewModel.setNavigator(mLoginCallback);
     }
 
@@ -83,15 +81,14 @@ public class LoginViewModelTest {
 
         mTestScheduler.triggerActions();
 
-        verify(mLoginCallback).showLoading();
-        verify(mLoginCallback).hideLoading();
         verify(mLoginCallback).openMainActivity();
-    }
+        verify(mLoginCallback).openMainActivity();
 
+    }
 
     @After
     public void tearDown() throws Exception {
-        mLoginViewModel.onDestroy();
+        mLoginViewModel.onDestroyView();
     }
 
 }

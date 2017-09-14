@@ -27,12 +27,13 @@ import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
 import com.mindorks.framework.mvvm.databinding.FragmentOpenSourceBinding;
-import com.mindorks.framework.mvvm.di.component.ActivityComponent;
 import com.mindorks.framework.mvvm.ui.base.BaseFragment;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import dagger.android.support.AndroidSupportInjection;
 
 /**
  * Created by amitshekhar on 10/07/17.
@@ -48,6 +49,7 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
 
     @Inject
     LinearLayoutManager mLayoutManager;
+
     FragmentOpenSourceBinding mFragmentOpenSourceBinding;
 
     public static OpenSourceFragment newInstance() {
@@ -119,10 +121,7 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
     }
 
     private void performDependencyInjection() {
-        ActivityComponent component = getActivityComponent();
-        if (getActivityComponent() != null) {
-            component.inject(this);
-        }
+        AndroidSupportInjection.inject(this);
     }
 
 }

@@ -14,34 +14,29 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.di.component;
+package com.mindorks.framework.mvvm.ui.feed;
 
-import android.app.Application;
-import android.content.Context;
-
-import com.mindorks.framework.mvvm.MvvmApp;
 import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.di.ApplicationContext;
-import com.mindorks.framework.mvvm.di.module.ApplicationModule;
+import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
-import javax.inject.Singleton;
-
-import dagger.Component;
+import dagger.Module;
+import dagger.Provides;
 
 /**
- * Created by amitshekhar on 07/07/17.
+ * Created by amitshekhar on 14/09/17.
  */
-@Singleton
-@Component(modules = ApplicationModule.class)
-public interface ApplicationComponent {
+@Module
+public class FeedActivityModule {
 
-    void inject(MvvmApp app);
+    @Provides
+    FeedViewModel provideFeedViewModel(DataManager dataManager,
+                                       SchedulerProvider schedulerProvider) {
+        return new FeedViewModel(dataManager, schedulerProvider);
+    }
 
-    @ApplicationContext
-    Context context();
-
-    Application application();
-
-    DataManager getDataManager();
+    @Provides
+    FeedPagerAdapter provideFeedPagerAdapter(FeedActivity activity) {
+        return new FeedPagerAdapter(activity.getSupportFragmentManager());
+    }
 
 }

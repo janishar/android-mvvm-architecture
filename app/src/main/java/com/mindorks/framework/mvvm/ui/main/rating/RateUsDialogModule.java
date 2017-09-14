@@ -14,17 +14,24 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.di;
+package com.mindorks.framework.mvvm.ui.main.rating;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
-import javax.inject.Qualifier;
+import dagger.Module;
+import dagger.Provides;
 
 /**
- * Created by amitshekhar on 07/07/17.
+ * Created by amitshekhar on 14/09/17.
  */
-@Qualifier
-@Retention(RetentionPolicy.RUNTIME)
-public @interface ApplicationContext {
+@Module
+public class RateUsDialogModule {
+
+    @Provides
+    RateUsViewModel provideRateUsViewModel(DataManager dataManager,
+                                           SchedulerProvider schedulerProvider) {
+        return new RateUsViewModel(dataManager, schedulerProvider);
+    }
+
 }

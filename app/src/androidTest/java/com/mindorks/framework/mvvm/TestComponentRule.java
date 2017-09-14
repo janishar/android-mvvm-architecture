@@ -18,10 +18,7 @@ package com.mindorks.framework.mvvm;
 
 import android.content.Context;
 
-import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.di.component.DaggerTestComponent;
 import com.mindorks.framework.mvvm.di.component.TestComponent;
-import com.mindorks.framework.mvvm.di.module.ApplicationTestModule;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -44,16 +41,16 @@ public class TestComponentRule implements TestRule {
         return mContext;
     }
 
-    public DataManager getDataManager() {
-        return mTestComponent.getDataManager();
-    }
+//    public DataManager getDataManager() {
+//        return mTestComponent.getDataManager();
+//    }
 
     private void setupDaggerTestComponentInApplication() {
         MvvmApp application = ((MvvmApp) mContext.getApplicationContext());
-        mTestComponent = DaggerTestComponent.builder()
-                .applicationTestModule(new ApplicationTestModule(application))
-                .build();
-        application.setComponent(mTestComponent);
+//        mTestComponent = DaggerTestComponent.builder()
+//                .applicationTestModule(new ApplicationTestModule(application))
+//                .build();
+//        application.setComponent(mTestComponent);
     }
 
     @Override

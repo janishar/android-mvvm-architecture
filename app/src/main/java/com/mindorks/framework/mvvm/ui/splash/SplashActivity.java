@@ -29,6 +29,8 @@ import com.mindorks.framework.mvvm.ui.main.MainActivity;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
+
 /**
  * Created by amitshekhar on 08/07/17.
  */
@@ -86,8 +88,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
     @Override
     public void performDependencyInjection() {
-        getActivityComponent().inject(this);
-
+        AndroidInjection.inject(this);
     }
 
 }

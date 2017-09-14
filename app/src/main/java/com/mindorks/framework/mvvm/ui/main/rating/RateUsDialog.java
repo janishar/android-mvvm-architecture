@@ -25,10 +25,11 @@ import android.view.ViewGroup;
 
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.DialogRateUsBinding;
-import com.mindorks.framework.mvvm.di.component.ActivityComponent;
 import com.mindorks.framework.mvvm.ui.base.BaseDialog;
 
 import javax.inject.Inject;
+
+import dagger.android.support.AndroidSupportInjection;
 
 /**
  * Created by amitshekhar on 10/07/17.
@@ -56,10 +57,7 @@ public class RateUsDialog extends BaseDialog implements RateUsCallback {
                 inflater, R.layout.dialog_rate_us, container, false);
         View view = binding.getRoot();
 
-        ActivityComponent component = getActivityComponent();
-        if (component != null) {
-            component.inject(this);
-        }
+        AndroidSupportInjection.inject(this);
 
         binding.setViewModel(mRateUsViewModel);
 

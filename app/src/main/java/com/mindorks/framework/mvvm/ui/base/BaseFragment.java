@@ -28,8 +28,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mindorks.framework.mvvm.di.component.ActivityComponent;
-
 /**
  * Created by amitshekhar on 09/07/17.
  */
@@ -78,13 +76,6 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     public void onDetach() {
         mActivity = null;
         super.onDetach();
-    }
-
-    public ActivityComponent getActivityComponent() {
-        if (mActivity != null) {
-            return mActivity.getActivityComponent();
-        }
-        return null;
     }
 
     public BaseActivity getBaseActivity() {

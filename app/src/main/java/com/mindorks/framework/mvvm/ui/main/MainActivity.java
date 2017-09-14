@@ -59,11 +59,18 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator {
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator, HasSupportFragmentInjector {
 
     @Inject
     ViewModelProvider.Factory mViewModelFactory;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 
     private MainViewModel mMainViewModel;
 
@@ -74,8 +81,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     private NavigationView mNavigationView;
 
     private SwipePlaceHolderView mCardsContainerView;
-    ActivityMainBinding mActivityMainBinding;
 
+    ActivityMainBinding mActivityMainBinding;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -326,8 +333,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public void performDependencyInjection() {
-        getActivityComponent().inject(this);
+        AndroidInjection.inject(this);
     }
 
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
+    }
 
 }
