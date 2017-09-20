@@ -28,6 +28,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import dagger.android.support.AndroidSupportInjection;
+
 /**
  * Created by amitshekhar on 09/07/17.
  */
@@ -41,6 +43,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        performDependencyInjection();
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(false);
     }
@@ -107,6 +110,10 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         if (mActivity != null) {
             mActivity.openActivityOnTokenExpire();
         }
+    }
+
+    private void performDependencyInjection() {
+        AndroidSupportInjection.inject(this);
     }
 
     public interface Callback {

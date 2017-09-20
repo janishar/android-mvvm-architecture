@@ -62,7 +62,6 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        performDependencyInjection();
         mOpenSourceViewModel.setNavigator(this);
         mOpenSourceAdapter.setListener(this);
     }
@@ -118,10 +117,6 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
     @Override
     public void onRetryClick() {
         mOpenSourceViewModel.fetchRepos();
-    }
-
-    private void performDependencyInjection() {
-        AndroidSupportInjection.inject(this);
     }
 
 }

@@ -27,8 +27,6 @@ import com.mindorks.framework.mvvm.ui.base.BaseFragment;
 
 import javax.inject.Inject;
 
-import dagger.android.support.AndroidSupportInjection;
-
 /**
  * Created by amitshekhar on 09/07/17.
  */
@@ -50,7 +48,6 @@ public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewM
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        performDependencyInjection();
         mAboutViewModel.setNavigator(this);
     }
 
@@ -77,10 +74,6 @@ public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewM
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-    }
-
-    private void performDependencyInjection() {
-        AndroidSupportInjection.inject(this);
     }
 
 }

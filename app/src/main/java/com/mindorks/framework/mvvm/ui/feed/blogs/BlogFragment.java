@@ -32,8 +32,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.android.support.AndroidSupportInjection;
-
 /**
  * Created by amitshekhar on 10/07/17.
  */
@@ -61,7 +59,6 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        performDependencyInjection();
         mBlogViewModel.setNavigator(this);
         mBlogAdapter.setListener(this);
     }
@@ -119,7 +116,4 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
         mBlogViewModel.fetchBlogs();
     }
 
-    private void performDependencyInjection() {
-        AndroidSupportInjection.inject(this);
-    }
 }

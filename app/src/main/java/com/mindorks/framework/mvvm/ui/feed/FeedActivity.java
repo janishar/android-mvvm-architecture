@@ -32,7 +32,6 @@ import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -147,11 +146,6 @@ public class FeedActivity extends BaseActivity<ActivityFeedBinding, FeedViewMode
     @Override
     public int getLayoutId() {
         return R.layout.activity_feed;
-    }
-
-    @Override
-    public void performDependencyInjection() {
-        AndroidInjection.inject(this);
     }
 
     @Override
