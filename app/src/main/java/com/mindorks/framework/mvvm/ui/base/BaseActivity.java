@@ -56,7 +56,6 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         super.onCreate(savedInstanceState);
         performDependencyInjection();
         performDataBinding();
-        mViewModel.onViewCreated();
     }
 
     private void performDataBinding() {
@@ -82,12 +81,6 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     public boolean hasPermission(String permission) {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
                 checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    @Override
-    protected void onDestroy() {
-        mViewModel.onDestroyView();
-        super.onDestroy();
     }
 
     @Override

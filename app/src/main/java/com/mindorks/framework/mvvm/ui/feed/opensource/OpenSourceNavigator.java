@@ -26,9 +26,5 @@ import java.util.List;
 
 public interface OpenSourceNavigator {
 
-    void updateRepo(List<OpenSourceResponse.Repo> repoList);
-
     void handleError(Throwable throwable);
-
-
 }

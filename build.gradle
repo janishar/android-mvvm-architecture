@@ -45,14 +45,14 @@ ext {
     minSdkVersion = 16
     targetSdkVersion = 26
     compileSdkVersion = 26
-    buildToolsVersion = '26.0.0'
+    buildToolsVersion = '26.0.1'
 
     // App dependencies
-    supportLibraryVersion = '25.4.0'
+    supportLibraryVersion = '26.1.0'
     gsonVersion = '2.8.0'
     calligraphyVersion = '2.2.0'
     glideVersion = '3.7.0'
-    roomDatabase = '1.0.0-alpha3'
+    roomDatabase = '1.0.0-beta2'
     rx2FastAndroidNetworking = '1.0.0'
 
     dagger2Version = '2.11'
@@ -61,7 +61,7 @@ ext {
     placeholderviewVersion = '0.6.1'
     debugDBVersion = '1.0.0'
     timberVersion = '4.5.1'
-    lifecycle = '1.0.0-alpha3'
+    lifecycle = '1.0.0-beta2'
 
     //Test dependencies
     junitVersion = '4.12'

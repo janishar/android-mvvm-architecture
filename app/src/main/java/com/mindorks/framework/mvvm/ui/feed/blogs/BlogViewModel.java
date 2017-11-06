@@ -16,10 +16,15 @@
 
 package com.mindorks.framework.mvvm.ui.feed.blogs;
 
+import android.arch.lifecycle.MutableLiveData;
+import android.databinding.ObservableArrayList;
+
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
+
+import java.util.List;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
@@ -30,9 +35,14 @@ import io.reactivex.functions.Consumer;
 
 public class BlogViewModel extends BaseViewModel<BlogNavigator> {
 
+    private final ObservableArrayList<BlogResponse.Blog> blogObservableArrayList = new ObservableArrayList<>();
+    private final MutableLiveData<List<BlogResponse.Blog>> blogListLiveData;
+
     public BlogViewModel(DataManager dataManager,
                          SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
+        blogListLiveData = new MutableLiveData<>();
+        fetchBlogs();
     }
 
     public void fetchBlogs() {
@@ -46,7 +56,7 @@ public class BlogViewModel extends BaseViewModel<BlogNavigator> {
                     public void accept(@NonNull BlogResponse blogResponse)
                             throws Exception {
                         if (blogResponse != null && blogResponse.getData() != null) {
-                            getNavigator().updateBlog(blogResponse.getData());
+                            blogListLiveData.setValue(blogResponse.getData());
                         }
                         setIsLoading(false);
                     }
@@ -60,4 +70,16 @@ public class BlogViewModel extends BaseViewModel<BlogNavigator> {
                 }));
     }
 
+    public MutableLiveData<List<BlogResponse.Blog>> getBlogListLiveData() {
+        return blogListLiveData;
+    }
+
+    public void addBlogItemsToList(List<BlogResponse.Blog> blogs) {
+        blogObservableArrayList.clear();
+        blogObservableArrayList.addAll(blogs);
+    }
+
+    public ObservableArrayList<BlogResponse.Blog> getBlogObservableArrayList() {
+        return blogObservableArrayList;
+    }
 }

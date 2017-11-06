@@ -41,21 +41,12 @@ public abstract class BaseViewModel<N> extends ViewModel {
                          SchedulerProvider schedulerProvider) {
         this.mDataManager = dataManager;
         this.mSchedulerProvider = schedulerProvider;
+        this.mCompositeDisposable = new CompositeDisposable();
     }
-
 
     public void setNavigator(N navigator) {
         this.mNavigator = navigator;
     }
-
-    public void onViewCreated() {
-        this.mCompositeDisposable = new CompositeDisposable();
-    }
-
-    public void onDestroyView() {
-        mCompositeDisposable.dispose();
-    }
-
 
     public N getNavigator() {
         return mNavigator;
@@ -81,4 +72,9 @@ public abstract class BaseViewModel<N> extends ViewModel {
         mIsLoading.set(isLoading);
     }
 
+    @Override
+    protected void onCleared() {
+        mCompositeDisposable.dispose();
+        super.onCleared();
+    }
 }

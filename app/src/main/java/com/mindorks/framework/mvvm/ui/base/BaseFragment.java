@@ -44,6 +44,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     public void onCreate(@Nullable Bundle savedInstanceState) {
         performDependencyInjection();
         super.onCreate(savedInstanceState);
+        mViewModel = getViewModel();
         setHasOptionsMenu(false);
     }
 
@@ -58,10 +59,8 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel = getViewModel();
         mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
         mViewDataBinding.executePendingBindings();
-        mViewModel.onViewCreated();
     }
 
     @Override
@@ -86,13 +85,6 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
     public T getViewDataBinding() {
         return mViewDataBinding;
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        mViewModel.onDestroyView();
-        super.onDestroyView();
     }
 
     public boolean isNetworkConnected() {

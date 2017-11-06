@@ -95,6 +95,10 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void clearItems() {
+        mBlogResponseList.clear();
+    }
+
     public class BlogViewHolder extends BaseViewHolder implements BlogItemViewModel.BlogItemViewModelListener {
 
         private ItemBlogViewBinding mBinding;

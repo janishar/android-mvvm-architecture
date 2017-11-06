@@ -96,6 +96,10 @@ public class OpenSourceAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void clearItems() {
+        mOpenSourceResponseList.clear();
+    }
+
     public class OpenSourceViewHolder extends BaseViewHolder implements View.OnClickListener {
 
         private ItemOpenSourceViewBinding mBinding;

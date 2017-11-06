@@ -14,7 +14,8 @@
   ~  limitations under the License
   -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -40,7 +41,8 @@
                 android:id="@+id/openSourceRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/item_blog_view" />
+                tools:listitem="@layout/item_blog_view"
+                app:adapter="@{viewModel.openSourceItemViewModels}"/>
 
         </LinearLayout>
 
