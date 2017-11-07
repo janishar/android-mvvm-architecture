@@ -128,15 +128,4 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
     public void onRetryClick() {
         mOpenSourceViewModel.fetchRepos();
     }
-
-    @BindingAdapter({"adapter"})
-    public static void setAdapter(RecyclerView recyclerView,
-                                  ArrayList<OpenSourceItemViewModel> openSourceItems) {
-        OpenSourceAdapter adapter = (OpenSourceAdapter) recyclerView.getAdapter();
-        if(adapter != null) {
-            adapter.clearItems();
-            adapter.addItems(openSourceItems);
-        }
-    }
-
 }

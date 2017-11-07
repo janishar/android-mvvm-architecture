@@ -129,14 +129,4 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
         mBlogViewModel.fetchBlogs();
     }
 
-    @BindingAdapter({"adapter"})
-    public static void setAdapter(RecyclerView recyclerView,
-                                  ArrayList<BlogResponse.Blog> blogs) {
-        BlogAdapter adapter = (BlogAdapter) recyclerView.getAdapter();
-        if(adapter != null) {
-            adapter.clearItems();
-            adapter.addItems(blogs);
-        }
-    }
-
 }

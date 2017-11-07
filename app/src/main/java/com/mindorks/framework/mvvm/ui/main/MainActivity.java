@@ -317,23 +317,4 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return fragmentDispatchingAndroidInjector;
     }
-
-    @BindingAdapter({"adapter", "action"})
-    public static void setAdapter(SwipePlaceHolderView mCardsContainerView,
-                                  ArrayList<QuestionCardData> mQuestionList,
-                                  int mAction) {
-        if (mAction == MainViewModel.ACTION_ADD_ALL) {
-            if (mQuestionList != null) {
-                mCardsContainerView.removeAllViews();
-                for (QuestionCardData question : mQuestionList) {
-                    if (question != null
-                            && question.options != null
-                            && question.options.size() == 3) {
-                        mCardsContainerView.addView(new QuestionCard(question));
-                    }
-                }
-                ViewAnimationUtils.scaleAnimateView(mCardsContainerView);
-            }
-        }
-    }
 }
