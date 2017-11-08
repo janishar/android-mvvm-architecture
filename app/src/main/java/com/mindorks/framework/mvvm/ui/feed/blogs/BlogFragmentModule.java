@@ -16,8 +16,10 @@
 
 package com.mindorks.framework.mvvm.ui.feed.blogs;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
@@ -34,7 +36,7 @@ import dagger.Provides;
 public class BlogFragmentModule {
 
     @Provides
-    BlogViewModel provideBlogViewModel(DataManager dataManager,
+    BlogViewModel blogViewModel(DataManager dataManager,
                                        SchedulerProvider schedulerProvider) {
         return new BlogViewModel(dataManager, schedulerProvider);
     }
@@ -47,6 +49,11 @@ public class BlogFragmentModule {
     @Provides
     LinearLayoutManager provideLinearLayoutManager(BlogFragment fragment) {
         return new LinearLayoutManager(fragment.getActivity());
+    }
+
+    @Provides
+    ViewModelProvider.Factory provideBlogViewModel(BlogViewModel blogViewModel) {
+        return new ViewModelProviderFactory<>(blogViewModel);
     }
 
 }

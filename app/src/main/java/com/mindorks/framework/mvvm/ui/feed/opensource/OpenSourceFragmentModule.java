@@ -16,8 +16,10 @@
 
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
@@ -31,7 +33,7 @@ import dagger.Provides;
 public class OpenSourceFragmentModule {
 
     @Provides
-    OpenSourceViewModel provideOpenSourceViewModel(DataManager dataManager,
+    OpenSourceViewModel openSourceViewModel(DataManager dataManager,
                                                    SchedulerProvider schedulerProvider) {
         return new OpenSourceViewModel(dataManager, schedulerProvider);
     }
@@ -46,4 +48,8 @@ public class OpenSourceFragmentModule {
         return new LinearLayoutManager(fragment.getActivity());
     }
 
+    @Provides
+    ViewModelProvider.Factory provideOpenSourceViewModel(OpenSourceViewModel openSourceViewModel) {
+        return new ViewModelProviderFactory<>(openSourceViewModel);
+    }
 }

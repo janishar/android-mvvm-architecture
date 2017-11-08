@@ -16,10 +16,15 @@
 
 package com.mindorks.framework.mvvm.ui.feed.blogs;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.BindingAdapter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.mindorks.framework.mvvm.BR;
@@ -28,6 +33,7 @@ import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 import com.mindorks.framework.mvvm.databinding.FragmentBlogBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,7 +45,7 @@ import javax.inject.Inject;
 public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewModel> implements BlogNavigator, BlogAdapter.BlogAdapterListener {
 
     @Inject
-    BlogViewModel mBlogViewModel;
+    ViewModelProvider.Factory mViewModelFactory;
 
     @Inject
     BlogAdapter mBlogAdapter;
@@ -48,6 +54,7 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
     LinearLayoutManager mLayoutManager;
 
     FragmentBlogBinding mFragmentBlogBinding;
+    private BlogViewModel mBlogViewModel;
 
     public static BlogFragment newInstance() {
         Bundle args = new Bundle();
@@ -63,19 +70,19 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
         mBlogAdapter.setListener(this);
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mFragmentBlogBinding = getViewDataBinding();
         setUp();
+        subscribeToLiveData();
     }
 
     @Override
     public BlogViewModel getViewModel() {
+        mBlogViewModel = ViewModelProviders.of(this, mViewModelFactory).get(BlogViewModel.class);
         return mBlogViewModel;
     }
-
 
     @Override
     public int getBindingVariable() {
@@ -92,10 +99,16 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
         mFragmentBlogBinding.blogRecyclerView.setLayoutManager(mLayoutManager);
         mFragmentBlogBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mFragmentBlogBinding.blogRecyclerView.setAdapter(mBlogAdapter);
-        //One method one responsibility.May be we can move fetchBlogs() outside this function.
-        mBlogViewModel.fetchBlogs();
     }
 
+    private void subscribeToLiveData() {
+        mBlogViewModel.getBlogListLiveData().observe(this, new Observer<List<BlogResponse.Blog>>() {
+            @Override
+            public void onChanged(@Nullable List<BlogResponse.Blog> blogs) {
+                mBlogViewModel.addBlogItemsToList(blogs);
+            }
+        });
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

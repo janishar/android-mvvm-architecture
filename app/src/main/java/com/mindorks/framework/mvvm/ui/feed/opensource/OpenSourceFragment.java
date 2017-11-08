@@ -17,10 +17,15 @@
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.BindingAdapter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.mindorks.framework.mvvm.BR;
@@ -29,6 +34,7 @@ import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
 import com.mindorks.framework.mvvm.databinding.FragmentOpenSourceBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -42,7 +48,7 @@ import dagger.android.support.AndroidSupportInjection;
 public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, OpenSourceViewModel> implements OpenSourceNavigator, OpenSourceAdapter.OpenSourceAdapterListener {
 
     @Inject
-    OpenSourceViewModel mOpenSourceViewModel;
+    ViewModelProvider.Factory mViewModelFactory;
 
     @Inject
     OpenSourceAdapter mOpenSourceAdapter;
@@ -50,6 +56,7 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
     @Inject
     LinearLayoutManager mLayoutManager;
 
+    private OpenSourceViewModel mOpenSourceViewModel;
     FragmentOpenSourceBinding mFragmentOpenSourceBinding;
 
     public static OpenSourceFragment newInstance() {
@@ -72,10 +79,21 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
         super.onViewCreated(view, savedInstanceState);
         mFragmentOpenSourceBinding = getViewDataBinding();
         setUp();
+        subscribeToLiveData();
+    }
+
+    private void subscribeToLiveData() {
+        mOpenSourceViewModel.getOpenSourceRepos().observe(this, new Observer<List<OpenSourceItemViewModel>>() {
+            @Override
+            public void onChanged(@Nullable List<OpenSourceItemViewModel> openSourceItemViewModels) {
+                mOpenSourceViewModel.addOpenSourceItemsToList(openSourceItemViewModels);
+            }
+        });
     }
 
     @Override
     public OpenSourceViewModel getViewModel() {
+        mOpenSourceViewModel = ViewModelProviders.of(this, mViewModelFactory).get(OpenSourceViewModel.class);
         return mOpenSourceViewModel;
     }
 
@@ -94,19 +112,11 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
         mFragmentOpenSourceBinding.openSourceRecyclerView.setLayoutManager(mLayoutManager);
         mFragmentOpenSourceBinding.openSourceRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mFragmentOpenSourceBinding.openSourceRecyclerView.setAdapter(mOpenSourceAdapter);
-
-        mOpenSourceViewModel.fetchRepos();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-    }
-
-    @Override
-    public void updateRepo(List<OpenSourceResponse.Repo> repoList) {
-        mOpenSourceViewModel.populateViewModel(repoList);
-        mOpenSourceAdapter.addItems(mOpenSourceViewModel.openSourceItemViewModels);
     }
 
     @Override
@@ -118,5 +128,4 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
     public void onRetryClick() {
         mOpenSourceViewModel.fetchRepos();
     }
-
 }
