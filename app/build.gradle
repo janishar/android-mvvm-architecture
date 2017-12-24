@@ -46,64 +46,64 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // android support libraries
-    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
-    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
-    compile "com.android.support:design:$rootProject.supportLibraryVersion"
-    compile "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
-    compile "com.android.support:animated-vector-drawable:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:animated-vector-drawable:$rootProject.supportLibraryVersion"
 
     // network
-    compile "com.amitshekhar.android:rx2-android-networking:$rootProject.rx2FastAndroidNetworking"
+    implementation "com.amitshekhar.android:rx2-android-networking:$rootProject.rx2FastAndroidNetworking"
 
     // database
-    compile "android.arch.persistence.room:rxjava2:$rootProject.roomDatabase"
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.roomDatabase"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomDatabase"
 
     // font
-    compile "uk.co.chrisjenx:calligraphy:$rootProject.calligraphyVersion"
+    implementation "uk.co.chrisjenx:calligraphy:$rootProject.calligraphyVersion"
 
     // image
-    compile "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
 
     // parser
-    compile "com.google.code.gson:gson:$rootProject.gsonVersion"
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
 
     // debug database
-    debugCompile "com.amitshekhar.android:debug-db:$rootProject.debugDBVersion"
+    debugImplementation "com.amitshekhar.android:debug-db:$rootProject.debugDBVersion"
 
     // dependency injection
-    compile "com.google.dagger:dagger:$rootProject.dagger2Version"
+    implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
     annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.dagger2Version"
-    compile "com.google.dagger:dagger-android-support:$rootProject.dagger2Version"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.dagger2Version"
 
     // reactive
-    compile "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
-    compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
 
     // swipe view
-    compile "com.mindorks:placeholderview:$rootProject.placeholderviewVersion"
+    implementation "com.mindorks:placeholderview:$rootProject.placeholderviewVersion"
 
     // logger
-    compile "com.jakewharton.timber:timber:$rootProject.timberVersion"
+    implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
 
     // dependencies for local unit tests
-    testCompile "junit:junit:$rootProject.ext.junitVersion"
-    testCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
     testAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
 
     // UI Testing
-    androidTestCompile "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
-    androidTestCompile "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
-    androidTestCompile "org.mockito:mockito-core:$rootProject.mockitoVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
+    androidTestImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
     androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
 
     //Viewmodel
-    compile "android.arch.lifecycle:extensions:$rootProject.lifecycle"
+    implementation "android.arch.lifecycle:extensions:$rootProject.lifecycle"
     annotationProcessor "android.arch.lifecycle:compiler:$rootProject.lifecycle"
 
 }
