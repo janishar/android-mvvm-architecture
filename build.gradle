@@ -61,7 +61,7 @@ ext {
     rxjava2Version = '2.0.6'
     rxandroidVersion = '2.0.1'
     placeholderviewVersion = '0.6.1'
-    debugDBVersion = '1.0.0'
+    debugDBVersion = '1.0.3'
     timberVersion = '4.5.1'
     lifecycle = '1.0.0-beta2'
 
