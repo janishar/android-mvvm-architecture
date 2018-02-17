@@ -26,8 +26,7 @@ import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 public class AboutViewModel extends BaseViewModel<AboutNavigator> {
 
-    public AboutViewModel(DataManager dataManager,
-                          SchedulerProvider schedulerProvider) {
+    public AboutViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
 

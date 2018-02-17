@@ -37,10 +37,15 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class MvvmApp extends Application implements HasActivityInjector {
 
     @Inject
-    CalligraphyConfig mCalligraphyConfig;
+    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
 
     @Inject
-    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
+    CalligraphyConfig mCalligraphyConfig;
+
+    @Override
+    public DispatchingAndroidInjector<Activity> activityInjector() {
+        return activityDispatchingAndroidInjector;
+    }
 
     @Override
     public void onCreate() {
@@ -60,10 +65,4 @@ public class MvvmApp extends Application implements HasActivityInjector {
 
         CalligraphyConfig.initDefault(mCalligraphyConfig);
     }
-
-    @Override
-    public DispatchingAndroidInjector<Activity> activityInjector() {
-        return activityDispatchingAndroidInjector;
-    }
-
 }

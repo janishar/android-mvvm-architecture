@@ -33,11 +33,8 @@ import java.util.List;
 @Dao
 public interface UserDao {
 
-    @Query("SELECT * FROM users")
-    List<User> loadAll();
-
-    @Query("SELECT * FROM users WHERE id IN (:userIds)")
-    List<User> loadAllByIds(List<Integer> userIds);
+    @Delete
+    void delete(User user);
 
     @Query("SELECT * FROM users WHERE name LIKE :name LIMIT 1")
     User findByName(String name);
@@ -48,7 +45,9 @@ public interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<User> users);
 
-    @Delete
-    void delete(User user);
+    @Query("SELECT * FROM users")
+    List<User> loadAll();
 
+    @Query("SELECT * FROM users WHERE id IN (:userIds)")
+    List<User> loadAllByIds(List<Integer> userIds);
 }

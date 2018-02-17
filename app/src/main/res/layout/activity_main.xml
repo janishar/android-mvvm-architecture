@@ -76,8 +76,8 @@
                         android:id="@+id/cardsContainer"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:adapter="@{viewModel.questionDataList}"
-                        app:action="@{viewModel.action}"/>
+                        app:action="@{viewModel.action}"
+                        app:adapter="@{viewModel.questionDataList}" />
 
                 </LinearLayout>
             </android.support.design.widget.CoordinatorLayout>
@@ -112,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"/>
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
 
     </FrameLayout>
 

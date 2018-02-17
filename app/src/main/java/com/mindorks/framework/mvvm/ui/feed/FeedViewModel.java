@@ -13,5 +13,4 @@ public class FeedViewModel extends BaseViewModel {
     public FeedViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
     }
-
 }

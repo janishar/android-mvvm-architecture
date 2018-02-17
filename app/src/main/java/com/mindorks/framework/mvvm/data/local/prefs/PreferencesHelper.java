@@ -24,28 +24,27 @@ import com.mindorks.framework.mvvm.data.DataManager;
 
 public interface PreferencesHelper {
 
-    int getCurrentUserLoggedInMode();
+    String getAccessToken();
 
-    void setCurrentUserLoggedInMode(DataManager.LoggedInMode mode);
-
-    Long getCurrentUserId();
-
-    void setCurrentUserId(Long userId);
-
-    String getCurrentUserName();
-
-    void setCurrentUserName(String userName);
+    void setAccessToken(String accessToken);
 
     String getCurrentUserEmail();
 
     void setCurrentUserEmail(String email);
 
+    Long getCurrentUserId();
+
+    void setCurrentUserId(Long userId);
+
+    int getCurrentUserLoggedInMode();
+
+    void setCurrentUserLoggedInMode(DataManager.LoggedInMode mode);
+
+    String getCurrentUserName();
+
+    void setCurrentUserName(String userName);
+
     String getCurrentUserProfilePicUrl();
 
     void setCurrentUserProfilePicUrl(String profilePicUrl);
-
-    String getAccessToken();
-
-    void setAccessToken(String accessToken);
-
 }

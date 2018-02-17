@@ -25,5 +25,4 @@ public interface SplashNavigator {
     void openLoginActivity();
 
     void openMainActivity();
-
 }

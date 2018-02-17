@@ -30,12 +30,15 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public abstract class BaseViewModel<N> extends ViewModel {
 
-    private N mNavigator;
     private final DataManager mDataManager;
-    private final SchedulerProvider mSchedulerProvider;
+
     private final ObservableBoolean mIsLoading = new ObservableBoolean(false);
 
+    private final SchedulerProvider mSchedulerProvider;
+
     private CompositeDisposable mCompositeDisposable;
+
+    private N mNavigator;
 
     public BaseViewModel(DataManager dataManager,
                          SchedulerProvider schedulerProvider) {
@@ -44,24 +47,18 @@ public abstract class BaseViewModel<N> extends ViewModel {
         this.mCompositeDisposable = new CompositeDisposable();
     }
 
-    public void setNavigator(N navigator) {
-        this.mNavigator = navigator;
-    }
-
-    public N getNavigator() {
-        return mNavigator;
-    }
-
-    public DataManager getDataManager() {
-        return mDataManager;
-    }
-
-    public SchedulerProvider getSchedulerProvider() {
-        return mSchedulerProvider;
+    @Override
+    protected void onCleared() {
+        mCompositeDisposable.dispose();
+        super.onCleared();
     }
 
     public CompositeDisposable getCompositeDisposable() {
         return mCompositeDisposable;
+    }
+
+    public DataManager getDataManager() {
+        return mDataManager;
     }
 
     public ObservableBoolean getIsLoading() {
@@ -72,9 +69,15 @@ public abstract class BaseViewModel<N> extends ViewModel {
         mIsLoading.set(isLoading);
     }
 
-    @Override
-    protected void onCleared() {
-        mCompositeDisposable.dispose();
-        super.onCleared();
+    public N getNavigator() {
+        return mNavigator;
+    }
+
+    public void setNavigator(N navigator) {
+        this.mNavigator = navigator;
+    }
+
+    public SchedulerProvider getSchedulerProvider() {
+        return mSchedulerProvider;
     }
 }

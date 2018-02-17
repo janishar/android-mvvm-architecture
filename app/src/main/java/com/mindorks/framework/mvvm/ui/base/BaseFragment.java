@@ -21,6 +21,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -36,32 +37,30 @@ import dagger.android.support.AndroidSupportInjection;
 public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment {
 
     private BaseActivity mActivity;
+    private View mRootView;
     private T mViewDataBinding;
     private V mViewModel;
-    private View mRootView;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        performDependencyInjection();
-        super.onCreate(savedInstanceState);
-        mViewModel = getViewModel();
-        setHasOptionsMenu(false);
-    }
+    /**
+     * Override for set binding variable
+     *
+     * @return variable id
+     */
+    public abstract int getBindingVariable();
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
-        mRootView = mViewDataBinding.getRoot();
-        return mRootView;
-    }
+    /**
+     * @return layout resource id
+     */
+    public abstract
+    @LayoutRes
+    int getLayoutId();
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
-        mViewDataBinding.executePendingBindings();
-    }
+    /**
+     * Override for set view model
+     *
+     * @return view model instance
+     */
+    public abstract V getViewModel();
 
     @Override
     public void onAttach(Context context) {
@@ -74,9 +73,31 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        performDependencyInjection();
+        super.onCreate(savedInstanceState);
+        mViewModel = getViewModel();
+        setHasOptionsMenu(false);
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
+        mRootView = mViewDataBinding.getRoot();
+        return mRootView;
+    }
+
+    @Override
     public void onDetach() {
         mActivity = null;
         super.onDetach();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
+        mViewDataBinding.executePendingBindings();
     }
 
     public BaseActivity getBaseActivity() {
@@ -87,14 +108,14 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         return mViewDataBinding;
     }
 
-    public boolean isNetworkConnected() {
-        return mActivity != null && mActivity.isNetworkConnected();
-    }
-
     public void hideKeyboard() {
         if (mActivity != null) {
             mActivity.hideKeyboard();
         }
+    }
+
+    public boolean isNetworkConnected() {
+        return mActivity != null && mActivity.isNetworkConnected();
     }
 
     public void openActivityOnTokenExpire() {
@@ -113,25 +134,4 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
         void onFragmentDetached(String tag);
     }
-
-    /**
-     * Override for set view model
-     *
-     * @return view model instance
-     */
-    public abstract V getViewModel();
-
-    /**
-     * Override for set binding variable
-     *
-     * @return variable id
-     */
-    public abstract int getBindingVariable();
-
-    /**
-     * @return layout resource id
-     */
-    public abstract
-    @LayoutRes
-    int getLayoutId();
 }

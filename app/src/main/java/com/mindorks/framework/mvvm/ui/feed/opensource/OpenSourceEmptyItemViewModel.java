@@ -22,7 +22,7 @@ package com.mindorks.framework.mvvm.ui.feed.opensource;
 
 public class OpenSourceEmptyItemViewModel {
 
-    private OpenSourceEmptyItemViewModelListener mListener;
+    private final OpenSourceEmptyItemViewModelListener mListener;
 
     public OpenSourceEmptyItemViewModel(OpenSourceEmptyItemViewModelListener listener) {
         this.mListener = listener;
@@ -33,6 +33,7 @@ public class OpenSourceEmptyItemViewModel {
     }
 
     public interface OpenSourceEmptyItemViewModelListener {
+
         void onRetryClick();
     }
 }

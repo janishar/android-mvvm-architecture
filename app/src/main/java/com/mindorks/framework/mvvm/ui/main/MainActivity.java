@@ -16,19 +16,15 @@
 
 package com.mindorks.framework.mvvm.ui.main;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -43,7 +39,6 @@ import android.view.View;
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.BuildConfig;
 import com.mindorks.framework.mvvm.R;
-import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 import com.mindorks.framework.mvvm.databinding.ActivityMainBinding;
 import com.mindorks.framework.mvvm.databinding.NavHeaderMainBinding;
 import com.mindorks.framework.mvvm.ui.about.AboutFragment;
@@ -52,13 +47,8 @@ import com.mindorks.framework.mvvm.ui.feed.FeedActivity;
 import com.mindorks.framework.mvvm.ui.login.LoginActivity;
 import com.mindorks.framework.mvvm.ui.main.rating.RateUsDialog;
 import com.mindorks.framework.mvvm.utils.ScreenUtils;
-import com.mindorks.framework.mvvm.utils.ViewAnimationUtils;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
-import com.mindorks.placeholderview.listeners.ItemRemovedListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -69,38 +59,51 @@ import dagger.android.support.HasSupportFragmentInjector;
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator, HasSupportFragmentInjector {
 
     @Inject
-    ViewModelProvider.Factory mViewModelFactory;
-
-    @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
-
-    private MainViewModel mMainViewModel;
-
-    private DrawerLayout mDrawer;
-    private Toolbar mToolbar;
-    private NavigationView mNavigationView;
+    @Inject
+    ViewModelProvider.Factory mViewModelFactory;
+    private ActivityMainBinding mActivityMainBinding;
     private SwipePlaceHolderView mCardsContainerView;
+    private DrawerLayout mDrawer;
+    private MainViewModel mMainViewModel;
+    private NavigationView mNavigationView;
+    private Toolbar mToolbar;
 
-    ActivityMainBinding mActivityMainBinding;
-
-    public static Intent getStartIntent(Context context) {
+    public static Intent newIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         return intent;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mActivityMainBinding = getViewDataBinding();
-        mMainViewModel.setNavigator(this);
-        setUp();
+    public int getBindingVariable() {
+        return BR.viewModel;
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (mDrawer != null)
-            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+    public int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public MainViewModel getViewModel() {
+        mMainViewModel = ViewModelProviders.of(this, mViewModelFactory).get(MainViewModel.class);
+        return mMainViewModel;
+    }
+
+    @Override
+    public void handleError(Throwable throwable) {
+        // handle error
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentByTag(AboutFragment.TAG);
+        if (fragment == null) {
+            super.onBackPressed();
+        } else {
+            onFragmentDetached(AboutFragment.TAG);
+        }
     }
 
     @Override
@@ -108,6 +111,20 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    public void onFragmentDetached(String tag) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentByTag(tag);
+        if (fragment != null) {
+            fragmentManager
+                    .beginTransaction()
+                    .disallowAddToBackStack()
+                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
+                    .remove(fragment)
+                    .commitNow();
+            unlockDrawer();
+        }
     }
 
     @Override
@@ -131,32 +148,39 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     @Override
-    public void onBackPressed() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentByTag(AboutFragment.TAG);
-        if (fragment == null) {
-            super.onBackPressed();
-        } else {
-            onFragmentDetached(AboutFragment.TAG);
+    public void openLoginActivity() {
+        startActivity(LoginActivity.newIntent(this));
+        finish();
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mActivityMainBinding = getViewDataBinding();
+        mMainViewModel.setNavigator(this);
+        setUp();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mDrawer != null) {
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
     }
 
-    public void onFragmentDetached(String tag) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = fragmentManager.findFragmentByTag(tag);
-        if (fragment != null) {
-            fragmentManager
-                    .beginTransaction()
-                    .disallowAddToBackStack()
-                    .setCustomAnimations(R.anim.slide_left, R.anim.slide_right)
-                    .remove(fragment)
-                    .commitNow();
-            unlockDrawer();
+    private void lockDrawer() {
+        if (mDrawer != null) {
+            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         }
     }
 
     private void setUp() {
-
         mDrawer = mActivityMainBinding.drawerView;
         mToolbar = mActivityMainBinding.toolbar;
         mNavigationView = mActivityMainBinding.navigationView;
@@ -170,14 +194,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 R.string.open_drawer,
                 R.string.close_drawer) {
             @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                hideKeyboard();
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
             }
 
             @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                hideKeyboard();
             }
         };
         mDrawer.addDrawerListener(mDrawerToggle);
@@ -190,17 +214,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         subscribeToLiveData();
     }
 
-    private void subscribeToLiveData() {
-        mMainViewModel.getQuestionCardData().observe(this, new Observer<List<QuestionCardData>>() {
-            @Override
-            public void onChanged(@Nullable List<QuestionCardData> questionCardDatas) {
-                mMainViewModel.setQuestionDataList(questionCardDatas);
-            }
-        });
-    }
-
     private void setupCardContainerView() {
-
         int screenWidth = ScreenUtils.getScreenWidth(this);
         int screenHeight = ScreenUtils.getScreenHeight(this);
 
@@ -215,21 +229,15 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                         .setSwipeRotationAngle(10)
                         .setRelativeScale(0.01f));
 
-        mCardsContainerView.addItemRemoveListener(new ItemRemovedListener() {
-            @Override
-            public void onItemRemoved(int count) {
-                if (count == 0) {
-                    // reload the contents again after 1 sec delay
-                    new Handler(getMainLooper()).postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            //Reload once all the cards are removed
-                            mMainViewModel.loadQuestionCards();
-                        }
-                    }, 800);
-                } else {
-                    mMainViewModel.removeQuestionCard();
-                }
+        mCardsContainerView.addItemRemoveListener(count -> {
+            if (count == 0) {
+                // reload the contents again after 1 sec delay
+                new Handler(getMainLooper()).postDelayed(() -> {
+                    //Reload once all the cards are removed
+                    mMainViewModel.loadQuestionCards();
+                }, 800);
+            } else {
+                mMainViewModel.removeQuestionCard();
             }
         });
     }
@@ -241,26 +249,23 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         navHeaderMainBinding.setViewModel(mMainViewModel);
 
         mNavigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        mDrawer.closeDrawer(GravityCompat.START);
-                        switch (item.getItemId()) {
-                            case R.id.navItemAbout:
-                                showAboutFragment();
-                                return true;
-                            case R.id.navItemRateUs:
-                                RateUsDialog.newInstance().show(getSupportFragmentManager());
-                                return true;
-                            case R.id.navItemFeed:
-                                startActivity(FeedActivity.getStartIntent(MainActivity.this));
-                                return true;
-                            case R.id.navItemLogout:
-                                mMainViewModel.logout();
-                                return true;
-                            default:
-                                return false;
-                        }
+                item -> {
+                    mDrawer.closeDrawer(GravityCompat.START);
+                    switch (item.getItemId()) {
+                        case R.id.navItemAbout:
+                            showAboutFragment();
+                            return true;
+                        case R.id.navItemRateUs:
+                            RateUsDialog.newInstance().show(getSupportFragmentManager());
+                            return true;
+                        case R.id.navItemFeed:
+                            startActivity(FeedActivity.newIntent(MainActivity.this));
+                            return true;
+                        case R.id.navItemLogout:
+                            mMainViewModel.logout();
+                            return true;
+                        default:
+                            return false;
                     }
                 });
     }
@@ -275,46 +280,13 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 .commit();
     }
 
-    private void lockDrawer() {
-        if (mDrawer != null)
-            mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    private void subscribeToLiveData() {
+        mMainViewModel.getQuestionCardData().observe(this, questionCardDatas -> mMainViewModel.setQuestionDataList(questionCardDatas));
     }
 
     private void unlockDrawer() {
-        if (mDrawer != null)
+        if (mDrawer != null) {
             mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-    }
-
-
-    @Override
-    public void openLoginActivity() {
-        startActivity(LoginActivity.getStartIntent(this));
-        finish();
-    }
-
-    @Override
-    public void handleError(Throwable throwable) {
-        // handle error
-    }
-
-    @Override
-    public MainViewModel getViewModel() {
-        mMainViewModel = ViewModelProviders.of(this, mViewModelFactory).get(MainViewModel.class);
-        return mMainViewModel;
-    }
-
-    @Override
-    public int getBindingVariable() {
-        return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_main;
-    }
-
-    @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
-        return fragmentDispatchingAndroidInjector;
+        }
     }
 }

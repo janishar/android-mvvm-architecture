@@ -6,8 +6,8 @@ import android.arch.lifecycle.ViewModelProvider;
 /**
  * Created by RV on 19/07/17.
  * <p>
- * A provider factory that persists ViewModels{@link ViewModel}.
- * Used if the viewmodel has a parameterized constructor.
+ * A provider factory that persists ViewModels {@link ViewModel}.
+ * Used if the view model has a parameterized constructor.
  */
 public class ViewModelProviderFactory<V> implements ViewModelProvider.Factory {
 
@@ -24,5 +24,4 @@ public class ViewModelProviderFactory<V> implements ViewModelProvider.Factory {
         }
         throw new IllegalArgumentException("Unknown class name");
     }
-
 }

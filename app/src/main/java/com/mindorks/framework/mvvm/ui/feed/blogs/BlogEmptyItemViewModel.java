@@ -33,7 +33,7 @@ public class BlogEmptyItemViewModel {
     }
 
     public interface BlogEmptyItemViewModelListener {
+
         void onRetryClick();
     }
-
 }

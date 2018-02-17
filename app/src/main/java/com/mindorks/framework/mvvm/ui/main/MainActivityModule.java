@@ -32,14 +32,12 @@ import dagger.Provides;
 public class MainActivityModule {
 
     @Provides
-    MainViewModel provideMainViewModel(DataManager dataManager,
-                                       SchedulerProvider schedulerProvider) {
-        return new MainViewModel(dataManager, schedulerProvider);
-    }
-
-    @Provides
     ViewModelProvider.Factory mainViewModelProvider(MainViewModel mainViewModel) {
         return new ViewModelProviderFactory<>(mainViewModel);
     }
 
+    @Provides
+    MainViewModel provideMainViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+        return new MainViewModel(dataManager, schedulerProvider);
+    }
 }

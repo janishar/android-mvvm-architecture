@@ -25,5 +25,4 @@ public final class ViewAnimationUtils {
         animation.setDuration(100);
         animation.start();
     }
-
 }

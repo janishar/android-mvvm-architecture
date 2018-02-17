@@ -38,40 +38,8 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     @Inject
     SplashViewModel mSplashViewModel;
 
-    public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, SplashActivity.class);
-        return intent;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mSplashViewModel.setNavigator(this);
-        mSplashViewModel.startSeeding();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void openLoginActivity() {
-        Intent intent = LoginActivity.getStartIntent(SplashActivity.this);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
-    public void openMainActivity() {
-        Intent intent = MainActivity.getStartIntent(SplashActivity.this);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
-    public SplashViewModel getViewModel() {
-        return mSplashViewModel;
+    public static Intent newIntent(Context context) {
+        return new Intent(context, SplashActivity.class);
     }
 
     @Override
@@ -84,4 +52,29 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
         return R.layout.activity_splash;
     }
 
+    @Override
+    public SplashViewModel getViewModel() {
+        return mSplashViewModel;
+    }
+
+    @Override
+    public void openLoginActivity() {
+        Intent intent = LoginActivity.newIntent(SplashActivity.this);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void openMainActivity() {
+        Intent intent = MainActivity.newIntent(SplashActivity.this);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mSplashViewModel.setNavigator(this);
+        mSplashViewModel.startSeeding();
+    }
 }

@@ -27,5 +27,4 @@ public abstract class AboutFragmentProvider {
 
     @ContributesAndroidInjector(modules = AboutFragmentModule.class)
     abstract AboutFragment provideAboutFragmentFactory();
-
 }
