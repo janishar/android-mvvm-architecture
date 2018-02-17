@@ -17,56 +17,56 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-  repositories {
-    jcenter()
-    google()
-  }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:3.0.1'
+    repositories {
+        jcenter()
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
 
-    // NOTE: Do not place your application dependencies here; they belong
-    // in the individual module build.gradle files
-  }
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
 }
 
 allprojects {
-  repositories {
-    jcenter()
-    maven { url 'https://maven.google.com' }
-    google()
-  }
+    repositories {
+        jcenter()
+        maven { url 'https://maven.google.com' }
+        google()
+    }
 }
 
 task clean(type: Delete) {
-  delete rootProject.buildDir
+    delete rootProject.buildDir
 }
 
 // Define versions in a single place
 ext {
-  // Sdk and tools
-  minSdkVersion = 16
-  targetSdkVersion = 27
-  compileSdkVersion = 27
-  buildToolsVersion = '27.0.3'
+    // Sdk and tools
+    minSdkVersion = 16
+    targetSdkVersion = 27
+    compileSdkVersion = 27
+    buildToolsVersion = '27.0.3'
 
-  // App dependencies
-  supportLibraryVersion = '27.0.2'
-  gsonVersion = '2.8.2'
-  calligraphyVersion = '2.2.0'
-  glideVersion = '3.7.0'
-  roomDatabase = '1.0.0'
-  rx2FastAndroidNetworking = '1.0.1'
+    // App dependencies
+    supportLibraryVersion = '27.0.2'
+    gsonVersion = '2.8.2'
+    calligraphyVersion = '2.2.0'
+    glideVersion = '3.7.0'
+    roomDatabase = '1.0.0'
+    rx2FastAndroidNetworking = '1.0.1'
 
-  dagger2Version = '2.14.1'
-  rxjava2Version = '2.1.9'
-  rxandroidVersion = '2.0.2'
-  placeholderviewVersion = '0.6.1'
-  debugDBVersion = '1.0.3'
-  timberVersion = '4.5.1'
-  lifecycle = '1.1.0'
+    dagger2Version = '2.14.1'
+    rxjava2Version = '2.1.9'
+    rxandroidVersion = '2.0.2'
+    placeholderviewVersion = '0.6.1'
+    debugDBVersion = '1.0.3'
+    timberVersion = '4.5.1'
+    lifecycle = '1.1.0'
 
-  // Test dependencies
-  junitVersion = '4.12'
-  espressoVersion = '3.0.1'
-  mockitoVersion = '2.15.0'
+    // Test dependencies
+    junitVersion = '4.12'
+    espressoVersion = '3.0.1'
+    mockitoVersion = '2.15.0'
 }

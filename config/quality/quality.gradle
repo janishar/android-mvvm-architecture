@@ -30,7 +30,7 @@ apply plugin: 'findbugs'
 apply plugin: 'pmd'
 
 dependencies {
-  checkstyle 'com.puppycrawl.tools:checkstyle:6.5'
+    checkstyle 'com.puppycrawl.tools:checkstyle:6.5'
 }
 
 def qualityConfigDir = "$project.rootDir/config/quality";
@@ -39,69 +39,69 @@ def reportsDir = "$project.buildDir/reports"
 check.dependsOn 'checkstyle', 'findbugs', 'pmd'
 
 task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code style checks') {
-  configFile file("$qualityConfigDir/checkstyle/checkstyle-config.xml")
-  source 'src'
-  include '**/*.java'
-  exclude '**/model/**'
-  exclude '**/AppLogger.java'
-  reports {
-    xml.enabled = true
-    xml {
-      destination "$reportsDir/checkstyle/checkstyle.xml"
+    configFile file("$qualityConfigDir/checkstyle/checkstyle-config.xml")
+    source 'src'
+    include '**/*.java'
+    exclude '**/model/**'
+    exclude '**/AppLogger.java'
+    reports {
+        xml.enabled = true
+        xml {
+            destination "$reportsDir/checkstyle/checkstyle.xml"
+        }
     }
-  }
 
-  classpath = files()
+    classpath = files()
 }
 
 task findbugs(type: FindBugs,
-    group: 'Verification',
-    description: 'Inspect java bytecode for bugs',
-    dependsOn: ['compileDebugSources', 'compileReleaseSources']) {
+        group: 'Verification',
+        description: 'Inspect java bytecode for bugs',
+        dependsOn: ['compileDebugSources', 'compileReleaseSources']) {
 
-  ignoreFailures = false
-  effort = "max"
-  reportLevel = "high"
-  excludeFilter = new File("$qualityConfigDir/findbugs/android-exclude-filter.xml")
-  classes = files("$project.rootDir/app/build/intermediates/classes")
+    ignoreFailures = false
+    effort = "max"
+    reportLevel = "high"
+    excludeFilter = new File("$qualityConfigDir/findbugs/android-exclude-filter.xml")
+    classes = files("$project.rootDir/app/build/intermediates/classes")
 
-  source 'src'
-  include '**/*.java'
-  exclude '**/gen/**'
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
 
-  reports {
-    xml.enabled = true
-    html.enabled = false
-    xml {
-      destination "$reportsDir/findbugs/findbugs.xml"
+    reports {
+        xml.enabled = true
+        html.enabled = false
+        xml {
+            destination "$reportsDir/findbugs/findbugs.xml"
+        }
+        html {
+            destination "$reportsDir/findbugs/findbugs.html"
+        }
     }
-    html {
-      destination "$reportsDir/findbugs/findbugs.html"
-    }
-  }
 
-  classpath = files()
+    classpath = files()
 }
 
 
 task pmd(type: Pmd, group: 'Verification', description: 'Inspect sourcecode for bugs') {
-  ruleSetFiles = files("$qualityConfigDir/pmd/pmd-ruleset.xml")
-  ignoreFailures = false
-  ruleSets = []
+    ruleSetFiles = files("$qualityConfigDir/pmd/pmd-ruleset.xml")
+    ignoreFailures = false
+    ruleSets = []
 
-  source 'src'
-  include '**/*.java'
-  exclude '**/gen/**'
-  exclude '**/model/**'
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/model/**'
 
-  reports {
-    xml.enabled = true
-    html.enabled = true
-    xml {
-      destination "$reportsDir/pmd/pmd.xml"
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        xml {
+            destination "$reportsDir/pmd/pmd.xml"
+        }
+        html {
+            destination "$reportsDir/pmd/pmd.html"
+        }
     }
-    html {
-      destination "$reportsDir/pmd/pmd.html"
-    }
-  }
 }
