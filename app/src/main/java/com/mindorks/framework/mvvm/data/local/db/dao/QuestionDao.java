@@ -31,13 +31,12 @@ import java.util.List;
 @Dao
 public interface QuestionDao {
 
-    @Query("SELECT * FROM questions")
-    List<Question> loadAll();
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Question question);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Question> questions);
 
+    @Query("SELECT * FROM questions")
+    List<Question> loadAll();
 }

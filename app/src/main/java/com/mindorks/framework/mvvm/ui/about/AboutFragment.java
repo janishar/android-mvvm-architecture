@@ -16,7 +16,6 @@
 
 package com.mindorks.framework.mvvm.ui.about;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -33,8 +32,7 @@ import javax.inject.Inject;
 
 public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewModel> implements AboutNavigator {
 
-    public static final String TAG = "AboutFragment";
-
+    public static final String TAG = AboutFragment.class.getSimpleName();
     @Inject
     AboutViewModel mAboutViewModel;
 
@@ -43,17 +41,6 @@ public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewM
         AboutFragment fragment = new AboutFragment();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mAboutViewModel.setNavigator(this);
-    }
-
-    @Override
-    public AboutViewModel getViewModel() {
-        return mAboutViewModel;
     }
 
     @Override
@@ -67,13 +54,18 @@ public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewM
     }
 
     @Override
+    public AboutViewModel getViewModel() {
+        return mAboutViewModel;
+    }
+
+    @Override
     public void goBack() {
         getBaseActivity().onFragmentDetached(TAG);
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mAboutViewModel.setNavigator(this);
     }
-
 }

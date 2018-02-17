@@ -38,11 +38,6 @@ import com.mindorks.placeholderview.annotations.View;
 @Layout(R.layout.card_layout)
 public class QuestionCard {
 
-    private static final String TAG = "QuestionCard";
-
-    @View(R.id.tv_question_txt)
-    private TextView mQuestionTextView;
-
     @View(R.id.btn_option_1)
     private Button mOption1Button;
 
@@ -57,14 +52,30 @@ public class QuestionCard {
 
     private QuestionCardData mQuestionCardData;
 
+    @View(R.id.tv_question_txt)
+    private TextView mQuestionTextView;
 
     public QuestionCard(QuestionCardData questionCardData) {
         mQuestionCardData = questionCardData;
     }
 
+    @Click(R.id.btn_option_1)
+    public void onOption1Click() {
+        showCorrectOptions();
+    }
+
+    @Click(R.id.btn_option_2)
+    public void onOption2Click() {
+        showCorrectOptions();
+    }
+
+    @Click(R.id.btn_option_3)
+    public void onOption3Click() {
+        showCorrectOptions();
+    }
+
     @Resolve
     private void onResolved() {
-
         mQuestionTextView.setText(mQuestionCardData.question.questionText);
         if (mQuestionCardData.mShowCorrectOptions) {
             showCorrectOptions();
@@ -84,8 +95,9 @@ public class QuestionCard {
                     break;
             }
 
-            if (button != null)
+            if (button != null) {
                 button.setText(mQuestionCardData.options.get(i).optionText);
+            }
 
             if (mQuestionCardData.question.imgUrl != null) {
                 mPicImageView.setImageUrl(mQuestionCardData.question.imgUrl);
@@ -118,20 +130,4 @@ public class QuestionCard {
             }
         }
     }
-
-    @Click(R.id.btn_option_1)
-    public void onOption1Click() {
-        showCorrectOptions();
-    }
-
-    @Click(R.id.btn_option_2)
-    public void onOption2Click() {
-        showCorrectOptions();
-    }
-
-    @Click(R.id.btn_option_3)
-    public void onOption3Click() {
-        showCorrectOptions();
-    }
-
 }

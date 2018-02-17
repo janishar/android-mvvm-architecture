@@ -37,7 +37,7 @@ import android.util.Log;
 
 public class RoundedImageView extends AppCompatImageView {
 
-    private static final String TAG = "RoundedImageView";
+    private static final String TAG = RoundedImageView.class.getSimpleName();
 
     public RoundedImageView(Context context) {
         super(context);
@@ -122,6 +122,4 @@ public class RoundedImageView extends AppCompatImageView {
 
         return output;
     }
-
 }
-

@@ -32,11 +32,6 @@ public class TestSchedulerProvider implements SchedulerProvider {
     }
 
     @Override
-    public Scheduler ui() {
-        return mTestScheduler;
-    }
-
-    @Override
     public Scheduler computation() {
         return mTestScheduler;
     }
@@ -46,4 +41,8 @@ public class TestSchedulerProvider implements SchedulerProvider {
         return mTestScheduler;
     }
 
+    @Override
+    public Scheduler ui() {
+        return mTestScheduler;
+    }
 }

@@ -37,8 +37,16 @@ public class FeedPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public int getCount() {
+        return mTabCount;
+    }
 
+    public void setCount(int count) {
+        mTabCount = count;
+    }
+
+    @Override
+    public Fragment getItem(int position) {
         switch (position) {
             case 0:
                 return BlogFragment.newInstance();
@@ -48,14 +56,4 @@ public class FeedPagerAdapter extends FragmentStatePagerAdapter {
                 return null;
         }
     }
-
-    @Override
-    public int getCount() {
-        return mTabCount;
-    }
-
-    public void setCount(int count) {
-        mTabCount = count;
-    }
-
 }

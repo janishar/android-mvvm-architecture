@@ -29,9 +29,7 @@ import dagger.Provides;
 public class RateUsDialogModule {
 
     @Provides
-    RateUsViewModel provideRateUsViewModel(DataManager dataManager,
-                                           SchedulerProvider schedulerProvider) {
+    RateUsViewModel provideRateUsViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         return new RateUsViewModel(dataManager, schedulerProvider);
     }
-
 }

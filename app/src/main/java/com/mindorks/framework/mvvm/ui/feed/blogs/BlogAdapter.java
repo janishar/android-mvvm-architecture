@@ -37,6 +37,7 @@ import java.util.List;
 public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public static final int VIEW_TYPE_EMPTY = 0;
+
     public static final int VIEW_TYPE_NORMAL = 1;
 
     private List<BlogResponse.Blog> mBlogResponseList;
@@ -47,8 +48,22 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         this.mBlogResponseList = blogResponseList;
     }
 
-    public void setListener(BlogAdapterListener listener) {
-        this.mListener = listener;
+    @Override
+    public int getItemCount() {
+        if (mBlogResponseList != null && mBlogResponseList.size() > 0) {
+            return mBlogResponseList.size();
+        } else {
+            return 1;
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (mBlogResponseList != null && !mBlogResponseList.isEmpty()) {
+            return VIEW_TYPE_NORMAL;
+        } else {
+            return VIEW_TYPE_EMPTY;
+        }
     }
 
     @Override
@@ -58,7 +73,6 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         switch (viewType) {
             case VIEW_TYPE_NORMAL:
                 ItemBlogViewBinding blogViewBinding = ItemBlogViewBinding.inflate(LayoutInflater.from(parent.getContext()),
@@ -72,24 +86,6 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         }
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        if (mBlogResponseList != null && mBlogResponseList.size() > 0) {
-            return VIEW_TYPE_NORMAL;
-        } else {
-            return VIEW_TYPE_EMPTY;
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        if (mBlogResponseList != null && mBlogResponseList.size() > 0) {
-            return mBlogResponseList.size();
-        } else {
-            return 1;
-        }
-    }
-
     public void addItems(List<BlogResponse.Blog> blogList) {
         mBlogResponseList.addAll(blogList);
         notifyDataSetChanged();
@@ -97,6 +93,15 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
     public void clearItems() {
         mBlogResponseList.clear();
+    }
+
+    public void setListener(BlogAdapterListener listener) {
+        this.mListener = listener;
+    }
+
+    public interface BlogAdapterListener {
+
+        void onRetryClick();
     }
 
     public class BlogViewHolder extends BaseViewHolder implements BlogItemViewModel.BlogItemViewModelListener {
@@ -112,11 +117,8 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
         @Override
         public void onBind(int position) {
-
             final BlogResponse.Blog blog = mBlogResponseList.get(position);
-
             mBlogItemViewModel = new BlogItemViewModel(blog, this);
-
             mBinding.setViewModel(mBlogItemViewModel);
 
             // Immediate Binding
@@ -124,7 +126,6 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
             // the next frame. There are times, however, when binding must be executed immediately.
             // To force execution, use the executePendingBindings() method.
             mBinding.executePendingBindings();
-
         }
 
         @Override
@@ -162,9 +163,5 @@ public class BlogAdapter extends RecyclerView.Adapter<BaseViewHolder> {
         public void onRetryClick() {
             mListener.onRetryClick();
         }
-    }
-
-    public interface BlogAdapterListener {
-        void onRetryClick();
     }
 }

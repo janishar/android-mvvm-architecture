@@ -35,6 +35,8 @@ import dagger.android.AndroidInjectionModule;
 @Component(modules = {AndroidInjectionModule.class, AppModule.class, ActivityBuilder.class})
 public interface AppComponent {
 
+    void inject(MvvmApp app);
+
     @Component.Builder
     interface Builder {
 
@@ -42,9 +44,5 @@ public interface AppComponent {
         Builder application(Application application);
 
         AppComponent build();
-
     }
-
-    void inject(MvvmApp app);
-
 }

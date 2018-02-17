@@ -27,5 +27,4 @@ public abstract class OpenSourceFragmentProvider {
 
     @ContributesAndroidInjector(modules = OpenSourceFragmentModule.class)
     abstract OpenSourceFragment provideOpenSourceFragmentFactory();
-
 }

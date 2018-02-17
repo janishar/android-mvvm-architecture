@@ -27,15 +27,29 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by amitshekhar on 08/07/17.
  */
-@Entity(tableName = "options", foreignKeys
-        = @ForeignKey(entity = Question.class,
-        parentColumns = "id",
-        childColumns = "question_id"))
+@Entity(
+        tableName = "options",
+        foreignKeys = @ForeignKey(
+                entity = Question.class,
+                parentColumns = "id",
+                childColumns = "question_id"
+        )
+)
 public class Option {
+
+    @Expose
+    @SerializedName("created_at")
+    @ColumnInfo(name = "created_at")
+    public String createdAt;
 
     @Expose
     @PrimaryKey
     public Long id;
+
+    @Expose
+    @SerializedName("is_correct")
+    @ColumnInfo(name = "is_correct")
+    public boolean isCorrect;
 
     @Expose
     @SerializedName("option_text")
@@ -48,18 +62,7 @@ public class Option {
     public Long questionId;
 
     @Expose
-    @SerializedName("is_correct")
-    @ColumnInfo(name = "is_correct")
-    public boolean isCorrect;
-
-    @Expose
-    @SerializedName("created_at")
-    @ColumnInfo(name = "created_at")
-    public String createdAt;
-
-    @Expose
     @SerializedName("updated_at")
     @ColumnInfo(name = "updated_at")
     public String updatedAt;
-
 }

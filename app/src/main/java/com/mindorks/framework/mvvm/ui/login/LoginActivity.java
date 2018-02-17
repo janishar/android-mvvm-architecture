@@ -37,32 +37,25 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Inject
     LoginViewModel mLoginViewModel;
+    private ActivityLoginBinding mActivityLoginBinding;
 
-    ActivityLoginBinding mActivityLoginBinding;
-
-    public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, LoginActivity.class);
-        return intent;
+    public static Intent newIntent(Context context) {
+        return new Intent(context, LoginActivity.class);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mActivityLoginBinding = getViewDataBinding();
-        mLoginViewModel.setNavigator(this);
-
+    public int getBindingVariable() {
+        return BR.viewModel;
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public int getLayoutId() {
+        return R.layout.activity_login;
     }
 
     @Override
-    public void openMainActivity() {
-        Intent intent = MainActivity.getStartIntent(LoginActivity.this);
-        startActivity(intent);
-        finish();
+    public LoginViewModel getViewModel() {
+        return mLoginViewModel;
     }
 
     @Override
@@ -83,18 +76,16 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     @Override
-    public LoginViewModel getViewModel() {
-        return mLoginViewModel;
+    public void openMainActivity() {
+        Intent intent = MainActivity.newIntent(LoginActivity.this);
+        startActivity(intent);
+        finish();
     }
 
     @Override
-    public int getBindingVariable() {
-        return BR.viewModel;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mActivityLoginBinding = getViewDataBinding();
+        mLoginViewModel.setNavigator(this);
     }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_login;
-    }
-
 }

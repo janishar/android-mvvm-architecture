@@ -22,10 +22,9 @@ package com.mindorks.framework.mvvm.ui.login;
 
 public interface LoginNavigator {
 
-    void openMainActivity();
-
     void handleError(Throwable throwable);
 
     void login();
 
+    void openMainActivity();
 }

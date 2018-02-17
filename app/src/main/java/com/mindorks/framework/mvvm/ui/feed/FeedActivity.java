@@ -43,64 +43,30 @@ import dagger.android.support.HasSupportFragmentInjector;
 public class FeedActivity extends BaseActivity<ActivityFeedBinding, FeedViewModel> implements HasSupportFragmentInjector {
 
     @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
+    @Inject
     FeedViewModel mFeedViewModel;
-
     @Inject
     FeedPagerAdapter mPagerAdapter;
+    private ActivityFeedBinding mActivityFeedBinding;
 
-    @Inject
-    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
-
-    ActivityFeedBinding mActivityFeedBinding;
-
-    public static Intent getStartIntent(Context context) {
-        Intent intent = new Intent(context, FeedActivity.class);
-        return intent;
+    public static Intent newIntent(Context context) {
+        return new Intent(context, FeedActivity.class);
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mActivityFeedBinding = getViewDataBinding();
-        setUp();
+    public int getBindingVariable() {
+        return BR.viewModel;
     }
 
-    private void setUp() {
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_feed;
+    }
 
-        setSupportActionBar(mActivityFeedBinding.toolbar);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-
-        mPagerAdapter.setCount(2);
-
-        mActivityFeedBinding.feedViewPager.setAdapter(mPagerAdapter);
-
-        mActivityFeedBinding.tabLayout.addTab(mActivityFeedBinding.tabLayout.newTab().setText(getString(R.string.blog)));
-        mActivityFeedBinding.tabLayout.addTab(mActivityFeedBinding.tabLayout.newTab().setText(getString(R.string.open_source)));
-
-        mActivityFeedBinding.feedViewPager.setOffscreenPageLimit(mActivityFeedBinding.tabLayout.getTabCount());
-
-        mActivityFeedBinding.feedViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mActivityFeedBinding.tabLayout));
-
-        mActivityFeedBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                mActivityFeedBinding.feedViewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+    @Override
+    public FeedViewModel getViewModel() {
+        return mFeedViewModel;
     }
 
     @Override
@@ -129,28 +95,50 @@ public class FeedActivity extends BaseActivity<ActivityFeedBinding, FeedViewMode
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public FeedViewModel getViewModel() {
-        return mFeedViewModel;
-    }
-
-    @Override
-    public int getBindingVariable() {
-        return BR.viewModel;
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.activity_feed;
-    }
-
-    @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return fragmentDispatchingAndroidInjector;
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mActivityFeedBinding = getViewDataBinding();
+        setUp();
+    }
+
+    private void setUp() {
+        setSupportActionBar(mActivityFeedBinding.toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+        mPagerAdapter.setCount(2);
+
+        mActivityFeedBinding.feedViewPager.setAdapter(mPagerAdapter);
+
+        mActivityFeedBinding.tabLayout.addTab(mActivityFeedBinding.tabLayout.newTab().setText(getString(R.string.blog)));
+        mActivityFeedBinding.tabLayout.addTab(mActivityFeedBinding.tabLayout.newTab().setText(getString(R.string.open_source)));
+
+        mActivityFeedBinding.feedViewPager.setOffscreenPageLimit(mActivityFeedBinding.tabLayout.getTabCount());
+
+        mActivityFeedBinding.feedViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mActivityFeedBinding.tabLayout));
+
+        mActivityFeedBinding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mActivityFeedBinding.feedViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
 }

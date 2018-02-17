@@ -18,6 +18,7 @@ package com.mindorks.framework.mvvm.ui.main.rating;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,8 +38,7 @@ import dagger.android.support.AndroidSupportInjection;
 
 public class RateUsDialog extends BaseDialog implements RateUsCallback {
 
-    private static final String TAG = "RateUsDialog";
-
+    private static final String TAG = RateUsDialog.class.getSimpleName();
     @Inject
     RateUsViewModel mRateUsViewModel;
 
@@ -50,11 +50,13 @@ public class RateUsDialog extends BaseDialog implements RateUsCallback {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void dismissDialog() {
+        dismissDialog(TAG);
+    }
 
-        DialogRateUsBinding binding = DataBindingUtil.inflate(
-                inflater, R.layout.dialog_rate_us, container, false);
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        DialogRateUsBinding binding = DataBindingUtil.inflate(inflater, R.layout.dialog_rate_us, container, false);
         View view = binding.getRoot();
 
         AndroidSupportInjection.inject(this);
@@ -66,18 +68,7 @@ public class RateUsDialog extends BaseDialog implements RateUsCallback {
         return view;
     }
 
-
     public void show(FragmentManager fragmentManager) {
         super.show(fragmentManager, TAG);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-    @Override
-    public void dismissDialog() {
-        dismissDialog(TAG);
     }
 }

@@ -29,14 +29,13 @@ import dagger.Provides;
 public class FeedActivityModule {
 
     @Provides
-    FeedViewModel provideFeedViewModel(DataManager dataManager,
-                                       SchedulerProvider schedulerProvider) {
-        return new FeedViewModel(dataManager, schedulerProvider);
-    }
-
-    @Provides
     FeedPagerAdapter provideFeedPagerAdapter(FeedActivity activity) {
         return new FeedPagerAdapter(activity.getSupportFragmentManager());
     }
 
+    @Provides
+    FeedViewModel provideFeedViewModel(DataManager dataManager,
+                                       SchedulerProvider schedulerProvider) {
+        return new FeedViewModel(dataManager, schedulerProvider);
+    }
 }

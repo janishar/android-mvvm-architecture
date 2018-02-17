@@ -33,10 +33,9 @@ import com.mindorks.framework.mvvm.data.model.db.User;
 @Database(entities = {User.class, Question.class, Option.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
 
-    public abstract UserDao userDao();
+    public abstract OptionDao optionDao();
 
     public abstract QuestionDao questionDao();
 
-    public abstract OptionDao optionDao();
-
+    public abstract UserDao userDao();
 }

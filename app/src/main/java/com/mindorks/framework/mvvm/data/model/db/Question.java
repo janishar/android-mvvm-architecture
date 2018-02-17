@@ -30,13 +30,13 @@ import com.google.gson.annotations.SerializedName;
 public class Question {
 
     @Expose
-    @PrimaryKey
-    public Long id;
+    @SerializedName("created_at")
+    @ColumnInfo(name = "created_at")
+    public String createdAt;
 
     @Expose
-    @SerializedName("question_text")
-    @ColumnInfo(name = "question_text")
-    public String questionText;
+    @PrimaryKey
+    public Long id;
 
     @Expose
     @SerializedName("question_img_url")
@@ -44,13 +44,12 @@ public class Question {
     public String imgUrl;
 
     @Expose
-    @SerializedName("created_at")
-    @ColumnInfo(name = "created_at")
-    public String createdAt;
+    @SerializedName("question_text")
+    @ColumnInfo(name = "question_text")
+    public String questionText;
 
     @Expose
     @SerializedName("updated_at")
     @ColumnInfo(name = "updated_at")
     public String updatedAt;
-
 }

@@ -27,5 +27,4 @@ public abstract class RateUsDialogProvider {
 
     @ContributesAndroidInjector(modules = RateUsDialogModule.class)
     abstract RateUsDialog provideRateUsDialogFactory();
-
 }

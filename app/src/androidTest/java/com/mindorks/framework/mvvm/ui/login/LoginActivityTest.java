@@ -39,8 +39,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class LoginActivityTest {
 
     @Rule
-    public ActivityTestRule<LoginActivity> mActivityRule =
-            new ActivityTestRule<>(LoginActivity.class);
+    public ActivityTestRule<LoginActivity> mActivityRule = new ActivityTestRule<>(LoginActivity.class);
 
     @Test
     public void checkViewsDisplay() {
@@ -62,6 +61,5 @@ public class LoginActivityTest {
 
         onView(withId(R.id.ibFbLogin))
                 .check(matches(isDisplayed()));
-
     }
 }

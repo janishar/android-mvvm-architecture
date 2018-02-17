@@ -21,7 +21,6 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 import java.util.ArrayList;
@@ -37,18 +36,13 @@ public class BlogFragmentModule {
 
     @Provides
     BlogViewModel blogViewModel(DataManager dataManager,
-                                       SchedulerProvider schedulerProvider) {
+                                SchedulerProvider schedulerProvider) {
         return new BlogViewModel(dataManager, schedulerProvider);
     }
 
     @Provides
     BlogAdapter provideBlogAdapter() {
-        return new BlogAdapter(new ArrayList<BlogResponse.Blog>());
-    }
-
-    @Provides
-    LinearLayoutManager provideLinearLayoutManager(BlogFragment fragment) {
-        return new LinearLayoutManager(fragment.getActivity());
+        return new BlogAdapter(new ArrayList<>());
     }
 
     @Provides
@@ -56,4 +50,8 @@ public class BlogFragmentModule {
         return new ViewModelProviderFactory<>(blogViewModel);
     }
 
+    @Provides
+    LinearLayoutManager provideLinearLayoutManager(BlogFragment fragment) {
+        return new LinearLayoutManager(fragment.getActivity());
+    }
 }

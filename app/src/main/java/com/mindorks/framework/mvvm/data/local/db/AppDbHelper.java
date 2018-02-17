@@ -43,16 +43,6 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Observable<List<User>> getAllUsers() {
-        return Observable.fromCallable(new Callable<List<User>>() {
-            @Override
-            public List<User> call() throws Exception {
-                return mAppDatabase.userDao().loadAll();
-            }
-        });
-    }
-
-    @Override
     public Observable<List<Question>> getAllQuestions() {
         return Observable.fromCallable(new Callable<List<Question>>() {
             @Override
@@ -63,21 +53,21 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Observable<Boolean> isQuestionEmpty() {
-        return Observable.fromCallable(new Callable<Boolean>() {
+    public Observable<List<User>> getAllUsers() {
+        return Observable.fromCallable(new Callable<List<User>>() {
             @Override
-            public Boolean call() throws Exception {
-                return mAppDatabase.questionDao().loadAll().isEmpty();
+            public List<User> call() throws Exception {
+                return mAppDatabase.userDao().loadAll();
             }
         });
     }
 
     @Override
-    public Observable<Boolean> isOptionEmpty() {
-        return Observable.fromCallable(new Callable<Boolean>() {
+    public Observable<List<Option>> getOptionsForQuestionId(final Long questionId) {
+        return Observable.fromCallable(new Callable<List<Option>>() {
             @Override
-            public Boolean call() throws Exception {
-                return mAppDatabase.optionDao().loadAll().isEmpty();
+            public List<Option> call() throws Exception {
+                return mAppDatabase.optionDao().loadAllByQuestionId(questionId);
             }
         });
     }
@@ -94,12 +84,21 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Observable<Boolean> saveQuestion(final Question question) {
+    public Observable<Boolean> isOptionEmpty() {
         return Observable.fromCallable(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
-                mAppDatabase.questionDao().insert(question);
-                return true;
+                return mAppDatabase.optionDao().loadAll().isEmpty();
+            }
+        });
+    }
+
+    @Override
+    public Observable<Boolean> isQuestionEmpty() {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return mAppDatabase.questionDao().loadAll().isEmpty();
             }
         });
     }
@@ -110,17 +109,6 @@ public class AppDbHelper implements DbHelper {
             @Override
             public Boolean call() throws Exception {
                 mAppDatabase.optionDao().insert(option);
-                return true;
-            }
-        });
-    }
-
-    @Override
-    public Observable<Boolean> saveQuestionList(final List<Question> questionList) {
-        return Observable.fromCallable(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                mAppDatabase.questionDao().insertAll(questionList);
                 return true;
             }
         });
@@ -138,13 +126,24 @@ public class AppDbHelper implements DbHelper {
     }
 
     @Override
-    public Observable<List<Option>> getOptionsForQuestionId(final Long questionId) {
-        return Observable.fromCallable(new Callable<List<Option>>() {
+    public Observable<Boolean> saveQuestion(final Question question) {
+        return Observable.fromCallable(new Callable<Boolean>() {
             @Override
-            public List<Option> call() throws Exception {
-                return mAppDatabase.optionDao().loadAllByQuestionId(questionId);
+            public Boolean call() throws Exception {
+                mAppDatabase.questionDao().insert(question);
+                return true;
             }
         });
     }
 
+    @Override
+    public Observable<Boolean> saveQuestionList(final List<Question> questionList) {
+        return Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                mAppDatabase.questionDao().insertAll(questionList);
+                return true;
+            }
+        });
+    }
 }

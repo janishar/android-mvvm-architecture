@@ -27,5 +27,4 @@ public abstract class BlogFragmentProvider {
 
     @ContributesAndroidInjector(modules = BlogFragmentModule.class)
     abstract BlogFragment provideBlogFragmentFactory();
-
 }

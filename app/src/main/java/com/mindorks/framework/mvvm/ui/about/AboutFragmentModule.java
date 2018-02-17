@@ -29,9 +29,7 @@ import dagger.Provides;
 public class AboutFragmentModule {
 
     @Provides
-    AboutViewModel provideAboutViewModel(DataManager dataManager,
-                                         SchedulerProvider schedulerProvider) {
+    AboutViewModel provideAboutViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         return new AboutViewModel(dataManager, schedulerProvider);
     }
-
 }

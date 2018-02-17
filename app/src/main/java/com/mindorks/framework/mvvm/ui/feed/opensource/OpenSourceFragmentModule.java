@@ -33,19 +33,18 @@ import dagger.Provides;
 public class OpenSourceFragmentModule {
 
     @Provides
-    OpenSourceViewModel openSourceViewModel(DataManager dataManager,
-                                                   SchedulerProvider schedulerProvider) {
+    OpenSourceViewModel openSourceViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
         return new OpenSourceViewModel(dataManager, schedulerProvider);
-    }
-
-    @Provides
-    OpenSourceAdapter provideOpenSourceAdapter() {
-        return new OpenSourceAdapter();
     }
 
     @Provides
     LinearLayoutManager provideLinearLayoutManager(OpenSourceFragment fragment) {
         return new LinearLayoutManager(fragment.getActivity());
+    }
+
+    @Provides
+    OpenSourceAdapter provideOpenSourceAdapter() {
+        return new OpenSourceAdapter();
     }
 
     @Provides
