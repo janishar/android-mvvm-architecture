@@ -25,6 +25,6 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class OpenSourceFragmentProvider {
 
-  @ContributesAndroidInjector(modules = OpenSourceFragmentModule.class)
-  abstract OpenSourceFragment provideOpenSourceFragmentFactory();
+    @ContributesAndroidInjector(modules = OpenSourceFragmentModule.class)
+    abstract OpenSourceFragment provideOpenSourceFragmentFactory();
 }

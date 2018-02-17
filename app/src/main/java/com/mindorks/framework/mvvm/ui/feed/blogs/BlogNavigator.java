@@ -26,7 +26,7 @@ import java.util.List;
 
 public interface BlogNavigator {
 
-  void handleError(Throwable throwable);
+    void handleError(Throwable throwable);
 
-  void updateBlog(List<BlogResponse.Blog> blogList);
+    void updateBlog(List<BlogResponse.Blog> blogList);
 }

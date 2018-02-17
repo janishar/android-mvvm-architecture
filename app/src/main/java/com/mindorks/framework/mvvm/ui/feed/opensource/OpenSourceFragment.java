@@ -17,11 +17,6 @@
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
 
-import com.mindorks.framework.mvvm.BR;
-import com.mindorks.framework.mvvm.R;
-import com.mindorks.framework.mvvm.databinding.FragmentOpenSourceBinding;
-import com.mindorks.framework.mvvm.ui.base.BaseFragment;
-
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -31,6 +26,11 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import com.mindorks.framework.mvvm.BR;
+import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.databinding.FragmentOpenSourceBinding;
+import com.mindorks.framework.mvvm.ui.base.BaseFragment;
+
 import javax.inject.Inject;
 
 /**
@@ -38,78 +38,74 @@ import javax.inject.Inject;
  */
 
 public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, OpenSourceViewModel>
-    implements OpenSourceNavigator, OpenSourceAdapter.OpenSourceAdapterListener {
+        implements OpenSourceNavigator, OpenSourceAdapter.OpenSourceAdapterListener {
 
-  public static OpenSourceFragment newInstance() {
-    Bundle args = new Bundle();
-    OpenSourceFragment fragment = new OpenSourceFragment();
-    fragment.setArguments(args);
-    return fragment;
-  }
+    FragmentOpenSourceBinding mFragmentOpenSourceBinding;
+    @Inject
+    LinearLayoutManager mLayoutManager;
+    @Inject
+    OpenSourceAdapter mOpenSourceAdapter;
+    @Inject
+    ViewModelProvider.Factory mViewModelFactory;
+    private OpenSourceViewModel mOpenSourceViewModel;
 
-  FragmentOpenSourceBinding mFragmentOpenSourceBinding;
+    public static OpenSourceFragment newInstance() {
+        Bundle args = new Bundle();
+        OpenSourceFragment fragment = new OpenSourceFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
-  @Inject
-  LinearLayoutManager mLayoutManager;
+    @Override
+    public int getBindingVariable() {
+        return BR.viewModel;
+    }
 
-  @Inject
-  OpenSourceAdapter mOpenSourceAdapter;
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_open_source;
+    }
 
-  @Inject
-  ViewModelProvider.Factory mViewModelFactory;
+    @Override
+    public OpenSourceViewModel getViewModel() {
+        mOpenSourceViewModel = ViewModelProviders.of(this, mViewModelFactory).get(OpenSourceViewModel.class);
+        return mOpenSourceViewModel;
+    }
 
-  private OpenSourceViewModel mOpenSourceViewModel;
+    @Override
+    public void handleError(Throwable throwable) {
+        // handle error
+    }
 
-  @Override
-  public int getBindingVariable() {
-    return BR.viewModel;
-  }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mOpenSourceViewModel.setNavigator(this);
+        mOpenSourceAdapter.setListener(this);
+    }
 
-  @Override
-  public int getLayoutId() {
-    return R.layout.fragment_open_source;
-  }
+    @Override
+    public void onRetryClick() {
+        mOpenSourceViewModel.fetchRepos();
+    }
 
-  @Override
-  public OpenSourceViewModel getViewModel() {
-    mOpenSourceViewModel = ViewModelProviders.of(this, mViewModelFactory).get(OpenSourceViewModel.class);
-    return mOpenSourceViewModel;
-  }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mFragmentOpenSourceBinding = getViewDataBinding();
+        setUp();
+        subscribeToLiveData();
+    }
 
-  @Override
-  public void handleError(Throwable throwable) {
-    // handle error
-  }
+    private void setUp() {
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mFragmentOpenSourceBinding.openSourceRecyclerView.setLayoutManager(mLayoutManager);
+        mFragmentOpenSourceBinding.openSourceRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mFragmentOpenSourceBinding.openSourceRecyclerView.setAdapter(mOpenSourceAdapter);
+    }
 
-  @Override
-  public void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    mOpenSourceViewModel.setNavigator(this);
-    mOpenSourceAdapter.setListener(this);
-  }
-
-  @Override
-  public void onRetryClick() {
-    mOpenSourceViewModel.fetchRepos();
-  }
-
-  @Override
-  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-    super.onViewCreated(view, savedInstanceState);
-    mFragmentOpenSourceBinding = getViewDataBinding();
-    setUp();
-    subscribeToLiveData();
-  }
-
-  private void setUp() {
-    mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-    mFragmentOpenSourceBinding.openSourceRecyclerView.setLayoutManager(mLayoutManager);
-    mFragmentOpenSourceBinding.openSourceRecyclerView.setItemAnimator(new DefaultItemAnimator());
-    mFragmentOpenSourceBinding.openSourceRecyclerView.setAdapter(mOpenSourceAdapter);
-  }
-
-  private void subscribeToLiveData() {
-    mOpenSourceViewModel.getOpenSourceRepos().observe(this,
-        openSourceItemViewModels -> mOpenSourceViewModel.addOpenSourceItemsToList(openSourceItemViewModels));
-  }
+    private void subscribeToLiveData() {
+        mOpenSourceViewModel.getOpenSourceRepos().observe(this,
+                openSourceItemViewModels -> mOpenSourceViewModel.addOpenSourceItemsToList(openSourceItemViewModels));
+    }
 }

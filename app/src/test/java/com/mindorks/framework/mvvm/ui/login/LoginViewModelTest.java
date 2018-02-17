@@ -41,49 +41,46 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class LoginViewModelTest {
 
-  @BeforeClass
-  public static void onlyOnce() throws Exception {
-  }
+    @Mock
+    LoginNavigator mLoginCallback;
+    @Mock
+    DataManager mMockDataManager;
+    private LoginViewModel mLoginViewModel;
+    private TestScheduler mTestScheduler;
 
-  @Mock
-  LoginNavigator mLoginCallback;
+    @BeforeClass
+    public static void onlyOnce() throws Exception {
+    }
 
-  @Mock
-  DataManager mMockDataManager;
+    @Before
+    public void setUp() throws Exception {
+        mTestScheduler = new TestScheduler();
+        TestSchedulerProvider testSchedulerProvider = new TestSchedulerProvider(mTestScheduler);
+        mLoginViewModel = new LoginViewModel(mMockDataManager, testSchedulerProvider);
+        mLoginViewModel.setNavigator(mLoginCallback);
+    }
 
-  private LoginViewModel mLoginViewModel;
+    @After
+    public void tearDown() throws Exception {
+        mTestScheduler = null;
+        mLoginViewModel = null;
+        mLoginCallback = null;
+    }
 
-  private TestScheduler mTestScheduler;
+    @Test
+    public void testServerLoginSuccess() {
+        String email = "dummy@gmail.com";
+        String password = "password";
 
-  @Before
-  public void setUp() throws Exception {
-    mTestScheduler = new TestScheduler();
-    TestSchedulerProvider testSchedulerProvider = new TestSchedulerProvider(mTestScheduler);
-    mLoginViewModel = new LoginViewModel(mMockDataManager, testSchedulerProvider);
-    mLoginViewModel.setNavigator(mLoginCallback);
-  }
+        LoginResponse loginResponse = new LoginResponse();
 
-  @After
-  public void tearDown() throws Exception {
-    mTestScheduler = null;
-    mLoginViewModel = null;
-    mLoginCallback = null;
-  }
+        doReturn(Single.just(loginResponse))
+                .when(mMockDataManager)
+                .doServerLoginApiCall(new LoginRequest.ServerLoginRequest(email, password));
 
-  @Test
-  public void testServerLoginSuccess() {
-    String email = "dummy@gmail.com";
-    String password = "password";
+        mLoginViewModel.login(email, password);
+        mTestScheduler.triggerActions();
 
-    LoginResponse loginResponse = new LoginResponse();
-
-    doReturn(Single.just(loginResponse))
-        .when(mMockDataManager)
-        .doServerLoginApiCall(new LoginRequest.ServerLoginRequest(email, password));
-
-    mLoginViewModel.login(email, password);
-    mTestScheduler.triggerActions();
-
-    verify(mLoginCallback).openMainActivity();
-  }
+        verify(mLoginCallback).openMainActivity();
+    }
 }

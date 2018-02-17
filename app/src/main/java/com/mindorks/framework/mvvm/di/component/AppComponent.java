@@ -16,11 +16,11 @@
 
 package com.mindorks.framework.mvvm.di.component;
 
+import android.app.Application;
+
 import com.mindorks.framework.mvvm.MvvmApp;
 import com.mindorks.framework.mvvm.di.builder.ActivityBuilder;
 import com.mindorks.framework.mvvm.di.module.AppModule;
-
-import android.app.Application;
 
 import javax.inject.Singleton;
 
@@ -35,14 +35,14 @@ import dagger.android.AndroidInjectionModule;
 @Component(modules = {AndroidInjectionModule.class, AppModule.class, ActivityBuilder.class})
 public interface AppComponent {
 
-  void inject(MvvmApp app);
+    void inject(MvvmApp app);
 
-  @Component.Builder
-  interface Builder {
+    @Component.Builder
+    interface Builder {
 
-    @BindsInstance
-    Builder application(Application application);
+        @BindsInstance
+        Builder application(Application application);
 
-    AppComponent build();
-  }
+        AppComponent build();
+    }
 }

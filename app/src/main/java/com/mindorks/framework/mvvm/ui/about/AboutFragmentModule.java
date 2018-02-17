@@ -28,8 +28,8 @@ import dagger.Provides;
 @Module
 public class AboutFragmentModule {
 
-  @Provides
-  AboutViewModel provideAboutViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-    return new AboutViewModel(dataManager, schedulerProvider);
-  }
+    @Provides
+    AboutViewModel provideAboutViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+        return new AboutViewModel(dataManager, schedulerProvider);
+    }
 }

@@ -30,17 +30,17 @@ import io.reactivex.Single;
 
 public interface ApiHelper {
 
-  Single<LoginResponse> doFacebookLoginApiCall(LoginRequest.FacebookLoginRequest request);
+    Single<LoginResponse> doFacebookLoginApiCall(LoginRequest.FacebookLoginRequest request);
 
-  Single<LoginResponse> doGoogleLoginApiCall(LoginRequest.GoogleLoginRequest request);
+    Single<LoginResponse> doGoogleLoginApiCall(LoginRequest.GoogleLoginRequest request);
 
-  Single<LogoutResponse> doLogoutApiCall();
+    Single<LogoutResponse> doLogoutApiCall();
 
-  Single<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest request);
+    Single<LoginResponse> doServerLoginApiCall(LoginRequest.ServerLoginRequest request);
 
-  ApiHeader getApiHeader();
+    ApiHeader getApiHeader();
 
-  Single<BlogResponse> getBlogApiCall();
+    Single<BlogResponse> getBlogApiCall();
 
-  Single<OpenSourceResponse> getOpenSourceApiCall();
+    Single<OpenSourceResponse> getOpenSourceApiCall();
 }

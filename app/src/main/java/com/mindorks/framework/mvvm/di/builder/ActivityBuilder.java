@@ -38,21 +38,21 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class ActivityBuilder {
 
-  @ContributesAndroidInjector(modules = {
-      FeedActivityModule.class,
-      BlogFragmentProvider.class,
-      OpenSourceFragmentProvider.class})
-  abstract FeedActivity bindFeedActivity();
+    @ContributesAndroidInjector(modules = {
+            FeedActivityModule.class,
+            BlogFragmentProvider.class,
+            OpenSourceFragmentProvider.class})
+    abstract FeedActivity bindFeedActivity();
 
-  @ContributesAndroidInjector(modules = LoginActivityModule.class)
-  abstract LoginActivity bindLoginActivity();
+    @ContributesAndroidInjector(modules = LoginActivityModule.class)
+    abstract LoginActivity bindLoginActivity();
 
-  @ContributesAndroidInjector(modules = {
-      MainActivityModule.class,
-      AboutFragmentProvider.class,
-      RateUsDialogProvider.class})
-  abstract MainActivity bindMainActivity();
+    @ContributesAndroidInjector(modules = {
+            MainActivityModule.class,
+            AboutFragmentProvider.class,
+            RateUsDialogProvider.class})
+    abstract MainActivity bindMainActivity();
 
-  @ContributesAndroidInjector(modules = SplashActivityModule.class)
-  abstract SplashActivity bindSplashActivity();
+    @ContributesAndroidInjector(modules = SplashActivityModule.class)
+    abstract SplashActivity bindSplashActivity();
 }

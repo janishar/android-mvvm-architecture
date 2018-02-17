@@ -15,102 +15,102 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <data>
+    <data>
 
-    <variable
-      name="viewModel"
-      type="com.mindorks.framework.mvvm.ui.about.AboutViewModel" />
+        <variable
+            name="viewModel"
+            type="com.mindorks.framework.mvvm.ui.about.AboutViewModel" />
 
-  </data>
-
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/black_effective">
+    </data>
 
     <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="55dp"
-      android:layout_marginTop="@dimen/app_bar_height"
-      android:orientation="horizontal"
-      android:gravity="center|start">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_effective"
+        android:orientation="vertical">
 
-      <ImageButton
-        android:id="@+id/navBackBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:background="@color/transparent"
-        android:onClick="@{() -> viewModel.onNavBackClick()}"
-        android:tint="@color/white"
-        app:srcCompat="@drawable/ic_keyboard_backspace_24px"
-        style="@style/Button.ImageButton" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="@dimen/app_bar_height"
+            android:gravity="center|start"
+            android:orientation="horizontal">
 
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:text="@string/about"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        style="@style/TextStyle.Heading" />
+            <ImageButton
+                android:id="@+id/navBackBtn"
+                style="@style/Button.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:background="@color/transparent"
+                android:onClick="@{() -> viewModel.onNavBackClick()}"
+                android:tint="@color/white"
+                app:srcCompat="@drawable/ic_keyboard_backspace_24px" />
+
+            <TextView
+                style="@style/TextStyle.Heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:text="@string/about"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/TextStyle.Heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:autoLink="web"
+            android:padding="20dp"
+            android:text="@string/project_info"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvMvpBlog"
+            style="@style/TextStyle.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:autoLink="web"
+            android:padding="10dp"
+            android:text="@string/link_mvvm_blog"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvMvpRepo"
+            style="@style/TextStyle.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:padding="10dp"
+            android:text="@string/link_mvvm_repo"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvMindorksBlog"
+            style="@style/TextStyle.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:padding="10dp"
+            android:text="@string/link_mindorks_blog"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvMindorksRepo"
+            style="@style/TextStyle.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:padding="10dp"
+            android:text="@string/link_mindorks_repo"
+            android:textColor="@color/white" />
     </LinearLayout>
-
-    <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="30dp"
-      android:autoLink="web"
-      android:padding="20dp"
-      android:text="@string/project_info"
-      android:textColor="@color/white"
-      android:textSize="20sp"
-      style="@style/TextStyle.Heading" />
-
-    <TextView
-      android:id="@+id/tvMvpBlog"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="10dp"
-      android:autoLink="web"
-      android:padding="10dp"
-      android:text="@string/link_mvvm_blog"
-      android:textColor="@color/white"
-      style="@style/TextStyle.Title" />
-
-    <TextView
-      android:id="@+id/tvMvpRepo"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:autoLink="web"
-      android:padding="10dp"
-      android:text="@string/link_mvvm_repo"
-      android:textColor="@color/white"
-      style="@style/TextStyle.Title" />
-
-    <TextView
-      android:id="@+id/tvMindorksBlog"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:autoLink="web"
-      android:padding="10dp"
-      android:text="@string/link_mindorks_blog"
-      android:textColor="@color/white"
-      style="@style/TextStyle.Title" />
-
-    <TextView
-      android:id="@+id/tvMindorksRepo"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:autoLink="web"
-      android:padding="10dp"
-      android:text="@string/link_mindorks_repo"
-      android:textColor="@color/white"
-      style="@style/TextStyle.Title" />
-  </LinearLayout>
 
 </layout>

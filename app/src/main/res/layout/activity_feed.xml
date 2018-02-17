@@ -15,54 +15,54 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  tools:context="com.mindorks.framework.mvvm.ui.feed.FeedActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.mindorks.framework.mvvm.ui.feed.FeedActivity">
 
-  <data>
+    <data>
 
-    <variable
-      name="viewModel"
-      type="com.mindorks.framework.mvvm.ui.feed.FeedViewModel" />
-  </data>
+        <variable
+            name="viewModel"
+            type="com.mindorks.framework.mvvm.ui.feed.FeedViewModel" />
+    </data>
 
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <android.support.design.widget.AppBarLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
-      <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:subtitleTextColor="@color/white"
-        app:title="@string/title"
-        app:titleTextAppearance="@style/Toolbar.TitleText"
-        app:titleTextColor="@color/white"
-        style="@style/Toolbar" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-      <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="@color/white"
-        style="@style/AppTab" />
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </android.support.design.widget.AppBarLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:subtitleTextColor="@color/white"
+                app:title="@string/title"
+                app:titleTextAppearance="@style/Toolbar.TitleText"
+                app:titleTextColor="@color/white" />
 
-    <android.support.v4.view.ViewPager
-      android:id="@+id/feedViewPager"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:background="@color/white"
-      android:clipToPadding="false" />
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout"
+                style="@style/AppTab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/white" />
 
-  </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/feedViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:clipToPadding="false" />
+
+    </LinearLayout>
 
 </layout>

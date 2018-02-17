@@ -28,8 +28,8 @@ import dagger.Provides;
 @Module
 public class SplashActivityModule {
 
-  @Provides
-  SplashViewModel provideSplashViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-    return new SplashViewModel(dataManager, schedulerProvider);
-  }
+    @Provides
+    SplashViewModel provideSplashViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+        return new SplashViewModel(dataManager, schedulerProvider);
+    }
 }
