@@ -14,9 +14,9 @@
   -->
 
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:interpolator="@android:anim/linear_interpolator">
-    <alpha
-        android:duration="500"
-        android:fromAlpha="1.0"
-        android:toAlpha="0.1" />
+  android:interpolator="@android:anim/linear_interpolator">
+  <alpha
+    android:duration="500"
+    android:fromAlpha="1.0"
+    android:toAlpha="0.1" />
 </set>

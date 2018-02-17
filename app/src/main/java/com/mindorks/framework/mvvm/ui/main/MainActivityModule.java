@@ -16,11 +16,11 @@
 
 package com.mindorks.framework.mvvm.ui.main;
 
-import android.arch.lifecycle.ViewModelProvider;
-
 import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
+
+import android.arch.lifecycle.ViewModelProvider;
 
 import dagger.Module;
 import dagger.Provides;
@@ -31,15 +31,13 @@ import dagger.Provides;
 @Module
 public class MainActivityModule {
 
-    @Provides
-    MainViewModel provideMainViewModel(DataManager dataManager,
-                                       SchedulerProvider schedulerProvider) {
-        return new MainViewModel(dataManager, schedulerProvider);
-    }
+  @Provides
+  ViewModelProvider.Factory mainViewModelProvider(MainViewModel mainViewModel) {
+    return new ViewModelProviderFactory<>(mainViewModel);
+  }
 
-    @Provides
-    ViewModelProvider.Factory mainViewModelProvider(MainViewModel mainViewModel) {
-        return new ViewModelProviderFactory<>(mainViewModel);
-    }
-
+  @Provides
+  MainViewModel provideMainViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+    return new MainViewModel(dataManager, schedulerProvider);
+  }
 }

@@ -16,19 +16,17 @@
 
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.databinding.ObservableArrayList;
-
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
+import android.arch.lifecycle.MutableLiveData;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
 
 /**
  * Created by amitshekhar on 10/07/17.
@@ -36,63 +34,54 @@ import io.reactivex.functions.Consumer;
 
 public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
 
-    private final ObservableArrayList<OpenSourceItemViewModel> openSourceItemViewModels = new ObservableArrayList<>();
-    private final MutableLiveData<List<OpenSourceItemViewModel>> openSourceItemsLiveData;
+  private final ObservableList<OpenSourceItemViewModel> openSourceItemViewModels = new ObservableArrayList<>();
 
+  private final MutableLiveData<List<OpenSourceItemViewModel>> openSourceItemsLiveData;
 
-    public OpenSourceViewModel(DataManager dataManager,
-                               SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
-        openSourceItemsLiveData = new MutableLiveData<>();
-        fetchRepos();
+  public OpenSourceViewModel(DataManager dataManager,
+      SchedulerProvider schedulerProvider) {
+    super(dataManager, schedulerProvider);
+    openSourceItemsLiveData = new MutableLiveData<>();
+    fetchRepos();
+  }
+
+  public void addOpenSourceItemsToList(List<OpenSourceItemViewModel> openSourceItems) {
+    openSourceItemViewModels.clear();
+    openSourceItemViewModels.addAll(openSourceItems);
+  }
+
+  public void fetchRepos() {
+    setIsLoading(true);
+    getCompositeDisposable().add(getDataManager()
+        .getOpenSourceApiCall()
+        .subscribeOn(getSchedulerProvider().io())
+        .observeOn(getSchedulerProvider().ui())
+        .subscribe(openSourceResponse -> {
+          if (openSourceResponse != null && openSourceResponse.getData() != null) {
+            openSourceItemsLiveData.setValue(getViewModelList(openSourceResponse.getData()));
+          }
+          setIsLoading(false);
+        }, throwable -> {
+          setIsLoading(false);
+          getNavigator().handleError(throwable);
+        }));
+  }
+
+  public ObservableList<OpenSourceItemViewModel> getOpenSourceItemViewModels() {
+    return openSourceItemViewModels;
+  }
+
+  public MutableLiveData<List<OpenSourceItemViewModel>> getOpenSourceRepos() {
+    return openSourceItemsLiveData;
+  }
+
+  public List<OpenSourceItemViewModel> getViewModelList(List<OpenSourceResponse.Repo> repoList) {
+    List<OpenSourceItemViewModel> openSourceItemViewModels = new ArrayList<>();
+    for (OpenSourceResponse.Repo repo : repoList) {
+      openSourceItemViewModels.add(new OpenSourceItemViewModel(
+          repo.getCoverImgUrl(), repo.getTitle(),
+          repo.getDescription(), repo.getProjectUrl()));
     }
-
-    public void fetchRepos() {
-        setIsLoading(true);
-        getCompositeDisposable().add(getDataManager()
-                .getOpenSourceApiCall()
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<OpenSourceResponse>() {
-                    @Override
-                    public void accept(@NonNull OpenSourceResponse openSourceResponse)
-                            throws Exception {
-                        if (openSourceResponse != null && openSourceResponse.getData() != null) {
-                            openSourceItemsLiveData.setValue(getViewModelList(openSourceResponse.getData()));
-                        }
-                        setIsLoading(false);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable)
-                            throws Exception {
-                        setIsLoading(false);
-                        getNavigator().handleError(throwable);
-                    }
-                }));
-    }
-
-
-    public List<OpenSourceItemViewModel> getViewModelList(List<OpenSourceResponse.Repo> repoList) {
-        ArrayList<OpenSourceItemViewModel> openSourceItemViewModels = new ArrayList<>();
-        for (int i = 0; i < repoList.size(); i++) {
-            openSourceItemViewModels.add(new OpenSourceItemViewModel(
-                    repoList.get(i).getCoverImgUrl(), repoList.get(i).getTitle(),
-                    repoList.get(i).getDescription(), repoList.get(i).getProjectUrl()));
-        }
-        return openSourceItemViewModels;
-    }
-
-    public MutableLiveData<List<OpenSourceItemViewModel>> getOpenSourceRepos() {
-        return openSourceItemsLiveData;
-    }
-
-    public void addOpenSourceItemsToList(List<OpenSourceItemViewModel> openSourceItems) {
-        openSourceItemViewModels.clear();
-        openSourceItemViewModels.addAll(openSourceItems);
-    }
-
-    public ObservableArrayList<OpenSourceItemViewModel> getOpenSourceItemViewModels() {
-        return openSourceItemViewModels;
-    }
+    return openSourceItemViewModels;
+  }
 }

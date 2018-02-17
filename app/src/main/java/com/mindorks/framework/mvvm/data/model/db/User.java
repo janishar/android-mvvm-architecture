@@ -26,15 +26,14 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "users")
 public class User {
 
-    @PrimaryKey
-    public Long id;
+  @ColumnInfo(name = "created_at")
+  public String createdAt;
 
-    public String name;
+  @PrimaryKey
+  public Long id;
 
-    @ColumnInfo(name = "created_at")
-    public String createdAt;
+  public String name;
 
-    @ColumnInfo(name = "updated_at")
-    public String updatedAt;
-
+  @ColumnInfo(name = "updated_at")
+  public String updatedAt;
 }

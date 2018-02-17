@@ -24,10 +24,9 @@ import io.reactivex.Scheduler;
 
 public interface SchedulerProvider {
 
-    Scheduler ui();
+  Scheduler computation();
 
-    Scheduler computation();
+  Scheduler io();
 
-    Scheduler io();
-
+  Scheduler ui();
 }

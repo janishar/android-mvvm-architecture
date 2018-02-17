@@ -16,13 +16,13 @@
 
 package com.mindorks.framework.mvvm;
 
-import android.app.Activity;
-import android.app.Application;
-
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.interceptors.HttpLoggingInterceptor;
 import com.mindorks.framework.mvvm.di.component.DaggerAppComponent;
 import com.mindorks.framework.mvvm.utils.AppLogger;
+
+import android.app.Activity;
+import android.app.Application;
 
 import javax.inject.Inject;
 
@@ -36,34 +36,33 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class MvvmApp extends Application implements HasActivityInjector {
 
-    @Inject
-    CalligraphyConfig mCalligraphyConfig;
+  @Inject
+  DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
 
-    @Inject
-    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
+  @Inject
+  CalligraphyConfig mCalligraphyConfig;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+  @Override
+  public DispatchingAndroidInjector<Activity> activityInjector() {
+    return activityDispatchingAndroidInjector;
+  }
 
-        DaggerAppComponent.builder()
-                .application(this)
-                .build()
-                .inject(this);
+  @Override
+  public void onCreate() {
+    super.onCreate();
 
-        AppLogger.init();
+    DaggerAppComponent.builder()
+        .application(this)
+        .build()
+        .inject(this);
 
-        AndroidNetworking.initialize(getApplicationContext());
-        if (BuildConfig.DEBUG) {
-            AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BODY);
-        }
+    AppLogger.init();
 
-        CalligraphyConfig.initDefault(mCalligraphyConfig);
+    AndroidNetworking.initialize(getApplicationContext());
+    if (BuildConfig.DEBUG) {
+      AndroidNetworking.enableLogging(HttpLoggingInterceptor.Level.BODY);
     }
 
-    @Override
-    public DispatchingAndroidInjector<Activity> activityInjector() {
-        return activityDispatchingAndroidInjector;
-    }
-
+    CalligraphyConfig.initDefault(mCalligraphyConfig);
+  }
 }

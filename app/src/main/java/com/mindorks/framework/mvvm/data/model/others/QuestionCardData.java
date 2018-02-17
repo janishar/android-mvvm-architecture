@@ -27,12 +27,14 @@ import java.util.List;
 
 public class QuestionCardData {
 
-    public Question question;
-    public List<Option> options;
-    public boolean mShowCorrectOptions;
+  public boolean mShowCorrectOptions;
 
-    public QuestionCardData(Question question, List<Option> options) {
-        this.question = question;
-        this.options = options;
-    }
+  public List<Option> options;
+
+  public Question question;
+
+  public QuestionCardData(Question question, List<Option> options) {
+    this.question = question;
+    this.options = options;
+  }
 }

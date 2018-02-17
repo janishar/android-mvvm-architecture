@@ -30,24 +30,23 @@ import io.reactivex.Observable;
 
 public interface DbHelper {
 
-    Observable<Boolean> insertUser(final User user);
+  Observable<List<Question>> getAllQuestions();
 
-    Observable<List<User>> getAllUsers();
+  Observable<List<User>> getAllUsers();
 
-    Observable<List<Question>> getAllQuestions();
+  Observable<List<Option>> getOptionsForQuestionId(Long questionId);
 
-    Observable<List<Option>> getOptionsForQuestionId(Long questionId);
+  Observable<Boolean> insertUser(final User user);
 
-    Observable<Boolean> isQuestionEmpty();
+  Observable<Boolean> isOptionEmpty();
 
-    Observable<Boolean> isOptionEmpty();
+  Observable<Boolean> isQuestionEmpty();
 
-    Observable<Boolean> saveQuestion(Question question);
+  Observable<Boolean> saveOption(Option option);
 
-    Observable<Boolean> saveOption(Option option);
+  Observable<Boolean> saveOptionList(List<Option> optionList);
 
-    Observable<Boolean> saveQuestionList(List<Question> questionList);
+  Observable<Boolean> saveQuestion(Question question);
 
-    Observable<Boolean> saveOptionList(List<Option> optionList);
-
+  Observable<Boolean> saveQuestionList(List<Question> questionList);
 }

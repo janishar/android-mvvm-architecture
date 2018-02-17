@@ -14,68 +14,68 @@
   ~  limitations under the License
   -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
+  <data>
 
-        <variable
-            name="viewModel"
-            type="com.mindorks.framework.mvvm.ui.feed.opensource.OpenSourceItemViewModel" />
+    <variable
+      name="viewModel"
+      type="com.mindorks.framework.mvvm.ui.feed.opensource.OpenSourceItemViewModel" />
 
-    </data>
+  </data>
 
-    <RelativeLayout
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="8dp"
+      android:orientation="vertical"
+      android:background="@color/white"
+      app:cardCornerRadius="7dp"
+      app:cardElevation="4dp">
+
+      <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="30dp">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            app:cardCornerRadius="7dp"
-            app:cardElevation="4dp">
+        <ImageView
+          android:id="@+id/coverImageView"
+          android:layout_width="match_parent"
+          android:layout_height="250dp"
+          android:scaleType="fitCenter"
+          app:imageUrl="@{viewModel.imageUrl}"
+          tools:src="@drawable/ic_rabbit" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="30dp">
+        <TextView
+          android:id="@+id/titleTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="20dp"
+          android:layout_marginRight="20dp"
+          android:layout_marginTop="20dp"
+          android:text="@{viewModel.title}"
+          tools:text="Android MVP Architecture"
+          style="@style/TextStyle.Heading" />
 
-                <ImageView
-                    android:id="@+id/coverImageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:scaleType="fitCenter"
-                    app:imageUrl="@{viewModel.imageUrl}"
-                    tools:src="@drawable/ic_rabbit" />
-
-                <TextView
-                    android:id="@+id/titleTextView"
-                    style="@style/TextStyle.Heading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="@{viewModel.title}"
-                    tools:text="Android MVP Architecture" />
-
-                <TextView
-                    android:id="@+id/contentTextView"
-                    style="@style/TextStyle.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:text="@{viewModel.content}"
-                    android:textStyle="normal"
-                    tools:text="This repository contains a detailed sample app that implements MVP architecture using Dagger2, GreenDao, RxJava2, FastAndroidNetworking and PlaceholderView" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-    </RelativeLayout>
+        <TextView
+          android:id="@+id/contentTextView"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="20dp"
+          android:layout_marginRight="20dp"
+          android:text="@{viewModel.content}"
+          android:textStyle="normal"
+          tools:text="This repository contains a detailed sample app that implements MVP architecture using Dagger2, GreenDao, RxJava2, FastAndroidNetworking and PlaceholderView"
+          style="@style/TextStyle.Title" />
+      </LinearLayout>
+    </android.support.v7.widget.CardView>
+  </RelativeLayout>
 
 </layout>

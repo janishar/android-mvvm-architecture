@@ -22,17 +22,18 @@ package com.mindorks.framework.mvvm.ui.feed.opensource;
 
 public class OpenSourceEmptyItemViewModel {
 
-    private OpenSourceEmptyItemViewModelListener mListener;
+  private final OpenSourceEmptyItemViewModelListener mListener;
 
-    public OpenSourceEmptyItemViewModel(OpenSourceEmptyItemViewModelListener listener) {
-        this.mListener = listener;
-    }
+  public OpenSourceEmptyItemViewModel(OpenSourceEmptyItemViewModelListener listener) {
+    this.mListener = listener;
+  }
 
-    public void onRetryClick() {
-        mListener.onRetryClick();
-    }
+  public void onRetryClick() {
+    mListener.onRetryClick();
+  }
 
-    public interface OpenSourceEmptyItemViewModelListener {
-        void onRetryClick();
-    }
+  public interface OpenSourceEmptyItemViewModelListener {
+
+    void onRetryClick();
+  }
 }

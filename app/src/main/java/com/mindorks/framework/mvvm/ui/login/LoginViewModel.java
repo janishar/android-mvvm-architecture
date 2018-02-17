@@ -18,12 +18,11 @@ package com.mindorks.framework.mvvm.ui.login;
 
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.api.LoginRequest;
-import com.mindorks.framework.mvvm.data.model.api.LoginResponse;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.CommonUtils;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
-import io.reactivex.functions.Consumer;
+import android.text.TextUtils;
 
 /**
  * Created by amitshekhar on 08/07/17.
@@ -31,111 +30,94 @@ import io.reactivex.functions.Consumer;
 
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
-    public LoginViewModel(DataManager dataManager,
-                          SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
-    }
+  public LoginViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+    super(dataManager, schedulerProvider);
+  }
 
-    public void onServerLoginClick() {
-        getNavigator().login();
+  public boolean isEmailAndPasswordValid(String email, String password) {
+    // validate email and password
+    if (TextUtils.isEmpty(email)) {
+      return false;
     }
-
-    public void onGoogleLoginClick() {
-        setIsLoading(true);
-        getCompositeDisposable().add(getDataManager()
-                .doGoogleLoginApiCall(new LoginRequest.GoogleLoginRequest("test1", "test1"))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<LoginResponse>() {
-                    @Override
-                    public void accept(LoginResponse response) throws Exception {
-                        getDataManager().updateUserInfo(
-                                response.getAccessToken(),
-                                response.getUserId(),
-                                DataManager.LoggedInMode.LOGGED_IN_MODE_GOOGLE,
-                                response.getUserName(),
-                                response.getUserEmail(),
-                                response.getGoogleProfilePicUrl());
-                        setIsLoading(false);
-                        getNavigator().openMainActivity();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
-                        getNavigator().handleError(throwable);
-                    }
-                }));
+    if (!CommonUtils.isEmailValid(email)) {
+      return false;
     }
-
-    public void onFbLoginClick() {
-        setIsLoading(true);
-        getCompositeDisposable().add(getDataManager()
-                .doFacebookLoginApiCall(new LoginRequest.FacebookLoginRequest("test3", "test4"))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<LoginResponse>() {
-                    @Override
-                    public void accept(LoginResponse response) throws Exception {
-                        getDataManager().updateUserInfo(
-                                response.getAccessToken(),
-                                response.getUserId(),
-                                DataManager.LoggedInMode.LOGGED_IN_MODE_FB,
-                                response.getUserName(),
-                                response.getUserEmail(),
-                                response.getGoogleProfilePicUrl());
-                        setIsLoading(false);
-                        getNavigator().openMainActivity();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
-                        getNavigator().handleError(throwable);
-                    }
-                }));
+    if (TextUtils.isEmpty(password)) {
+      return false;
     }
+    return true;
+  }
 
-    public void login(String email, String password) {
-        setIsLoading(true);
-        getCompositeDisposable().add(getDataManager()
-                .doServerLoginApiCall(new LoginRequest.ServerLoginRequest(email, password))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(new Consumer<LoginResponse>() {
-                    @Override
-                    public void accept(LoginResponse response) throws Exception {
-                        getDataManager().updateUserInfo(
-                                response.getAccessToken(),
-                                response.getUserId(),
-                                DataManager.LoggedInMode.LOGGED_IN_MODE_SERVER,
-                                response.getUserName(),
-                                response.getUserEmail(),
-                                response.getGoogleProfilePicUrl());
-                        setIsLoading(false);
-                        getNavigator().openMainActivity();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        setIsLoading(false);
-                        getNavigator().handleError(throwable);
-                    }
-                }));
-    }
+  public void login(String email, String password) {
+    setIsLoading(true);
+    getCompositeDisposable().add(getDataManager()
+        .doServerLoginApiCall(new LoginRequest.ServerLoginRequest(email, password))
+        .doOnSuccess(response -> getDataManager()
+            .updateUserInfo(
+                response.getAccessToken(),
+                response.getUserId(),
+                DataManager.LoggedInMode.LOGGED_IN_MODE_SERVER,
+                response.getUserName(),
+                response.getUserEmail(),
+                response.getGoogleProfilePicUrl()))
+        .subscribeOn(getSchedulerProvider().io())
+        .observeOn(getSchedulerProvider().ui())
+        .subscribe(response -> {
+          setIsLoading(false);
+          getNavigator().openMainActivity();
+        }, throwable -> {
+          setIsLoading(false);
+          getNavigator().handleError(throwable);
+        }));
+  }
 
-    public boolean isEmailAndPasswordValid(String email, String password) {
-        //validate email and password
-        if (email == null || email.isEmpty()) {
-            return false;
-        }
-        if (!CommonUtils.isEmailValid(email)) {
-            return false;
-        }
-        if (password == null || password.isEmpty()) {
-            return false;
-        }
-        return true;
-    }
+  public void onFbLoginClick() {
+    setIsLoading(true);
+    getCompositeDisposable().add(getDataManager()
+        .doFacebookLoginApiCall(new LoginRequest.FacebookLoginRequest("test3", "test4"))
+        .doOnSuccess(response -> getDataManager()
+            .updateUserInfo(
+                response.getAccessToken(),
+                response.getUserId(),
+                DataManager.LoggedInMode.LOGGED_IN_MODE_FB,
+                response.getUserName(),
+                response.getUserEmail(),
+                response.getGoogleProfilePicUrl()))
+        .subscribeOn(getSchedulerProvider().io())
+        .observeOn(getSchedulerProvider().ui())
+        .subscribe(response -> {
+          setIsLoading(false);
+          getNavigator().openMainActivity();
+        }, throwable -> {
+          setIsLoading(false);
+          getNavigator().handleError(throwable);
+        }));
+  }
 
+  public void onGoogleLoginClick() {
+    setIsLoading(true);
+    getCompositeDisposable().add(getDataManager()
+        .doGoogleLoginApiCall(new LoginRequest.GoogleLoginRequest("test1", "test1"))
+        .doOnSuccess(response -> getDataManager()
+            .updateUserInfo(
+                response.getAccessToken(),
+                response.getUserId(),
+                DataManager.LoggedInMode.LOGGED_IN_MODE_GOOGLE,
+                response.getUserName(),
+                response.getUserEmail(),
+                response.getGoogleProfilePicUrl()))
+        .subscribeOn(getSchedulerProvider().io())
+        .observeOn(getSchedulerProvider().ui())
+        .subscribe(response -> {
+          setIsLoading(false);
+          getNavigator().openMainActivity();
+        }, throwable -> {
+          setIsLoading(false);
+          getNavigator().handleError(throwable);
+        }));
+  }
+
+  public void onServerLoginClick() {
+    getNavigator().login();
+  }
 }

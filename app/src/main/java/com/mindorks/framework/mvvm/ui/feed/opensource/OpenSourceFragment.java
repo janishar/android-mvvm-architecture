@@ -17,115 +17,99 @@
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
-import android.databinding.BindingAdapter;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
-import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
 import com.mindorks.framework.mvvm.databinding.FragmentOpenSourceBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import javax.inject.Inject;
-
-import dagger.android.support.AndroidSupportInjection;
 
 /**
  * Created by amitshekhar on 10/07/17.
  */
 
-public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, OpenSourceViewModel> implements OpenSourceNavigator, OpenSourceAdapter.OpenSourceAdapterListener {
+public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, OpenSourceViewModel>
+    implements OpenSourceNavigator, OpenSourceAdapter.OpenSourceAdapterListener {
 
-    @Inject
-    ViewModelProvider.Factory mViewModelFactory;
+  public static OpenSourceFragment newInstance() {
+    Bundle args = new Bundle();
+    OpenSourceFragment fragment = new OpenSourceFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
 
-    @Inject
-    OpenSourceAdapter mOpenSourceAdapter;
+  FragmentOpenSourceBinding mFragmentOpenSourceBinding;
 
-    @Inject
-    LinearLayoutManager mLayoutManager;
+  @Inject
+  LinearLayoutManager mLayoutManager;
 
-    private OpenSourceViewModel mOpenSourceViewModel;
-    FragmentOpenSourceBinding mFragmentOpenSourceBinding;
+  @Inject
+  OpenSourceAdapter mOpenSourceAdapter;
 
-    public static OpenSourceFragment newInstance() {
-        Bundle args = new Bundle();
-        OpenSourceFragment fragment = new OpenSourceFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+  @Inject
+  ViewModelProvider.Factory mViewModelFactory;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mOpenSourceViewModel.setNavigator(this);
-        mOpenSourceAdapter.setListener(this);
-    }
+  private OpenSourceViewModel mOpenSourceViewModel;
 
+  @Override
+  public int getBindingVariable() {
+    return BR.viewModel;
+  }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mFragmentOpenSourceBinding = getViewDataBinding();
-        setUp();
-        subscribeToLiveData();
-    }
+  @Override
+  public int getLayoutId() {
+    return R.layout.fragment_open_source;
+  }
 
-    private void subscribeToLiveData() {
-        mOpenSourceViewModel.getOpenSourceRepos().observe(this, new Observer<List<OpenSourceItemViewModel>>() {
-            @Override
-            public void onChanged(@Nullable List<OpenSourceItemViewModel> openSourceItemViewModels) {
-                mOpenSourceViewModel.addOpenSourceItemsToList(openSourceItemViewModels);
-            }
-        });
-    }
+  @Override
+  public OpenSourceViewModel getViewModel() {
+    mOpenSourceViewModel = ViewModelProviders.of(this, mViewModelFactory).get(OpenSourceViewModel.class);
+    return mOpenSourceViewModel;
+  }
 
-    @Override
-    public OpenSourceViewModel getViewModel() {
-        mOpenSourceViewModel = ViewModelProviders.of(this, mViewModelFactory).get(OpenSourceViewModel.class);
-        return mOpenSourceViewModel;
-    }
+  @Override
+  public void handleError(Throwable throwable) {
+    // handle error
+  }
 
-    @Override
-    public int getBindingVariable() {
-        return BR.viewModel;
-    }
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    mOpenSourceViewModel.setNavigator(this);
+    mOpenSourceAdapter.setListener(this);
+  }
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_open_source;
-    }
+  @Override
+  public void onRetryClick() {
+    mOpenSourceViewModel.fetchRepos();
+  }
 
-    private void setUp() {
-        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mFragmentOpenSourceBinding.openSourceRecyclerView.setLayoutManager(mLayoutManager);
-        mFragmentOpenSourceBinding.openSourceRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mFragmentOpenSourceBinding.openSourceRecyclerView.setAdapter(mOpenSourceAdapter);
-    }
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    mFragmentOpenSourceBinding = getViewDataBinding();
+    setUp();
+    subscribeToLiveData();
+  }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
+  private void setUp() {
+    mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+    mFragmentOpenSourceBinding.openSourceRecyclerView.setLayoutManager(mLayoutManager);
+    mFragmentOpenSourceBinding.openSourceRecyclerView.setItemAnimator(new DefaultItemAnimator());
+    mFragmentOpenSourceBinding.openSourceRecyclerView.setAdapter(mOpenSourceAdapter);
+  }
 
-    @Override
-    public void handleError(Throwable throwable) {
-        // handle error
-    }
-
-    @Override
-    public void onRetryClick() {
-        mOpenSourceViewModel.fetchRepos();
-    }
+  private void subscribeToLiveData() {
+    mOpenSourceViewModel.getOpenSourceRepos().observe(this,
+        openSourceItemViewModels -> mOpenSourceViewModel.addOpenSourceItemsToList(openSourceItemViewModels));
+  }
 }

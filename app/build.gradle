@@ -17,99 +17,102 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
-    defaultConfig {
-        applicationId "com.mindorks.framework.mvvm"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary = true
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+  defaultConfig {
+    applicationId "com.mindorks.framework.mvvm"
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
+    versionCode 1
+    versionName "1.0"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    vectorDrawables.useSupportLibrary = true
+  }
+  buildTypes {
+    debug {
+      buildConfigField("String", "BASE_URL", "\"http://www.mocky.io/v2\"")
+      buildConfigField("String", "API_KEY", "\"ABCXYZ123TEST\"")
     }
-    buildTypes {
-        debug {
-            buildConfigField("String", "BASE_URL", "\"http://www.mocky.io/v2\"")
-            buildConfigField("String", "API_KEY", "\"ABCXYZ123TEST\"")
-        }
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", "\"http://www.mocky.io/v2\"")
-            buildConfigField("String", "API_KEY", "\"ABCXYZ123TEST\"")
-        }
+    release {
+      minifyEnabled true
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      buildConfigField("String", "BASE_URL", "\"http://www.mocky.io/v2\"")
+      buildConfigField("String", "API_KEY", "\"ABCXYZ123TEST\"")
     }
-    dataBinding {
-        enabled = true
-    }
+  }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  dataBinding {
+    enabled = true
+  }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    // android support libraries
-    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
-    implementation "com.android.support:animated-vector-drawable:$rootProject.supportLibraryVersion"
+  // android support libraries
+  implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+  implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+  implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+  implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+  implementation "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
+  implementation "com.android.support:animated-vector-drawable:$rootProject.supportLibraryVersion"
 
-    // network
-    implementation "com.amitshekhar.android:rx2-android-networking:$rootProject.rx2FastAndroidNetworking"
+  // network
+  implementation "com.amitshekhar.android:rx2-android-networking:$rootProject.rx2FastAndroidNetworking"
 
-    // database
-    implementation "android.arch.persistence.room:rxjava2:$rootProject.roomDatabase"
-    annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomDatabase"
+  // database
+  implementation "android.arch.persistence.room:rxjava2:$rootProject.roomDatabase"
+  annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomDatabase"
 
-    // font
-    implementation "uk.co.chrisjenx:calligraphy:$rootProject.calligraphyVersion"
+  // font
+  implementation "uk.co.chrisjenx:calligraphy:$rootProject.calligraphyVersion"
 
-    // image
-    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+  // image
+  implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
 
-    // parser
-    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+  // parser
+  implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
 
-    // debug database
-    debugImplementation "com.amitshekhar.android:debug-db:$rootProject.debugDBVersion"
+  // debug database
+  debugImplementation "com.amitshekhar.android:debug-db:$rootProject.debugDBVersion"
 
-    // dependency injection
-    implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
-    annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.dagger2Version"
-    implementation "com.google.dagger:dagger-android-support:$rootProject.dagger2Version"
+  // dependency injection
+  implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
+  annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+  annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.dagger2Version"
+  implementation "com.google.dagger:dagger-android-support:$rootProject.dagger2Version"
 
-    // reactive
-    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
-    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
+  // reactive
+  implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
+  implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
 
-    // swipe view
-    implementation "com.mindorks:placeholderview:$rootProject.placeholderviewVersion"
+  // swipe view
+  implementation "com.mindorks:placeholderview:$rootProject.placeholderviewVersion"
 
-    // logger
-    implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
+  // logger
+  implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
 
-    // dependencies for local unit tests
-    testImplementation "junit:junit:$rootProject.ext.junitVersion"
-    testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
-    testAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+  // dependencies for local unit tests
+  testImplementation "junit:junit:$rootProject.ext.junitVersion"
+  testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+  testAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
 
-    // UI Testing
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
-    androidTestImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
-    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+  // UI Testing
+  androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+  androidTestImplementation "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion"
+  androidTestImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+  androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
 
-    //Viewmodel
-    implementation "android.arch.lifecycle:extensions:$rootProject.lifecycle"
-    annotationProcessor "android.arch.lifecycle:compiler:$rootProject.lifecycle"
-
+  // view model
+  implementation "android.arch.lifecycle:extensions:$rootProject.lifecycle"
+  annotationProcessor "android.arch.lifecycle:compiler:$rootProject.lifecycle"
 }
 
 configurations.all {
-    resolutionStrategy.force "com.android.support:support-annotations:$supportLibraryVersion"
-    resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+  resolutionStrategy.force "com.android.support:support-annotations:$supportLibraryVersion"
+  resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
 }
 

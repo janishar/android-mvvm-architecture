@@ -16,11 +16,11 @@
 
 package com.mindorks.framework.mvvm.ui.base;
 
-import android.arch.lifecycle.ViewModel;
-import android.databinding.ObservableBoolean;
-
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
+
+import android.arch.lifecycle.ViewModel;
+import android.databinding.ObservableBoolean;
 
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -30,51 +30,54 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public abstract class BaseViewModel<N> extends ViewModel {
 
-    private N mNavigator;
-    private final DataManager mDataManager;
-    private final SchedulerProvider mSchedulerProvider;
-    private final ObservableBoolean mIsLoading = new ObservableBoolean(false);
+  private final DataManager mDataManager;
 
-    private CompositeDisposable mCompositeDisposable;
+  private final ObservableBoolean mIsLoading = new ObservableBoolean(false);
 
-    public BaseViewModel(DataManager dataManager,
-                         SchedulerProvider schedulerProvider) {
-        this.mDataManager = dataManager;
-        this.mSchedulerProvider = schedulerProvider;
-        this.mCompositeDisposable = new CompositeDisposable();
-    }
+  private final SchedulerProvider mSchedulerProvider;
 
-    public void setNavigator(N navigator) {
-        this.mNavigator = navigator;
-    }
+  private CompositeDisposable mCompositeDisposable;
 
-    public N getNavigator() {
-        return mNavigator;
-    }
+  private N mNavigator;
 
-    public DataManager getDataManager() {
-        return mDataManager;
-    }
+  public BaseViewModel(DataManager dataManager,
+      SchedulerProvider schedulerProvider) {
+    this.mDataManager = dataManager;
+    this.mSchedulerProvider = schedulerProvider;
+    this.mCompositeDisposable = new CompositeDisposable();
+  }
 
-    public SchedulerProvider getSchedulerProvider() {
-        return mSchedulerProvider;
-    }
+  @Override
+  protected void onCleared() {
+    mCompositeDisposable.dispose();
+    super.onCleared();
+  }
 
-    public CompositeDisposable getCompositeDisposable() {
-        return mCompositeDisposable;
-    }
+  public CompositeDisposable getCompositeDisposable() {
+    return mCompositeDisposable;
+  }
 
-    public ObservableBoolean getIsLoading() {
-        return mIsLoading;
-    }
+  public DataManager getDataManager() {
+    return mDataManager;
+  }
 
-    public void setIsLoading(boolean isLoading) {
-        mIsLoading.set(isLoading);
-    }
+  public ObservableBoolean getIsLoading() {
+    return mIsLoading;
+  }
 
-    @Override
-    protected void onCleared() {
-        mCompositeDisposable.dispose();
-        super.onCleared();
-    }
+  public void setIsLoading(boolean isLoading) {
+    mIsLoading.set(isLoading);
+  }
+
+  public N getNavigator() {
+    return mNavigator;
+  }
+
+  public void setNavigator(N navigator) {
+    this.mNavigator = navigator;
+  }
+
+  public SchedulerProvider getSchedulerProvider() {
+    return mSchedulerProvider;
+  }
 }

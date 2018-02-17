@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.schedulers.TestScheduler;
 
 import static org.mockito.Mockito.doReturn;
@@ -41,54 +41,49 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class LoginViewModelTest {
 
-    @Mock
-    LoginNavigator mLoginCallback;
-    @Mock
-    DataManager mMockDataManager;
+  @BeforeClass
+  public static void onlyOnce() throws Exception {
+  }
 
-    private LoginViewModel mLoginViewModel;
-    private TestScheduler mTestScheduler;
+  @Mock
+  LoginNavigator mLoginCallback;
 
-    @BeforeClass
-    public static void onlyOnce() throws Exception {
-    }
+  @Mock
+  DataManager mMockDataManager;
 
-    @Before
-    public void setUp() throws Exception {
-        mTestScheduler = new TestScheduler();
-        TestSchedulerProvider testSchedulerProvider = new TestSchedulerProvider(mTestScheduler);
-        mLoginViewModel = new LoginViewModel(
-                mMockDataManager,
-                testSchedulerProvider);
-        mLoginViewModel.onViewCreated();
-        mLoginViewModel.setNavigator(mLoginCallback);
-    }
+  private LoginViewModel mLoginViewModel;
 
-    @Test
-    public void testServerLoginSuccess() {
+  private TestScheduler mTestScheduler;
 
-        String email = "dummy@gmail.com";
-        String password = "password";
+  @Before
+  public void setUp() throws Exception {
+    mTestScheduler = new TestScheduler();
+    TestSchedulerProvider testSchedulerProvider = new TestSchedulerProvider(mTestScheduler);
+    mLoginViewModel = new LoginViewModel(mMockDataManager, testSchedulerProvider);
+    mLoginViewModel.setNavigator(mLoginCallback);
+  }
 
-        LoginResponse loginResponse = new LoginResponse();
+  @After
+  public void tearDown() throws Exception {
+    mTestScheduler = null;
+    mLoginViewModel = null;
+    mLoginCallback = null;
+  }
 
-        doReturn(Observable.just(loginResponse))
-                .when(mMockDataManager)
-                .doServerLoginApiCall(new LoginRequest
-                        .ServerLoginRequest(email, password));
+  @Test
+  public void testServerLoginSuccess() {
+    String email = "dummy@gmail.com";
+    String password = "password";
 
-        mLoginViewModel.login(email, password);
+    LoginResponse loginResponse = new LoginResponse();
 
-        mTestScheduler.triggerActions();
+    doReturn(Single.just(loginResponse))
+        .when(mMockDataManager)
+        .doServerLoginApiCall(new LoginRequest.ServerLoginRequest(email, password));
 
-        verify(mLoginCallback).openMainActivity();
-        verify(mLoginCallback).openMainActivity();
+    mLoginViewModel.login(email, password);
+    mTestScheduler.triggerActions();
 
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        mLoginViewModel.onDestroyView();
-    }
-
+    verify(mLoginCallback).openMainActivity();
+  }
 }

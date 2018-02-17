@@ -16,9 +16,8 @@
 
 package com.mindorks.framework.mvvm.di.module;
 
-import android.app.Application;
-import android.arch.persistence.room.Room;
-import android.content.Context;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import com.mindorks.framework.mvvm.BuildConfig;
 import com.mindorks.framework.mvvm.R;
@@ -39,6 +38,10 @@ import com.mindorks.framework.mvvm.utils.AppConstants;
 import com.mindorks.framework.mvvm.utils.rx.AppSchedulerProvider;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
+import android.app.Application;
+import android.arch.persistence.room.Room;
+import android.content.Context;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -51,82 +54,88 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 @Module
 public class AppModule {
 
-    @Provides
-    @Singleton
-    Context provideContext(Application application) {
-        return application;
-    }
+  @Provides
+  @Singleton
+  ApiHelper provideApiHelper(AppApiHelper appApiHelper) {
+    return appApiHelper;
+  }
 
-    @Provides
-    SchedulerProvider provideSchedulerProvider() {
-        return new AppSchedulerProvider();
-    }
+  @Provides
+  @ApiInfo
+  String provideApiKey() {
+    return BuildConfig.API_KEY;
+  }
 
-    @Provides
-    @DatabaseInfo
-    String provideDatabaseName() {
-        return AppConstants.DB_NAME;
-    }
+  @Provides
+  @Singleton
+  AppDatabase provideAppDatabase(@DatabaseInfo String dbName, Context context) {
+    return Room.databaseBuilder(context, AppDatabase.class, dbName).fallbackToDestructiveMigration()
+        .build();
+  }
 
-    @Provides
-    @ApiInfo
-    String provideApiKey() {
-        return BuildConfig.API_KEY;
-    }
+  @Provides
+  @Singleton
+  CalligraphyConfig provideCalligraphyDefaultConfig() {
+    return new CalligraphyConfig.Builder()
+        .setDefaultFontPath("fonts/source-sans-pro/SourceSansPro-Regular.ttf")
+        .setFontAttrId(R.attr.fontPath)
+        .build();
+  }
 
-    @Provides
-    @PreferenceInfo
-    String providePreferenceName() {
-        return AppConstants.PREF_NAME;
-    }
+  @Provides
+  @Singleton
+  Context provideContext(Application application) {
+    return application;
+  }
 
-    @Provides
-    @Singleton
-    DataManager provideDataManager(AppDataManager appDataManager) {
-        return appDataManager;
-    }
+  @Provides
+  @Singleton
+  DataManager provideDataManager(AppDataManager appDataManager) {
+    return appDataManager;
+  }
 
-    @Provides
-    @Singleton
-    AppDatabase provideAppDatabase(@DatabaseInfo String dbName, Context context) {
-        return Room.databaseBuilder(context, AppDatabase.class, dbName).fallbackToDestructiveMigration()
-                .build();
-    }
+  @Provides
+  @DatabaseInfo
+  String provideDatabaseName() {
+    return AppConstants.DB_NAME;
+  }
 
-    @Provides
-    @Singleton
-    DbHelper provideDbHelper(AppDbHelper appDbHelper) {
-        return appDbHelper;
-    }
+  @Provides
+  @Singleton
+  DbHelper provideDbHelper(AppDbHelper appDbHelper) {
+    return appDbHelper;
+  }
 
-    @Provides
-    @Singleton
-    PreferencesHelper providePreferencesHelper(AppPreferencesHelper appPreferencesHelper) {
-        return appPreferencesHelper;
-    }
+  @Provides
+  @Singleton
+  Gson provideGson() {
+    return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+  }
 
-    @Provides
-    @Singleton
-    ApiHelper provideApiHelper(AppApiHelper appApiHelper) {
-        return appApiHelper;
-    }
+  @Provides
+  @PreferenceInfo
+  String providePreferenceName() {
+    return AppConstants.PREF_NAME;
+  }
 
-    @Provides
-    @Singleton
-    ApiHeader.ProtectedApiHeader provideProtectedApiHeader(@ApiInfo String apiKey,
-                                                           PreferencesHelper preferencesHelper) {
-        return new ApiHeader.ProtectedApiHeader(
-                apiKey,
-                preferencesHelper.getCurrentUserId(),
-                preferencesHelper.getAccessToken());
-    }
+  @Provides
+  @Singleton
+  PreferencesHelper providePreferencesHelper(AppPreferencesHelper appPreferencesHelper) {
+    return appPreferencesHelper;
+  }
 
-    @Provides
-    @Singleton
-    CalligraphyConfig provideCalligraphyDefaultConfig() {
-        return new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/source-sans-pro/SourceSansPro-Regular.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build();
-    }
+  @Provides
+  @Singleton
+  ApiHeader.ProtectedApiHeader provideProtectedApiHeader(@ApiInfo String apiKey,
+      PreferencesHelper preferencesHelper) {
+    return new ApiHeader.ProtectedApiHeader(
+        apiKey,
+        preferencesHelper.getCurrentUserId(),
+        preferencesHelper.getAccessToken());
+  }
+
+  @Provides
+  SchedulerProvider provideSchedulerProvider() {
+    return new AppSchedulerProvider();
+  }
 }

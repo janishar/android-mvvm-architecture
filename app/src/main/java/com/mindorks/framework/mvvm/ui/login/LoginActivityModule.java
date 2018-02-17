@@ -28,10 +28,8 @@ import dagger.Provides;
 @Module
 public class LoginActivityModule {
 
-    @Provides
-    LoginViewModel provideLoginViewModel(DataManager dataManager,
-                                         SchedulerProvider schedulerProvider) {
-        return new LoginViewModel(dataManager, schedulerProvider);
-    }
-
+  @Provides
+  LoginViewModel provideLoginViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+    return new LoginViewModel(dataManager, schedulerProvider);
+  }
 }

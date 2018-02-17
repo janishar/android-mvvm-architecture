@@ -14,106 +14,106 @@
   ~  limitations under the License
   -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.mindorks.framework.mvvm.ui.main.MainActivity">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:context="com.mindorks.framework.mvvm.ui.main.MainActivity">
 
-    <data>
+  <data>
 
-        <import type="android.view.View" />
+    <import type="android.view.View" />
 
-        <variable
-            name="viewModel"
-            type="com.mindorks.framework.mvvm.ui.main.MainViewModel" />
+    <variable
+      name="viewModel"
+      type="com.mindorks.framework.mvvm.ui.main.MainViewModel" />
 
-    </data>
+  </data>
 
 
-    <FrameLayout
+  <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.DrawerLayout
+
+      android:id="@+id/drawerView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fitsSystemWindows="true">
+
+      <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/clRootView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipChildren="false">
 
-        <android.support.v4.widget.DrawerLayout
+        <LinearLayout
+          android:id="@+id/activityMain"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical">
 
-            android:id="@+id/drawerView"
+          <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="5dp">
+
+            <android.support.v7.widget.Toolbar
+              android:id="@+id/toolbar"
+              app:subtitleTextColor="@color/white"
+              app:title="@string/app_name"
+              app:titleTextAppearance="@style/Toolbar.TitleText"
+              app:titleTextColor="@color/white"
+              style="@style/Toolbar" />
+
+            <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="@color/light_gray" />
+
+          </android.support.design.widget.AppBarLayout>
+
+          <com.mindorks.placeholderview.SwipePlaceHolderView
+            android:id="@+id/cardsContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true">
+            app:action="@{viewModel.action}"
+            app:adapter="@{viewModel.questionDataList}" />
 
-            <android.support.design.widget.CoordinatorLayout
-                android:id="@+id/clRootView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipChildren="false">
+        </LinearLayout>
+      </android.support.design.widget.CoordinatorLayout>
 
-                <LinearLayout
-                    android:id="@+id/activityMain"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+      <android.support.design.widget.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/white"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@color/black_effective"
+        app:itemTextColor="@color/black_effective"
+        app:menu="@menu/drawer"
+        style="@style/Widget.Design.NavigationView">
 
-                    <android.support.design.widget.AppBarLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:elevation="5dp">
+        <TextView
+          android:id="@+id/tvAppVersion"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|end"
+          android:padding="5dp"
+          android:text="@{viewModel.appVersion}"
+          style="@style/TextStyle.Title.Sub" />
+      </android.support.design.widget.NavigationView>
 
-                        <android.support.v7.widget.Toolbar
-                            android:id="@+id/toolbar"
-                            style="@style/Toolbar"
-                            app:subtitleTextColor="@color/white"
-                            app:title="@string/app_name"
-                            app:titleTextAppearance="@style/Toolbar.TitleText"
-                            app:titleTextColor="@color/white" />
+    </android.support.v4.widget.DrawerLayout>
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/light_gray" />
+    <android.support.v4.widget.ContentLoadingProgressBar
+      android:id="@+id/address_looking_up"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+      style="?android:attr/progressBarStyleLarge" />
 
-                    </android.support.design.widget.AppBarLayout>
-
-                    <com.mindorks.placeholderview.SwipePlaceHolderView
-                        android:id="@+id/cardsContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:adapter="@{viewModel.questionDataList}"
-                        app:action="@{viewModel.action}"/>
-
-                </LinearLayout>
-            </android.support.design.widget.CoordinatorLayout>
-
-            <android.support.design.widget.NavigationView
-                android:id="@+id/navigationView"
-                style="@style/Widget.Design.NavigationView"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:background="@color/white"
-                app:itemBackground="@color/white"
-                app:itemIconTint="@color/black_effective"
-                app:itemTextColor="@color/black_effective"
-                app:menu="@menu/drawer">
-
-                <TextView
-                    android:id="@+id/tvAppVersion"
-                    style="@style/TextStyle.Title.Sub"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:padding="5dp"
-                    android:text="@{viewModel.appVersion}" />
-            </android.support.design.widget.NavigationView>
-
-        </android.support.v4.widget.DrawerLayout>
-
-        <android.support.v4.widget.ContentLoadingProgressBar
-            android:id="@+id/address_looking_up"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"/>
-
-    </FrameLayout>
+  </FrameLayout>
 
 </layout>
