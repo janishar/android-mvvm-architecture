@@ -22,6 +22,8 @@ import android.databinding.ObservableBoolean;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
+import java.lang.ref.WeakReference;
+
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
@@ -38,7 +40,7 @@ public abstract class BaseViewModel<N> extends ViewModel {
 
     private CompositeDisposable mCompositeDisposable;
 
-    private N mNavigator;
+    private WeakReference<N> mNavigator;
 
     public BaseViewModel(DataManager dataManager,
                          SchedulerProvider schedulerProvider) {
@@ -70,11 +72,11 @@ public abstract class BaseViewModel<N> extends ViewModel {
     }
 
     public N getNavigator() {
-        return mNavigator;
+        return mNavigator.get();
     }
 
     public void setNavigator(N navigator) {
-        this.mNavigator = navigator;
+        this.mNavigator = new WeakReference<>(navigator);
     }
 
     public SchedulerProvider getSchedulerProvider() {
