@@ -28,7 +28,6 @@ import com.mindorks.framework.mvvm.ui.main.MainActivityModule;
 import com.mindorks.framework.mvvm.ui.main.rating.RateUsDialogProvider;
 import com.mindorks.framework.mvvm.ui.splash.SplashActivity;
 import com.mindorks.framework.mvvm.ui.splash.SplashActivityModule;
-
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 

@@ -23,16 +23,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-
 import com.mindorks.framework.mvvm.BR;
-import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 import com.mindorks.framework.mvvm.databinding.FragmentBlogBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseFragment;
-
 import java.util.List;
-
 import javax.inject.Inject;
 
 /**

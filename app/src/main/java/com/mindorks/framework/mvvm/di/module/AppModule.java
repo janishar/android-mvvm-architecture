@@ -19,7 +19,6 @@ package com.mindorks.framework.mvvm.di.module;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.Context;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mindorks.framework.mvvm.BuildConfig;
@@ -40,11 +39,9 @@ import com.mindorks.framework.mvvm.di.PreferenceInfo;
 import com.mindorks.framework.mvvm.utils.AppConstants;
 import com.mindorks.framework.mvvm.utils.rx.AppSchedulerProvider;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
-
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
+import javax.inject.Singleton;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**

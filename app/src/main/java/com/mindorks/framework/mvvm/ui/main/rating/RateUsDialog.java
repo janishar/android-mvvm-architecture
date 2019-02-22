@@ -24,15 +24,12 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.databinding.DialogRateUsBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseDialog;
-
-import javax.inject.Inject;
-
 import dagger.android.support.AndroidSupportInjection;
+import javax.inject.Inject;
 
 /**
  * Created by amitshekhar on 10/07/17.
@@ -43,7 +40,7 @@ public class RateUsDialog extends BaseDialog implements RateUsCallback {
     private static final String TAG = RateUsDialog.class.getSimpleName();
     @Inject
     ViewModelProviderFactory factory;
-    RateUsViewModel mRateUsViewModel;
+    private RateUsViewModel mRateUsViewModel;
 
     public static RateUsDialog newInstance() {
         RateUsDialog fragment = new RateUsDialog();

@@ -19,13 +19,11 @@ package com.mindorks.framework.mvvm.ui.about;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import com.mindorks.framework.mvvm.BR;
-import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.databinding.FragmentAboutBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseFragment;
-
 import javax.inject.Inject;
 
 /**
@@ -37,7 +35,7 @@ public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewM
     public static final String TAG = AboutFragment.class.getSimpleName();
     @Inject
     ViewModelProviderFactory factory;
-    AboutViewModel mAboutViewModel;
+    private AboutViewModel mAboutViewModel;
 
     public static AboutFragment newInstance() {
         Bundle args = new Bundle();

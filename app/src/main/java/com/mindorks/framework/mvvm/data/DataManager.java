@@ -20,10 +20,8 @@ import com.mindorks.framework.mvvm.data.local.db.DbHelper;
 import com.mindorks.framework.mvvm.data.local.prefs.PreferencesHelper;
 import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 import com.mindorks.framework.mvvm.data.remote.ApiHelper;
-
-import java.util.List;
-
 import io.reactivex.Observable;
+import java.util.List;
 
 /**
  * Created by amitshekhar on 07/07/17.

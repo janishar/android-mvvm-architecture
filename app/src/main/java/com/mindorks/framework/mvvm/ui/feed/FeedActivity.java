@@ -25,18 +25,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.MenuItem;
-
 import com.mindorks.framework.mvvm.BR;
-import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.databinding.ActivityFeedBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
-
-import javax.inject.Inject;
-
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -53,7 +50,7 @@ public class FeedActivity extends BaseActivity<ActivityFeedBinding, FeedViewMode
     @Named("FeedActivity")
     ViewModelProviderFactory factory;
     private ActivityFeedBinding mActivityFeedBinding;
-    FeedViewModel mFeedViewModel;
+    private FeedViewModel mFeedViewModel;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, FeedActivity.class);

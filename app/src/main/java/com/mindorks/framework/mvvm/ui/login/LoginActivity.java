@@ -21,14 +21,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import com.mindorks.framework.mvvm.BR;
-import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.databinding.ActivityLoginBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 import com.mindorks.framework.mvvm.ui.main.MainActivity;
-
 import javax.inject.Inject;
 
 /**
@@ -39,7 +37,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Inject
     ViewModelProviderFactory factory;
-    LoginViewModel mLoginViewModel;
+    private LoginViewModel mLoginViewModel;
     private ActivityLoginBinding mActivityLoginBinding;
 
     public static Intent newIntent(Context context) {

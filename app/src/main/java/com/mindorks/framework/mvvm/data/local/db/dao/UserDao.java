@@ -21,9 +21,7 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
-
 import com.mindorks.framework.mvvm.data.model.db.User;
-
 import java.util.List;
 
 /**

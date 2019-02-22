@@ -17,7 +17,6 @@
 package com.mindorks.framework.mvvm.ui.feed.blogs;
 
 import android.databinding.ObservableField;
-
 import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 
 /**

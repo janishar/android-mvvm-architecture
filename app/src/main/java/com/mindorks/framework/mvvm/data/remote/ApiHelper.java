@@ -21,7 +21,6 @@ import com.mindorks.framework.mvvm.data.model.api.LoginRequest;
 import com.mindorks.framework.mvvm.data.model.api.LoginResponse;
 import com.mindorks.framework.mvvm.data.model.api.LogoutResponse;
 import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
-
 import io.reactivex.Single;
 
 /**

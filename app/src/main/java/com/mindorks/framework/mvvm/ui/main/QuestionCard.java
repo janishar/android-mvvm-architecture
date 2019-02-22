@@ -19,7 +19,6 @@ package com.mindorks.framework.mvvm.ui.main;
 import android.graphics.Color;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.androidnetworking.widget.ANImageView;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.data.model.db.Option;

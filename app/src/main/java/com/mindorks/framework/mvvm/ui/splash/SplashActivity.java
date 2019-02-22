@@ -17,18 +17,15 @@
 package com.mindorks.framework.mvvm.ui.splash;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.mindorks.framework.mvvm.BR;
-import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.databinding.ActivitySplashBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 import com.mindorks.framework.mvvm.ui.login.LoginActivity;
 import com.mindorks.framework.mvvm.ui.main.MainActivity;
-
 import javax.inject.Inject;
 
 /**
@@ -39,11 +36,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
     @Inject
     ViewModelProviderFactory factory;
-    SplashViewModel mSplashViewModel;
-
-    public static Intent newIntent(Context context) {
-        return new Intent(context, SplashActivity.class);
-    }
+    private SplashViewModel mSplashViewModel;
 
     @Override
     public int getBindingVariable() {
