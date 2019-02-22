@@ -17,9 +17,12 @@
 package com.mindorks.framework.mvvm.ui.main;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.databinding.ObservableList;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.mindorks.framework.mvvm.data.DataManager;
@@ -147,4 +150,27 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
     public void updateAppVersion(String version) {
         appVersion.set(version);
     }
+    public static class Factory extends ViewModelProvider.NewInstanceFactory {
+
+        private final DataManager dataManager;
+        private final SchedulerProvider schedulerProvider;
+
+
+        public Factory(DataManager dataManager,
+            SchedulerProvider schedulerProvider) {
+
+            this.dataManager = dataManager;
+            this.schedulerProvider = schedulerProvider;
+        }
+
+        @NonNull
+        @Override
+        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+            if (modelClass.isAssignableFrom(MainViewModel.class)) {
+                return (T) new MainViewModel(dataManager, schedulerProvider);
+            }
+            throw new IllegalArgumentException("Unknown class name");
+        }
+    }
+
 }
