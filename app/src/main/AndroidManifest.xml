@@ -40,8 +40,7 @@
 
         <activity
             android:name=".ui.login.LoginActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop" />
 
         <activity
             android:name=".ui.main.MainActivity"
@@ -50,8 +49,7 @@
         <activity
             android:name="com.mindorks.framework.mvvm.ui.feed.FeedActivity"
             android:launchMode="singleTop"
-            android:parentActivityName=".ui.main.MainActivity"
-            android:screenOrientation="portrait">
+            android:parentActivityName=".ui.main.MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

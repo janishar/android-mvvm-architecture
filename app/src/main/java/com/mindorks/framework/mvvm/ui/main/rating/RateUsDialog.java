@@ -16,6 +16,7 @@
 
 package com.mindorks.framework.mvvm.ui.main.rating;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.DialogRateUsBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseDialog;
@@ -40,6 +42,7 @@ public class RateUsDialog extends BaseDialog implements RateUsCallback {
 
     private static final String TAG = RateUsDialog.class.getSimpleName();
     @Inject
+    ViewModelProviderFactory factory;
     RateUsViewModel mRateUsViewModel;
 
     public static RateUsDialog newInstance() {
@@ -60,7 +63,7 @@ public class RateUsDialog extends BaseDialog implements RateUsCallback {
         View view = binding.getRoot();
 
         AndroidSupportInjection.inject(this);
-
+        mRateUsViewModel = ViewModelProviders.of(this,factory).get(RateUsViewModel.class);
         binding.setViewModel(mRateUsViewModel);
 
         mRateUsViewModel.setNavigator(this);

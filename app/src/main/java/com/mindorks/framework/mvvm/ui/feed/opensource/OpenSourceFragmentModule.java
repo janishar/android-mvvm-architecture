@@ -16,7 +16,6 @@
 
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.mindorks.framework.mvvm.ViewModelProviderFactory;
@@ -48,7 +47,7 @@ public class OpenSourceFragmentModule {
     }
 
     @Provides
-    ViewModelProvider.Factory provideOpenSourceViewModel(OpenSourceViewModel openSourceViewModel) {
-        return new ViewModelProviderFactory<>(openSourceViewModel);
+    ViewModelProviderFactory provideOpenSourceFactory(DataManager dataManager, SchedulerProvider schedulerProvider) {
+        return new ViewModelProviderFactory(dataManager, schedulerProvider);
     }
 }

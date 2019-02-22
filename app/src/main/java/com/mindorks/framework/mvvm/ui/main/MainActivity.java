@@ -16,7 +16,6 @@
 
 package com.mindorks.framework.mvvm.ui.main;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +37,7 @@ import android.view.View;
 
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.BuildConfig;
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.databinding.ActivityMainBinding;
 import com.mindorks.framework.mvvm.databinding.NavHeaderMainBinding;
@@ -55,13 +55,15 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+import javax.inject.Named;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator, HasSupportFragmentInjector {
 
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
     @Inject
-    ViewModelProvider.Factory mViewModelFactory;
+    @Named("MainActivity")
+    ViewModelProviderFactory factory;
     private ActivityMainBinding mActivityMainBinding;
     private SwipePlaceHolderView mCardsContainerView;
     private DrawerLayout mDrawer;
@@ -86,7 +88,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     @Override
     public MainViewModel getViewModel() {
-        mMainViewModel = ViewModelProviders.of(this, mViewModelFactory).get(MainViewModel.class);
+        mMainViewModel = ViewModelProviders.of(this, factory).get(MainViewModel.class);
         return mMainViewModel;
     }
 
