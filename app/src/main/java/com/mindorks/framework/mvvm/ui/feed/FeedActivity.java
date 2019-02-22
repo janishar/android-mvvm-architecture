@@ -34,7 +34,6 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * Created by amitshekhar on 10/07/17.
@@ -47,7 +46,6 @@ public class FeedActivity extends BaseActivity<ActivityFeedBinding, FeedViewMode
     @Inject
     FeedPagerAdapter mPagerAdapter;
     @Inject
-    @Named("FeedActivity")
     ViewModelProviderFactory factory;
     private ActivityFeedBinding mActivityFeedBinding;
     private FeedViewModel mFeedViewModel;

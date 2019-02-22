@@ -16,12 +16,8 @@
 
 package com.mindorks.framework.mvvm.ui.feed;
 
-import com.mindorks.framework.mvvm.ViewModelProviderFactory;
-import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 import dagger.Module;
 import dagger.Provides;
-import javax.inject.Named;
 
 /**
  * Created by amitshekhar on 14/09/17.
@@ -34,9 +30,4 @@ public class FeedActivityModule {
         return new FeedPagerAdapter(activity.getSupportFragmentManager());
     }
 
-    @Provides
-    @Named("FeedActivity")
-    ViewModelProviderFactory provideFeedSourceFactory(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        return new ViewModelProviderFactory(dataManager, schedulerProvider);
-    }
 }
