@@ -50,7 +50,7 @@ public class FeedActivity extends BaseActivity<ActivityFeedBinding, FeedViewMode
   @Inject
   @Named("FeedActivity")
   ViewModelProviderFactory factory;
-  FeedViewModel mFeedViewModel;
+  private FeedViewModel mFeedViewModel;
   private ActivityFeedBinding mActivityFeedBinding;
 
   public static Intent newIntent(Context context) {

@@ -36,7 +36,7 @@ public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewM
   public static final String TAG = AboutFragment.class.getSimpleName();
   @Inject
   ViewModelProviderFactory factory;
-  AboutViewModel mAboutViewModel;
+  private AboutViewModel mAboutViewModel;
 
   public static AboutFragment newInstance() {
     Bundle args = new Bundle();

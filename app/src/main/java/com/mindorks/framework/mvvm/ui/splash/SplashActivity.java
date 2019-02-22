@@ -38,7 +38,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
   @Inject
   ViewModelProviderFactory factory;
-  SplashViewModel mSplashViewModel;
+  private SplashViewModel mSplashViewModel;
 
   public static Intent newIntent(Context context) {
     return new Intent(context, SplashActivity.class);

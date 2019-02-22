@@ -40,7 +40,7 @@ public class RateUsDialog extends BaseDialog implements RateUsCallback {
   private static final String TAG = RateUsDialog.class.getSimpleName();
   @Inject
   ViewModelProviderFactory factory;
-  RateUsViewModel mRateUsViewModel;
+  private RateUsViewModel mRateUsViewModel;
 
   public static RateUsDialog newInstance() {
     RateUsDialog fragment = new RateUsDialog();

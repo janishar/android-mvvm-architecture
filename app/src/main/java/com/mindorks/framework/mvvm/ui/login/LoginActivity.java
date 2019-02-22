@@ -38,7 +38,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
   @Inject
   ViewModelProviderFactory factory;
-  LoginViewModel mLoginViewModel;
+  private LoginViewModel mLoginViewModel;
   private ActivityLoginBinding mActivityLoginBinding;
 
   public static Intent newIntent(Context context) {
