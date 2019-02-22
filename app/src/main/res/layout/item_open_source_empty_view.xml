@@ -15,60 +15,60 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
+  <data>
 
-        <variable
-            name="viewModel"
-            type="com.mindorks.framework.mvvm.ui.feed.opensource.OpenSourceEmptyItemViewModel" />
+    <variable
+      name="viewModel"
+      type="com.mindorks.framework.mvvm.ui.feed.opensource.OpenSourceEmptyItemViewModel"/>
 
-    </data>
+  </data>
 
-    <LinearLayout
-        android:id="@+id/linearLayoutView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+  <LinearLayout
+    android:id="@+id/linearLayoutView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageViewEmpty"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_rabbit" />
+    <ImageView
+      android:id="@+id/imageViewEmpty"
+      android:layout_width="80dp"
+      android:layout_height="80dp"
+      android:layout_gravity="center"
+      app:srcCompat="@drawable/ic_rabbit"/>
 
-        <TextView
-            android:id="@+id/tv_message"
-            style="@style/TextStyle.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="@string/empty_screen"
-            android:textColor="@color/gray" />
+    <TextView
+      android:id="@+id/tv_message"
+      style="@style/TextStyle.Title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:text="@string/empty_screen"
+      android:textColor="@color/gray"/>
 
-        <TextView
-            style="@style/TextStyle.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:text="@string/please_retry"
-            android:textColor="@color/gray" />
+    <TextView
+      style="@style/TextStyle.Title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="30dp"
+      android:layout_gravity="center"
+      android:text="@string/please_retry"
+      android:textColor="@color/gray"/>
 
-        <Button
-            android:id="@+id/btn_retry"
-            style="@style/Button.Primary.Quiz.Empty"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:onClick="@{() -> viewModel.onRetryClick()}"
-            android:text="@string/retry"
-            android:textSize="20sp" />
-    </LinearLayout>
+    <Button
+      android:id="@+id/btn_retry"
+      style="@style/Button.Primary.Quiz.Empty"
+      android:layout_width="150dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:layout_gravity="center"
+      android:onClick="@{() -> viewModel.onRetryClick()}"
+      android:text="@string/retry"
+      android:textSize="20sp"/>
+  </LinearLayout>
 
 </layout>

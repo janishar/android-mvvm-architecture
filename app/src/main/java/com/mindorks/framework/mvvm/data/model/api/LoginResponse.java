@@ -25,131 +25,131 @@ import com.google.gson.annotations.SerializedName;
 
 public final class LoginResponse {
 
-    @Expose
-    @SerializedName("access_token")
-    private String accessToken;
+  @Expose
+  @SerializedName("access_token")
+  private String accessToken;
 
-    @Expose
-    @SerializedName("fb_profile_pic_url")
-    private String fbProfilePicUrl;
+  @Expose
+  @SerializedName("fb_profile_pic_url")
+  private String fbProfilePicUrl;
 
-    @Expose
-    @SerializedName("google_profile_pic_url")
-    private String googleProfilePicUrl;
+  @Expose
+  @SerializedName("google_profile_pic_url")
+  private String googleProfilePicUrl;
 
-    @Expose
-    @SerializedName("message")
-    private String message;
+  @Expose
+  @SerializedName("message")
+  private String message;
 
-    @Expose
-    @SerializedName("server_profile_pic_url")
-    private String serverProfilePicUrl;
+  @Expose
+  @SerializedName("server_profile_pic_url")
+  private String serverProfilePicUrl;
 
-    @Expose
-    @SerializedName("status_code")
-    private String statusCode;
+  @Expose
+  @SerializedName("status_code")
+  private String statusCode;
 
-    @Expose
-    @SerializedName("email")
-    private String userEmail;
+  @Expose
+  @SerializedName("email")
+  private String userEmail;
 
-    @Expose
-    @SerializedName("user_id")
-    private Long userId;
+  @Expose
+  @SerializedName("user_id")
+  private Long userId;
 
-    @Expose
-    @SerializedName("user_name")
-    private String userName;
+  @Expose
+  @SerializedName("user_name")
+  private String userName;
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (object == null || getClass() != object.getClass()) {
-            return false;
-        }
-
-        LoginResponse that = (LoginResponse) object;
-
-        if (statusCode != null ? !statusCode.equals(that.statusCode) : that.statusCode != null) {
-            return false;
-        }
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) {
-            return false;
-        }
-        if (accessToken != null ? !accessToken.equals(that.accessToken) : that.accessToken != null) {
-            return false;
-        }
-        if (userName != null ? !userName.equals(that.userName) : that.userName != null) {
-            return false;
-        }
-        if (userEmail != null ? !userEmail.equals(that.userEmail) : that.userEmail != null) {
-            return false;
-        }
-        if (serverProfilePicUrl != null ? !serverProfilePicUrl.equals(that.serverProfilePicUrl)
-                : that.serverProfilePicUrl != null) {
-            return false;
-        }
-        if (fbProfilePicUrl != null ? !fbProfilePicUrl.equals(that.fbProfilePicUrl)
-                : that.fbProfilePicUrl != null) {
-            return false;
-        }
-        if (googleProfilePicUrl != null ? !googleProfilePicUrl.equals(that.googleProfilePicUrl)
-                : that.googleProfilePicUrl != null) {
-            return false;
-        }
-        return message != null ? message.equals(that.message) : that.message == null;
-
+  @Override
+  public boolean equals(Object object) {
+    if (this == object) {
+      return true;
+    }
+    if (object == null || getClass() != object.getClass()) {
+      return false;
     }
 
-    @Override
-    public int hashCode() {
-        int result = statusCode != null ? statusCode.hashCode() : 0;
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (accessToken != null ? accessToken.hashCode() : 0);
-        result = 31 * result + (userName != null ? userName.hashCode() : 0);
-        result = 31 * result + (userEmail != null ? userEmail.hashCode() : 0);
-        result = 31 * result + (serverProfilePicUrl != null ? serverProfilePicUrl.hashCode() : 0);
-        result = 31 * result + (fbProfilePicUrl != null ? fbProfilePicUrl.hashCode() : 0);
-        result = 31 * result + (googleProfilePicUrl != null ? googleProfilePicUrl.hashCode() : 0);
-        result = 31 * result + (message != null ? message.hashCode() : 0);
-        return result;
-    }
+    LoginResponse that = (LoginResponse) object;
 
-    public String getAccessToken() {
-        return accessToken;
+    if (statusCode != null ? !statusCode.equals(that.statusCode) : that.statusCode != null) {
+      return false;
     }
+    if (userId != null ? !userId.equals(that.userId) : that.userId != null) {
+      return false;
+    }
+    if (accessToken != null ? !accessToken.equals(that.accessToken) : that.accessToken != null) {
+      return false;
+    }
+    if (userName != null ? !userName.equals(that.userName) : that.userName != null) {
+      return false;
+    }
+    if (userEmail != null ? !userEmail.equals(that.userEmail) : that.userEmail != null) {
+      return false;
+    }
+    if (serverProfilePicUrl != null ? !serverProfilePicUrl.equals(that.serverProfilePicUrl)
+        : that.serverProfilePicUrl != null) {
+      return false;
+    }
+    if (fbProfilePicUrl != null ? !fbProfilePicUrl.equals(that.fbProfilePicUrl)
+        : that.fbProfilePicUrl != null) {
+      return false;
+    }
+    if (googleProfilePicUrl != null ? !googleProfilePicUrl.equals(that.googleProfilePicUrl)
+        : that.googleProfilePicUrl != null) {
+      return false;
+    }
+    return message != null ? message.equals(that.message) : that.message == null;
 
-    public String getFbProfilePicUrl() {
-        return fbProfilePicUrl;
-    }
+  }
 
-    public String getGoogleProfilePicUrl() {
-        return googleProfilePicUrl;
-    }
+  @Override
+  public int hashCode() {
+    int result = statusCode != null ? statusCode.hashCode() : 0;
+    result = 31 * result + (userId != null ? userId.hashCode() : 0);
+    result = 31 * result + (accessToken != null ? accessToken.hashCode() : 0);
+    result = 31 * result + (userName != null ? userName.hashCode() : 0);
+    result = 31 * result + (userEmail != null ? userEmail.hashCode() : 0);
+    result = 31 * result + (serverProfilePicUrl != null ? serverProfilePicUrl.hashCode() : 0);
+    result = 31 * result + (fbProfilePicUrl != null ? fbProfilePicUrl.hashCode() : 0);
+    result = 31 * result + (googleProfilePicUrl != null ? googleProfilePicUrl.hashCode() : 0);
+    result = 31 * result + (message != null ? message.hashCode() : 0);
+    return result;
+  }
 
-    public String getMessage() {
-        return message;
-    }
+  public String getAccessToken() {
+    return accessToken;
+  }
 
-    public String getServerProfilePicUrl() {
-        return serverProfilePicUrl;
-    }
+  public String getFbProfilePicUrl() {
+    return fbProfilePicUrl;
+  }
 
-    public String getStatusCode() {
-        return statusCode;
-    }
+  public String getGoogleProfilePicUrl() {
+    return googleProfilePicUrl;
+  }
 
-    public String getUserEmail() {
-        return userEmail;
-    }
+  public String getMessage() {
+    return message;
+  }
 
-    public Long getUserId() {
-        return userId;
-    }
+  public String getServerProfilePicUrl() {
+    return serverProfilePicUrl;
+  }
 
-    public String getUserName() {
-        return userName;
-    }
+  public String getStatusCode() {
+    return statusCode;
+  }
+
+  public String getUserEmail() {
+    return userEmail;
+  }
+
+  public Long getUserId() {
+    return userId;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
 }

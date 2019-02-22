@@ -13,19 +13,19 @@
   ~ limitations under the License
   -->
 <FindBugsFilter>
-    <Match>
-        <Class name="~.*\.R\$.*"/>
-    </Match>
-    <Match>
-        <Class name="~.*\.Manifest\$.*"/>
-    </Match>
-    <!-- All bugs in test classes, except for JUnit-specific bugs -->
-    <Match>
-        <Class name="~.*\.*Test" />
-        <Not>
-            <Bug code="IJU" />
-        </Not>
-    </Match>
+  <Match>
+    <Class name="~.*\.R\$.*"/>
+  </Match>
+  <Match>
+    <Class name="~.*\.Manifest\$.*"/>
+  </Match>
+  <!-- All bugs in test classes, except for JUnit-specific bugs -->
+  <Match>
+    <Class name="~.*\.*Test"/>
+    <Not>
+      <Bug code="IJU"/>
+    </Not>
+  </Match>
 
 
 </FindBugsFilter>

@@ -26,11 +26,11 @@ import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 public class AboutViewModel extends BaseViewModel<AboutNavigator> {
 
-    public AboutViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
-    }
+  public AboutViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+    super(dataManager, schedulerProvider);
+  }
 
-    public void onNavBackClick() {
-        getNavigator().goBack();
-    }
+  public void onNavBackClick() {
+    getNavigator().goBack();
+  }
 }

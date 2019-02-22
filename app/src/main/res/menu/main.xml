@@ -14,30 +14,30 @@
   -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_cut"
-        android:icon="@drawable/avd_cut"
-        android:title="@string/cut"
-        app:showAsAction="always" />
+  <item
+    android:id="@+id/action_cut"
+    android:icon="@drawable/avd_cut"
+    android:title="@string/cut"
+    app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/action_copy"
-        android:icon="@drawable/avd_copy"
-        android:title="@string/copy"
-        app:showAsAction="always" />
+  <item
+    android:id="@+id/action_copy"
+    android:icon="@drawable/avd_copy"
+    android:title="@string/copy"
+    app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/action_delete"
-        android:icon="@drawable/avd_delete"
-        android:title="@string/delete"
-        app:showAsAction="always" />
+  <item
+    android:id="@+id/action_delete"
+    android:icon="@drawable/avd_delete"
+    android:title="@string/delete"
+    app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/action_share"
-        android:icon="@drawable/avd_share"
-        android:title="@string/share"
-        app:showAsAction="always" />
+  <item
+    android:id="@+id/action_share"
+    android:icon="@drawable/avd_share"
+    android:title="@string/share"
+    app:showAsAction="always"/>
 
 </menu>

@@ -10,19 +10,19 @@ import android.view.animation.ScaleAnimation;
 
 public final class ViewAnimationUtils {
 
-    private ViewAnimationUtils() {
-        // This class is not publicly instantiable
-    }
+  private ViewAnimationUtils() {
+    // This class is not publicly instantiable
+  }
 
-    public static void scaleAnimateView(View view) {
-        ScaleAnimation animation =
-                new ScaleAnimation(
-                        1.15f, 1, 1.15f, 1,
-                        Animation.RELATIVE_TO_SELF, 0.5f,
-                        Animation.RELATIVE_TO_SELF, 0.5f);
+  public static void scaleAnimateView(View view) {
+    ScaleAnimation animation =
+        new ScaleAnimation(
+            1.15f, 1, 1.15f, 1,
+            Animation.RELATIVE_TO_SELF, 0.5f,
+            Animation.RELATIVE_TO_SELF, 0.5f);
 
-        view.setAnimation(animation);
-        animation.setDuration(100);
-        animation.start();
-    }
+    view.setAnimation(animation);
+    animation.setDuration(100);
+    animation.start();
+  }
 }

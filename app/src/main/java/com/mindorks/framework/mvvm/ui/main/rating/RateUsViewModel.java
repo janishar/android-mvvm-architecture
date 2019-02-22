@@ -26,15 +26,15 @@ import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 public class RateUsViewModel extends BaseViewModel<RateUsCallback> {
 
-    public RateUsViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
-    }
+  public RateUsViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+    super(dataManager, schedulerProvider);
+  }
 
-    public void onLaterClick() {
-        getNavigator().dismissDialog();
-    }
+  public void onLaterClick() {
+    getNavigator().dismissDialog();
+  }
 
-    public void onSubmitClick() {
-        getNavigator().dismissDialog();
-    }
+  public void onSubmitClick() {
+    getNavigator().dismissDialog();
+  }
 }

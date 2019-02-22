@@ -16,9 +16,9 @@
 
 package com.mindorks.framework.mvvm.ui.main.rating;
 
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -28,8 +28,9 @@ import dagger.Provides;
 @Module
 public class RateUsDialogModule {
 
-    @Provides
-    RateUsViewModel provideRateUsViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        return new RateUsViewModel(dataManager, schedulerProvider);
-    }
+  @Provides
+  ViewModelProviderFactory provideRateUsViewModelFactory(DataManager dataManager,
+      SchedulerProvider schedulerProvider) {
+    return new ViewModelProviderFactory(dataManager, schedulerProvider);
+  }
 }

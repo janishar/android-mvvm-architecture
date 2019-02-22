@@ -20,10 +20,8 @@ import com.mindorks.framework.mvvm.data.local.db.DbHelper;
 import com.mindorks.framework.mvvm.data.local.prefs.PreferencesHelper;
 import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 import com.mindorks.framework.mvvm.data.remote.ApiHelper;
-
-import java.util.List;
-
 import io.reactivex.Observable;
+import java.util.List;
 
 /**
  * Created by amitshekhar on 07/07/17.
@@ -31,39 +29,39 @@ import io.reactivex.Observable;
 
 public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
 
-    Observable<List<QuestionCardData>> getQuestionCardData();
+  Observable<List<QuestionCardData>> getQuestionCardData();
 
-    Observable<Boolean> seedDatabaseOptions();
+  Observable<Boolean> seedDatabaseOptions();
 
-    Observable<Boolean> seedDatabaseQuestions();
+  Observable<Boolean> seedDatabaseQuestions();
 
-    void setUserAsLoggedOut();
+  void setUserAsLoggedOut();
 
-    void updateApiHeader(Long userId, String accessToken);
+  void updateApiHeader(Long userId, String accessToken);
 
-    void updateUserInfo(
-            String accessToken,
-            Long userId,
-            LoggedInMode loggedInMode,
-            String userName,
-            String email,
-            String profilePicPath);
+  void updateUserInfo(
+      String accessToken,
+      Long userId,
+      LoggedInMode loggedInMode,
+      String userName,
+      String email,
+      String profilePicPath);
 
-    enum LoggedInMode {
+  enum LoggedInMode {
 
-        LOGGED_IN_MODE_LOGGED_OUT(0),
-        LOGGED_IN_MODE_GOOGLE(1),
-        LOGGED_IN_MODE_FB(2),
-        LOGGED_IN_MODE_SERVER(3);
+    LOGGED_IN_MODE_LOGGED_OUT(0),
+    LOGGED_IN_MODE_GOOGLE(1),
+    LOGGED_IN_MODE_FB(2),
+    LOGGED_IN_MODE_SERVER(3);
 
-        private final int mType;
+    private final int mType;
 
-        LoggedInMode(int type) {
-            mType = type;
-        }
-
-        public int getType() {
-            return mType;
-        }
+    LoggedInMode(int type) {
+      mType = type;
     }
+
+    public int getType() {
+      return mType;
+    }
+  }
 }
