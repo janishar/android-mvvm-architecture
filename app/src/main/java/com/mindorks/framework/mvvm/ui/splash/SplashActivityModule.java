@@ -16,9 +16,9 @@
 
 package com.mindorks.framework.mvvm.ui.splash;
 
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -29,7 +29,7 @@ import dagger.Provides;
 public class SplashActivityModule {
 
     @Provides
-    SplashViewModel provideSplashViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        return new SplashViewModel(dataManager, schedulerProvider);
+    ViewModelProviderFactory provideSplashViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+        return new ViewModelProviderFactory(dataManager, schedulerProvider);
     }
 }

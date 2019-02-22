@@ -18,7 +18,6 @@ package com.mindorks.framework.mvvm.data.model.api;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 /**

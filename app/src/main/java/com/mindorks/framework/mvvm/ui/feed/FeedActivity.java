@@ -16,6 +16,7 @@
 
 package com.mindorks.framework.mvvm.ui.feed;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,17 +25,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.MenuItem;
-
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.databinding.ActivityFeedBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
-
-import javax.inject.Inject;
-
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Created by amitshekhar on 10/07/17.
@@ -45,10 +45,12 @@ public class FeedActivity extends BaseActivity<ActivityFeedBinding, FeedViewMode
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
     @Inject
-    FeedViewModel mFeedViewModel;
-    @Inject
     FeedPagerAdapter mPagerAdapter;
+    @Inject
+    @Named("FeedActivity")
+    ViewModelProviderFactory factory;
     private ActivityFeedBinding mActivityFeedBinding;
+    private FeedViewModel mFeedViewModel;
 
     public static Intent newIntent(Context context) {
         return new Intent(context, FeedActivity.class);
@@ -66,6 +68,7 @@ public class FeedActivity extends BaseActivity<ActivityFeedBinding, FeedViewMode
 
     @Override
     public FeedViewModel getViewModel() {
+        mFeedViewModel = ViewModelProviders.of(this,factory).get(FeedViewModel.class);
         return mFeedViewModel;
     }
 

@@ -22,12 +22,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.mindorks.framework.mvvm.databinding.ItemOpenSourceEmptyViewBinding;
 import com.mindorks.framework.mvvm.databinding.ItemOpenSourceViewBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseViewHolder;
 import com.mindorks.framework.mvvm.utils.AppLogger;
-
 import java.util.ArrayList;
 import java.util.List;
 

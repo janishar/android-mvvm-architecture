@@ -18,7 +18,6 @@ package com.mindorks.framework.mvvm.data.model.others;
 
 import com.mindorks.framework.mvvm.data.model.db.Option;
 import com.mindorks.framework.mvvm.data.model.db.Question;
-
 import java.util.List;
 
 /**
