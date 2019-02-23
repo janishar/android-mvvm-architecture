@@ -12,6 +12,7 @@ import com.mindorks.framework.mvvm.ui.main.MainViewModel;
 import com.mindorks.framework.mvvm.ui.main.rating.RateUsViewModel;
 import com.mindorks.framework.mvvm.ui.splash.SplashViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
+import javax.inject.Inject;
 
 /**
  * Created by jyotidubey on 22/02/19.
@@ -22,6 +23,7 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
   private final DataManager dataManager;
   private final SchedulerProvider schedulerProvider;
 
+  @Inject
   public ViewModelProviderFactory(DataManager dataManager,
       SchedulerProvider schedulerProvider) {
     this.dataManager = dataManager;

@@ -138,7 +138,6 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
 
     public void removeQuestionCard() {
         action = ACTION_DELETE_SINGLE;
-        questionDataList.remove(0);
         questionCardData.getValue().remove(0);
     }
 

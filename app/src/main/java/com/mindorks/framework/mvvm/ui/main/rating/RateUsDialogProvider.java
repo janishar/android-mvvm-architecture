@@ -25,6 +25,6 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class RateUsDialogProvider {
 
-    @ContributesAndroidInjector(modules = RateUsDialogModule.class)
+    @ContributesAndroidInjector
     abstract RateUsDialog provideRateUsDialogFactory();
 }
