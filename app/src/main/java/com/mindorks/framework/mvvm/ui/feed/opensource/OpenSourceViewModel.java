@@ -16,6 +16,7 @@
 
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
@@ -32,8 +33,6 @@ import java.util.List;
 
 public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
 
-    private final ObservableList<OpenSourceItemViewModel> openSourceItemViewModels = new ObservableArrayList<>();
-
     private final MutableLiveData<List<OpenSourceItemViewModel>> openSourceItemsLiveData;
 
     public OpenSourceViewModel(DataManager dataManager,
@@ -41,11 +40,6 @@ public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
         super(dataManager, schedulerProvider);
         openSourceItemsLiveData = new MutableLiveData<>();
         fetchRepos();
-    }
-
-    public void addOpenSourceItemsToList(List<OpenSourceItemViewModel> openSourceItems) {
-        openSourceItemViewModels.clear();
-        openSourceItemViewModels.addAll(openSourceItems);
     }
 
     public void fetchRepos() {
@@ -65,11 +59,7 @@ public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
                 }));
     }
 
-    public ObservableList<OpenSourceItemViewModel> getOpenSourceItemViewModels() {
-        return openSourceItemViewModels;
-    }
-
-    public MutableLiveData<List<OpenSourceItemViewModel>> getOpenSourceRepos() {
+    public LiveData<List<OpenSourceItemViewModel>> getOpenSourceItemsLiveData() {
         return openSourceItemsLiveData;
     }
 

@@ -92,7 +92,6 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
         super.onViewCreated(view, savedInstanceState);
         mFragmentOpenSourceBinding = getViewDataBinding();
         setUp();
-        subscribeToLiveData();
     }
 
     private void setUp() {
@@ -100,10 +99,5 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
         mFragmentOpenSourceBinding.openSourceRecyclerView.setLayoutManager(mLayoutManager);
         mFragmentOpenSourceBinding.openSourceRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mFragmentOpenSourceBinding.openSourceRecyclerView.setAdapter(mOpenSourceAdapter);
-    }
-
-    private void subscribeToLiveData() {
-        mOpenSourceViewModel.getOpenSourceRepos().observe(this,
-                openSourceItemViewModels -> mOpenSourceViewModel.addOpenSourceItemsToList(openSourceItemViewModels));
     }
 }

@@ -16,6 +16,7 @@
 
 package com.mindorks.framework.mvvm.ui.main;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
@@ -63,7 +64,7 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
         return appVersion;
     }
 
-    public MutableLiveData<List<QuestionCardData>> getQuestionCardData() {
+    public LiveData<List<QuestionCardData>> getQuestionCardData() {
         return questionCardData;
     }
 

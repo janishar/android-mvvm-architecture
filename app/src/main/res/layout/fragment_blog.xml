@@ -41,7 +41,7 @@
                 android:id="@+id/blogRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:adapter="@{viewModel.blogObservableArrayList}"
+                app:adapter="@{viewModel.blogListLiveData}"
                 tools:listitem="@layout/item_blog_view" />
 
         </LinearLayout>
