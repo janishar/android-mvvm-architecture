@@ -93,7 +93,6 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
         super.onViewCreated(view, savedInstanceState);
         mFragmentBlogBinding = getViewDataBinding();
         setUp();
-        subscribeToLiveData();
     }
 
     @Override
@@ -106,9 +105,5 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
         mFragmentBlogBinding.blogRecyclerView.setLayoutManager(mLayoutManager);
         mFragmentBlogBinding.blogRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mFragmentBlogBinding.blogRecyclerView.setAdapter(mBlogAdapter);
-    }
-
-    private void subscribeToLiveData() {
-        mBlogViewModel.getBlogListLiveData().observe(this, blogs -> mBlogViewModel.addBlogItemsToList(blogs));
     }
 }
