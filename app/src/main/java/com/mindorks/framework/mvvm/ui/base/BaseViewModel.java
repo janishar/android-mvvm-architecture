@@ -31,7 +31,7 @@ public abstract class BaseViewModel<N> extends ViewModel {
 
     private final DataManager mDataManager;
 
-    private final ObservableBoolean mIsLoading = new ObservableBoolean(false);
+    private final ObservableBoolean mIsLoading = new ObservableBoolean();
 
     private final SchedulerProvider mSchedulerProvider;
 
