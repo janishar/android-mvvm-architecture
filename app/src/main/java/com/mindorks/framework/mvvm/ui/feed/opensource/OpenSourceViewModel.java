@@ -18,14 +18,16 @@ package com.mindorks.framework.mvvm.ui.feed.opensource;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
+
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
-import java.util.ArrayList;
+
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * Created by amitshekhar on 10/07/17.
@@ -46,12 +48,12 @@ public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
         setIsLoading(true);
         getCompositeDisposable().add(getDataManager()
                 .getOpenSourceApiCall()
+                .map(openSourceResponse -> openSourceResponse.getData())
+                .flatMap(this::getViewModelList)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(openSourceResponse -> {
-                    if (openSourceResponse != null && openSourceResponse.getData() != null) {
-                        openSourceItemsLiveData.setValue(getViewModelList(openSourceResponse.getData()));
-                    }
+                    openSourceItemsLiveData.setValue(openSourceResponse);
                     setIsLoading(false);
                 }, throwable -> {
                     setIsLoading(false);
@@ -63,13 +65,10 @@ public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
         return openSourceItemsLiveData;
     }
 
-    public List<OpenSourceItemViewModel> getViewModelList(List<OpenSourceResponse.Repo> repoList) {
-        List<OpenSourceItemViewModel> openSourceItemViewModels = new ArrayList<>();
-        for (OpenSourceResponse.Repo repo : repoList) {
-            openSourceItemViewModels.add(new OpenSourceItemViewModel(
-                    repo.getCoverImgUrl(), repo.getTitle(),
-                    repo.getDescription(), repo.getProjectUrl()));
-        }
-        return openSourceItemViewModels;
+    private Single<List<OpenSourceItemViewModel>> getViewModelList(List<OpenSourceResponse.Repo> repoList) {
+        return Observable.fromIterable(repoList)
+                .map(repo -> new OpenSourceItemViewModel(
+                        repo.getCoverImgUrl(), repo.getTitle(),
+                        repo.getDescription(), repo.getProjectUrl())).toList();
     }
 }

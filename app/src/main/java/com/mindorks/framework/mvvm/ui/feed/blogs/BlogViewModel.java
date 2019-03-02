@@ -18,8 +18,6 @@ package com.mindorks.framework.mvvm.ui.feed.blogs;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableList;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
