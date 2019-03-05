@@ -16,8 +16,8 @@
 
 package com.mindorks.framework.mvvm.ui.base;
 
-import android.arch.lifecycle.ViewModel;
-import android.databinding.ObservableBoolean;
+import androidx.lifecycle.ViewModel;
+import androidx.databinding.ObservableBoolean;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 import io.reactivex.disposables.CompositeDisposable;

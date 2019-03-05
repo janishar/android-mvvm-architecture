@@ -16,7 +16,7 @@
 
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
-import android.databinding.ObservableField;
+import androidx.databinding.ObservableField;
 
 /**
  * Created by amitshekhar on 10/07/17.

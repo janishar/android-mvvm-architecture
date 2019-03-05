@@ -33,14 +33,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.widget.DrawerLayout
+        <androidx.drawerlayout.widget.DrawerLayout
 
             android:id="@+id/drawerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true">
 
-            <android.support.design.widget.CoordinatorLayout
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:id="@+id/clRootView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -52,12 +52,12 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <android.support.design.widget.AppBarLayout
+                    <com.google.android.material.appbar.AppBarLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:elevation="5dp">
 
-                        <android.support.v7.widget.Toolbar
+                        <androidx.appcompat.widget.Toolbar
                             android:id="@+id/toolbar"
                             style="@style/Toolbar"
                             app:subtitleTextColor="@color/white"
@@ -70,7 +70,7 @@
                             android:layout_height="1dp"
                             android:background="@color/light_gray" />
 
-                    </android.support.design.widget.AppBarLayout>
+                    </com.google.android.material.appbar.AppBarLayout>
 
                     <com.mindorks.placeholderview.SwipePlaceHolderView
                         android:id="@+id/cardsContainer"
@@ -80,9 +80,9 @@
                         app:adapter="@{viewModel.questionDataList}" />
 
                 </LinearLayout>
-            </android.support.design.widget.CoordinatorLayout>
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-            <android.support.design.widget.NavigationView
+            <com.google.android.material.navigation.NavigationView
                 android:id="@+id/navigationView"
                 style="@style/Widget.Design.NavigationView"
                 android:layout_width="wrap_content"
@@ -102,11 +102,11 @@
                     android:layout_gravity="bottom|end"
                     android:padding="5dp"
                     android:text="@{viewModel.appVersion}" />
-            </android.support.design.widget.NavigationView>
+            </com.google.android.material.navigation.NavigationView>
 
-        </android.support.v4.widget.DrawerLayout>
+        </androidx.drawerlayout.widget.DrawerLayout>
 
-        <android.support.v4.widget.ContentLoadingProgressBar
+        <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/address_looking_up"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
