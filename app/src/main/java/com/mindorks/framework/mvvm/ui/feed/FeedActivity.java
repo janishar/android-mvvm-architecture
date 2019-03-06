@@ -16,14 +16,14 @@
 
 package com.mindorks.framework.mvvm.ui.feed;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.core.app.NavUtils;
+import androidx.core.app.TaskStackBuilder;
 import android.view.MenuItem;
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;

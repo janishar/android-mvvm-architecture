@@ -16,11 +16,11 @@
 
 package com.mindorks.framework.mvvm.ui.main;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableField;
-import android.databinding.ObservableList;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableList;
 import android.text.TextUtils;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;

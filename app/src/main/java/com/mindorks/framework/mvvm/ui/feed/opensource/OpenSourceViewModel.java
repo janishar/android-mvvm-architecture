@@ -16,8 +16,8 @@
 
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;

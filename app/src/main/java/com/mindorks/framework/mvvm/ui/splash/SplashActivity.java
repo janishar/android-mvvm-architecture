@@ -16,9 +16,10 @@
 
 package com.mindorks.framework.mvvm.ui.splash;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.ViewModelProviderFactory;

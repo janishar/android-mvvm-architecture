@@ -1,7 +1,7 @@
 package com.mindorks.framework.mvvm;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.ui.about.AboutViewModel;
 import com.mindorks.framework.mvvm.ui.feed.FeedViewModel;
