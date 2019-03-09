@@ -16,21 +16,23 @@
 
 package com.mindorks.framework.mvvm.ui.feed.blogs;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.view.View;
+
+import com.mindorks.framework.mvvm.BR;
+import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
+import com.mindorks.framework.mvvm.databinding.FragmentBlogBinding;
+import com.mindorks.framework.mvvm.ui.base.BaseFragment;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import android.view.View;
-import com.mindorks.framework.mvvm.BR;
-import com.mindorks.framework.mvvm.R;
-import com.mindorks.framework.mvvm.ViewModelProviderFactory;
-import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
-import com.mindorks.framework.mvvm.databinding.FragmentBlogBinding;
-import com.mindorks.framework.mvvm.ui.base.BaseFragment;
-import java.util.List;
-import javax.inject.Inject;
 
 /**
  * Created by amitshekhar on 10/07/17.
@@ -44,9 +46,9 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
     FragmentBlogBinding mFragmentBlogBinding;
     @Inject
     LinearLayoutManager mLayoutManager;
+
     @Inject
-    ViewModelProviderFactory factory;
-    private BlogViewModel mBlogViewModel;
+    BlogViewModel mBlogViewModel;
 
     public static BlogFragment newInstance() {
         Bundle args = new Bundle();
@@ -67,7 +69,6 @@ public class BlogFragment extends BaseFragment<FragmentBlogBinding, BlogViewMode
 
     @Override
     public BlogViewModel getViewModel() {
-        mBlogViewModel = ViewModelProviders.of(this, factory).get(BlogViewModel.class);
         return mBlogViewModel;
     }
 

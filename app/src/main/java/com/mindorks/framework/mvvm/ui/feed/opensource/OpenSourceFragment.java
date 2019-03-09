@@ -43,9 +43,9 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
     LinearLayoutManager mLayoutManager;
     @Inject
     OpenSourceAdapter mOpenSourceAdapter;
+
     @Inject
-    ViewModelProviderFactory factory;
-    private OpenSourceViewModel mOpenSourceViewModel;
+    OpenSourceViewModel mOpenSourceViewModel;
 
     public static OpenSourceFragment newInstance() {
         Bundle args = new Bundle();
@@ -66,7 +66,6 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
 
     @Override
     public OpenSourceViewModel getViewModel() {
-        mOpenSourceViewModel = ViewModelProviders.of(this, factory).get(OpenSourceViewModel.class);
         return mOpenSourceViewModel;
     }
 

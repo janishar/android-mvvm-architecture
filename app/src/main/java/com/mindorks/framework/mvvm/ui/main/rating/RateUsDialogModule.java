@@ -14,17 +14,25 @@
  *  limitations under the License
  */
 
-package com.mindorks.framework.mvvm.ui.about;
+package com.mindorks.framework.mvvm.ui.main.rating;
+
+import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 import dagger.Module;
-import dagger.android.ContributesAndroidInjector;
+import dagger.Provides;
 
 /**
- * Created by amitshekhar on 14/09/17.
+ * Project : android-mvvm-architecture-mindorks
+ * Created by: Harsh Dalwadi - Senior Software Engineer
+ * Created Date: 09-Mar-19
  */
 @Module
-public abstract class AboutFragmentProvider {
+public class RateUsDialogModule {
 
-    @ContributesAndroidInjector
-    abstract AboutFragment provideAboutFragmentFactory();
+    @Provides
+    RateUsViewModel rateUsViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
+        return new RateUsViewModel(dataManager, schedulerProvider);
+    }
+
 }

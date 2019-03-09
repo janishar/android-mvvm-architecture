@@ -38,9 +38,9 @@ import javax.inject.Inject;
 public class RateUsDialog extends BaseDialog implements RateUsCallback {
 
     private static final String TAG = RateUsDialog.class.getSimpleName();
+
     @Inject
-    ViewModelProviderFactory factory;
-    private RateUsViewModel mRateUsViewModel;
+    RateUsViewModel mRateUsViewModel;
 
     public static RateUsDialog newInstance() {
         RateUsDialog fragment = new RateUsDialog();
@@ -60,7 +60,7 @@ public class RateUsDialog extends BaseDialog implements RateUsCallback {
         View view = binding.getRoot();
 
         AndroidSupportInjection.inject(this);
-        mRateUsViewModel = ViewModelProviders.of(this,factory).get(RateUsViewModel.class);
+//        mRateUsViewModel = ViewModelProviders.of(this,factory).get(RateUsViewModel.class);
         binding.setViewModel(mRateUsViewModel);
 
         mRateUsViewModel.setNavigator(this);

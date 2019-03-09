@@ -17,19 +17,24 @@
 package com.mindorks.framework.mvvm.di.component;
 
 import android.app.Application;
+
 import com.mindorks.framework.mvvm.MvvmApp;
 import com.mindorks.framework.mvvm.di.builder.ActivityBuilder;
+import com.mindorks.framework.mvvm.di.builder.DialogBuilder;
+import com.mindorks.framework.mvvm.di.builder.FragmentBuilder;
 import com.mindorks.framework.mvvm.di.module.AppModule;
+
+import javax.inject.Singleton;
+
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
-import javax.inject.Singleton;
 
 /**
  * Created by amitshekhar on 07/07/17.
  */
 @Singleton
-@Component(modules = {AndroidInjectionModule.class, AppModule.class, ActivityBuilder.class})
+@Component(modules = {AndroidInjectionModule.class, AppModule.class, ActivityBuilder.class, FragmentBuilder.class, DialogBuilder.class})
 public interface AppComponent {
 
     void inject(MvvmApp app);

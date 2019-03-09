@@ -16,15 +16,16 @@
 
 package com.mindorks.framework.mvvm.ui.about;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
+
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
-import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.databinding.FragmentAboutBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseFragment;
+
 import javax.inject.Inject;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by amitshekhar on 09/07/17.
@@ -33,9 +34,9 @@ import javax.inject.Inject;
 public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewModel> implements AboutNavigator {
 
     public static final String TAG = AboutFragment.class.getSimpleName();
+    //    ViewModelProviderFactory factory;
     @Inject
-    ViewModelProviderFactory factory;
-    private AboutViewModel mAboutViewModel;
+    AboutViewModel mAboutViewModel;
 
     public static AboutFragment newInstance() {
         Bundle args = new Bundle();
@@ -56,7 +57,7 @@ public class AboutFragment extends BaseFragment<FragmentAboutBinding, AboutViewM
 
     @Override
     public AboutViewModel getViewModel() {
-        mAboutViewModel = ViewModelProviders.of(this,factory).get(AboutViewModel.class);
+//        mAboutViewModel = ViewModelProviders.of(this,factory).get(AboutViewModel.class);
         return mAboutViewModel;
     }
 
