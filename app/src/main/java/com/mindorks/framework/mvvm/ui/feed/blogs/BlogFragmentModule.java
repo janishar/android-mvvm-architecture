@@ -17,8 +17,6 @@
 package com.mindorks.framework.mvvm.ui.feed.blogs;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
-import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 import dagger.Module;
 import dagger.Provides;
 import java.util.ArrayList;
@@ -28,12 +26,6 @@ import java.util.ArrayList;
  */
 @Module
 public class BlogFragmentModule {
-
-    @Provides
-    BlogViewModel blogViewModel(DataManager dataManager,
-                                SchedulerProvider schedulerProvider) {
-        return new BlogViewModel(dataManager, schedulerProvider);
-    }
 
     @Provides
     BlogAdapter provideBlogAdapter() {
