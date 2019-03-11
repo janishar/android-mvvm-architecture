@@ -134,4 +134,5 @@ public class AppModule {
     SchedulerProvider provideSchedulerProvider() {
         return new AppSchedulerProvider();
     }
+
 }
