@@ -37,6 +37,7 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
 
     @Inject
     ViewModelProviderFactory factory;
+    
     private SplashViewModel mSplashViewModel;
 
     @Override
