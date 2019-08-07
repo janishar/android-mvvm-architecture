@@ -23,6 +23,8 @@ import androidx.room.Query;
 import com.mindorks.framework.mvvm.data.model.db.Option;
 import java.util.List;
 
+import io.reactivex.Single;
+
 /**
  * Created by amitshekhar on 08/07/17.
  */
@@ -36,8 +38,8 @@ public interface OptionDao {
     void insertAll(List<Option> options);
 
     @Query("SELECT * FROM options")
-    List<Option> loadAll();
+    Single<List<Option>> loadAll();
 
     @Query("SELECT * FROM options WHERE question_id = :questionId")
-    List<Option> loadAllByQuestionId(Long questionId);
+    Single<List<Option>> loadAllByQuestionId(Long questionId);
 }

@@ -23,6 +23,8 @@ import androidx.room.Query;
 import com.mindorks.framework.mvvm.data.model.db.Question;
 import java.util.List;
 
+import io.reactivex.Single;
+
 /**
  * Created by amitshekhar on 08/07/17.
  */
@@ -36,5 +38,5 @@ public interface QuestionDao {
     void insertAll(List<Question> questions);
 
     @Query("SELECT * FROM questions")
-    List<Question> loadAll();
+    Single<List<Question>> loadAll();
 }

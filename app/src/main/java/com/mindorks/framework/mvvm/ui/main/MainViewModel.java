@@ -22,6 +22,8 @@ import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableList;
 import android.text.TextUtils;
+import android.util.Log;
+
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
@@ -33,6 +35,8 @@ import java.util.List;
  */
 
 public class MainViewModel extends BaseViewModel<MainNavigator> {
+
+    private static final String TAG = "MainViewModel";
 
     public static final int NO_ACTION = -1, ACTION_ADD_ALL = 0, ACTION_DELETE_SINGLE = 1;
 
@@ -93,15 +97,17 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
     public void loadQuestionCards() {
         getCompositeDisposable().add(getDataManager()
                 .getQuestionCardData()
+                .doOnNext(list -> Log.d(TAG, "loadQuestionCards: " + list.size()))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(questionList -> {
                     if (questionList != null) {
+                        Log.d(TAG, "loadQuestionCards: " + questionList.size());
                         action = ACTION_ADD_ALL;
                         questionCardData.setValue(questionList);
                     }
                 }, throwable -> {
-
+                    Log.d(TAG, "loadQuestionCards: " + throwable);
                 }));
     }
 

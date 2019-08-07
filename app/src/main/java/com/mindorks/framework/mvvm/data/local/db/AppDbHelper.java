@@ -41,12 +41,8 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Observable<List<Question>> getAllQuestions() {
-        return Observable.fromCallable(new Callable<List<Question>>() {
-            @Override
-            public List<Question> call() throws Exception {
-                return mAppDatabase.questionDao().loadAll();
-            }
-        });
+        return mAppDatabase.questionDao().loadAll()
+                .toObservable();
     }
 
     @Override
@@ -61,12 +57,8 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Observable<List<Option>> getOptionsForQuestionId(final Long questionId) {
-        return Observable.fromCallable(new Callable<List<Option>>() {
-            @Override
-            public List<Option> call() throws Exception {
-                return mAppDatabase.optionDao().loadAllByQuestionId(questionId);
-            }
-        });
+        return mAppDatabase.optionDao().loadAllByQuestionId(questionId)
+                .toObservable();
     }
 
     @Override
@@ -82,22 +74,15 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Observable<Boolean> isOptionEmpty() {
-        return Observable.fromCallable(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return mAppDatabase.optionDao().loadAll().isEmpty();
-            }
-        });
+        return mAppDatabase.optionDao().loadAll()
+                .flatMapObservable(options -> Observable.just(options.isEmpty()));
     }
 
     @Override
     public Observable<Boolean> isQuestionEmpty() {
-        return Observable.fromCallable(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return mAppDatabase.questionDao().loadAll().isEmpty();
-            }
-        });
+        return mAppDatabase.questionDao().loadAll()
+                .flatMapObservable(questions -> Observable.just(questions.isEmpty()));
+
     }
 
     @Override

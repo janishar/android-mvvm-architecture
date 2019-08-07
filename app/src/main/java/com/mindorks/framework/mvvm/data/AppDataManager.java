@@ -17,6 +17,8 @@
 package com.mindorks.framework.mvvm.data;
 
 import android.content.Context;
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
 import com.google.gson.reflect.TypeToken;
@@ -47,6 +49,8 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class AppDataManager implements DataManager {
+
+    private static final String TAG = "AppDataManager";
 
     private final ApiHelper mApiHelper;
 
