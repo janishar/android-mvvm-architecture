@@ -16,17 +16,17 @@
 
 package com.mindorks.framework.mvvm.ui.login;
 
+import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.databinding.ActivityLoginBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 import com.mindorks.framework.mvvm.ui.main.MainActivity;
-
 import javax.inject.Inject;
 
 /**
@@ -36,7 +36,8 @@ import javax.inject.Inject;
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator {
 
     @Inject
-    LoginViewModel mLoginViewModel;
+    ViewModelProviderFactory factory;
+    private LoginViewModel mLoginViewModel;
     private ActivityLoginBinding mActivityLoginBinding;
 
     public static Intent newIntent(Context context) {
@@ -55,6 +56,7 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
 
     @Override
     public LoginViewModel getViewModel() {
+        mLoginViewModel = ViewModelProviders.of(this,factory).get(LoginViewModel.class);
         return mLoginViewModel;
     }
 

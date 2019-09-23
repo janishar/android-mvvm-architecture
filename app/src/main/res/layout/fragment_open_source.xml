@@ -37,16 +37,16 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/openSourceRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:adapter="@{viewModel.openSourceItemViewModels}"
+                app:adapter="@{viewModel.openSourceItemsLiveData}"
                 tools:listitem="@layout/item_blog_view" />
 
         </LinearLayout>
 
-        <android.support.v4.widget.ContentLoadingProgressBar
+        <androidx.core.widget.ContentLoadingProgressBar
             android:id="@+id/address_looking_up"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"

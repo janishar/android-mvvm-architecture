@@ -16,9 +16,6 @@
 
 package com.mindorks.framework.mvvm.ui.feed;
 
-import com.mindorks.framework.mvvm.data.DataManager;
-import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -33,9 +30,4 @@ public class FeedActivityModule {
         return new FeedPagerAdapter(activity.getSupportFragmentManager());
     }
 
-    @Provides
-    FeedViewModel provideFeedViewModel(DataManager dataManager,
-                                       SchedulerProvider schedulerProvider) {
-        return new FeedViewModel(dataManager, schedulerProvider);
-    }
 }

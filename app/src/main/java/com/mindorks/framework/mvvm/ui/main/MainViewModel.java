@@ -16,17 +16,18 @@
 
 package com.mindorks.framework.mvvm.ui.main;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableField;
-import android.databinding.ObservableList;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableList;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
-
 import java.util.List;
 
 /**
@@ -34,6 +35,8 @@ import java.util.List;
  */
 
 public class MainViewModel extends BaseViewModel<MainNavigator> {
+
+    private static final String TAG = "MainViewModel";
 
     public static final int NO_ACTION = -1, ACTION_ADD_ALL = 0, ACTION_DELETE_SINGLE = 1;
 
@@ -65,7 +68,7 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
         return appVersion;
     }
 
-    public MutableLiveData<List<QuestionCardData>> getQuestionCardData() {
+    public LiveData<List<QuestionCardData>> getQuestionCardData() {
         return questionCardData;
     }
 
@@ -94,15 +97,17 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
     public void loadQuestionCards() {
         getCompositeDisposable().add(getDataManager()
                 .getQuestionCardData()
+                .doOnNext(list -> Log.d(TAG, "loadQuestionCards: " + list.size()))
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(questionList -> {
                     if (questionList != null) {
+                        Log.d(TAG, "loadQuestionCards: " + questionList.size());
                         action = ACTION_ADD_ALL;
                         questionCardData.setValue(questionList);
                     }
                 }, throwable -> {
-
+                    Log.d(TAG, "loadQuestionCards: " + throwable);
                 }));
     }
 
@@ -140,7 +145,6 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
 
     public void removeQuestionCard() {
         action = ACTION_DELETE_SINGLE;
-        questionDataList.remove(0);
         questionCardData.getValue().remove(0);
     }
 

@@ -17,10 +17,9 @@
 package com.mindorks.framework.mvvm.utils;
 
 import android.content.Context;
-import android.databinding.BindingAdapter;
-import android.support.v7.widget.RecyclerView;
+import androidx.databinding.BindingAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 import android.widget.ImageView;
-
 import com.bumptech.glide.Glide;
 import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
@@ -30,7 +29,6 @@ import com.mindorks.framework.mvvm.ui.feed.opensource.OpenSourceItemViewModel;
 import com.mindorks.framework.mvvm.ui.main.MainViewModel;
 import com.mindorks.framework.mvvm.ui.main.QuestionCard;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
-
 import java.util.List;
 
 /**

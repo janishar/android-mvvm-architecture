@@ -17,20 +17,18 @@
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
 
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.View;
-
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
+import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.databinding.FragmentOpenSourceBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseFragment;
-
 import javax.inject.Inject;
 
 /**
@@ -46,7 +44,7 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
     @Inject
     OpenSourceAdapter mOpenSourceAdapter;
     @Inject
-    ViewModelProvider.Factory mViewModelFactory;
+    ViewModelProviderFactory factory;
     private OpenSourceViewModel mOpenSourceViewModel;
 
     public static OpenSourceFragment newInstance() {
@@ -68,7 +66,7 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
 
     @Override
     public OpenSourceViewModel getViewModel() {
-        mOpenSourceViewModel = ViewModelProviders.of(this, mViewModelFactory).get(OpenSourceViewModel.class);
+        mOpenSourceViewModel = ViewModelProviders.of(this, factory).get(OpenSourceViewModel.class);
         return mOpenSourceViewModel;
     }
 
@@ -94,7 +92,6 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
         super.onViewCreated(view, savedInstanceState);
         mFragmentOpenSourceBinding = getViewDataBinding();
         setUp();
-        subscribeToLiveData();
     }
 
     private void setUp() {
@@ -102,10 +99,5 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
         mFragmentOpenSourceBinding.openSourceRecyclerView.setLayoutManager(mLayoutManager);
         mFragmentOpenSourceBinding.openSourceRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mFragmentOpenSourceBinding.openSourceRecyclerView.setAdapter(mOpenSourceAdapter);
-    }
-
-    private void subscribeToLiveData() {
-        mOpenSourceViewModel.getOpenSourceRepos().observe(this,
-                openSourceItemViewModels -> mOpenSourceViewModel.addOpenSourceItemsToList(openSourceItemViewModels));
     }
 }

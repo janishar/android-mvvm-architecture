@@ -19,14 +19,11 @@ package com.mindorks.framework.mvvm.data.local.db;
 import com.mindorks.framework.mvvm.data.model.db.Option;
 import com.mindorks.framework.mvvm.data.model.db.Question;
 import com.mindorks.framework.mvvm.data.model.db.User;
-
+import io.reactivex.Observable;
 import java.util.List;
 import java.util.concurrent.Callable;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
-
-import io.reactivex.Observable;
 
 /**
  * Created by amitshekhar on 07/07/17.
@@ -44,12 +41,8 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Observable<List<Question>> getAllQuestions() {
-        return Observable.fromCallable(new Callable<List<Question>>() {
-            @Override
-            public List<Question> call() throws Exception {
-                return mAppDatabase.questionDao().loadAll();
-            }
-        });
+        return mAppDatabase.questionDao().loadAll()
+                .toObservable();
     }
 
     @Override
@@ -64,12 +57,8 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Observable<List<Option>> getOptionsForQuestionId(final Long questionId) {
-        return Observable.fromCallable(new Callable<List<Option>>() {
-            @Override
-            public List<Option> call() throws Exception {
-                return mAppDatabase.optionDao().loadAllByQuestionId(questionId);
-            }
-        });
+        return mAppDatabase.optionDao().loadAllByQuestionId(questionId)
+                .toObservable();
     }
 
     @Override
@@ -85,22 +74,15 @@ public class AppDbHelper implements DbHelper {
 
     @Override
     public Observable<Boolean> isOptionEmpty() {
-        return Observable.fromCallable(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return mAppDatabase.optionDao().loadAll().isEmpty();
-            }
-        });
+        return mAppDatabase.optionDao().loadAll()
+                .flatMapObservable(options -> Observable.just(options.isEmpty()));
     }
 
     @Override
     public Observable<Boolean> isQuestionEmpty() {
-        return Observable.fromCallable(new Callable<Boolean>() {
-            @Override
-            public Boolean call() throws Exception {
-                return mAppDatabase.questionDao().loadAll().isEmpty();
-            }
-        });
+        return mAppDatabase.questionDao().loadAll()
+                .flatMapObservable(questions -> Observable.just(questions.isEmpty()));
+
     }
 
     @Override

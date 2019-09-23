@@ -17,7 +17,6 @@
 package com.mindorks.framework.mvvm.ui.login;
 
 import android.text.TextUtils;
-
 import com.mindorks.framework.mvvm.data.DataManager;
 import com.mindorks.framework.mvvm.data.model.api.LoginRequest;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
