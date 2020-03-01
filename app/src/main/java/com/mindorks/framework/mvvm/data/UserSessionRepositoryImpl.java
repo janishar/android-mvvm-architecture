@@ -242,14 +242,15 @@ import org.jetbrains.annotations.Nullable;
 
         if (user != null) {
             user.getIdToken(false)
-                .addOnSuccessListener(getTokenResult -> updateUserInfo(
-                    getTokenResult.getToken(),
-                    Long.valueOf(user.getUid()),
-                    LoggedInMode.LOGGED_IN_MODE_FIREBASE_AUTH_UI,
-                    user.getDisplayName(),
-                    user.getEmail(),
-                    user.getPhotoUrl().toString()
-                ));
+                .addOnSuccessListener(getTokenResult ->
+                    updateUserInfo(
+                        getTokenResult.getToken(),
+                        getTokenResult.getAuthTimestamp(),
+                        LoggedInMode.LOGGED_IN_MODE_FIREBASE_AUTH_UI,
+                        user.getDisplayName(),
+                        user.getEmail(),
+                        user.getPhotoUrl().toString())
+                );
         }
     }
 

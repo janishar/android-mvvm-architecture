@@ -41,24 +41,6 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Single<LoginResponse> doFacebookLoginApiCall(LoginRequest.FacebookLoginRequest request) {
-        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_FACEBOOK_LOGIN)
-                .addHeaders(mApiHeader.getPublicApiHeader())
-                .addBodyParameter(request)
-                .build()
-                .getObjectSingle(LoginResponse.class);
-    }
-
-    @Override
-    public Single<LoginResponse> doGoogleLoginApiCall(LoginRequest.GoogleLoginRequest request) {
-        return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_GOOGLE_LOGIN)
-                .addHeaders(mApiHeader.getPublicApiHeader())
-                .addBodyParameter(request)
-                .build()
-                .getObjectSingle(LoginResponse.class);
-    }
-
-    @Override
     public Single<LogoutResponse> doLogoutApiCall() {
         return Rx2AndroidNetworking.post(ApiEndPoint.ENDPOINT_LOGOUT)
                 .addHeaders(mApiHeader.getProtectedApiHeader())

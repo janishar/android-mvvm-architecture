@@ -18,7 +18,6 @@ package com.mindorks.framework.mvvm.ui.login;
 
 import android.content.Intent;
 import com.mindorks.framework.mvvm.data.UserSessionRepository;
-import com.mindorks.framework.mvvm.data.model.api.LoginRequest;
 import com.mindorks.framework.mvvm.google.SingleLiveEvent;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
@@ -44,35 +43,34 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
         launchSignInEvent.setValue(repository.getSignInInent());
     }
 
-    public void login(String email, String password) {
-        setIsLoading(true);
-        getCompositeDisposable().add(getRepository()
-                .doServerLoginApiCall(new LoginRequest.ServerLoginRequest(email, password))
-                .doOnSuccess(response -> getRepository()
-                        .updateUserInfo(
-                                response.getAccessToken(),
-                                response.getUserId(),
-                                UserSessionRepository.LoggedInMode.LOGGED_IN_MODE_FIREBASE_AUTH_UI,
-                                response.getUserName(),
-                                response.getUserEmail(),
-                                response.getGoogleProfilePicUrl()))
-                .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui())
-                .subscribe(response -> {
-                    setIsLoading(false);
-                    getNavigator().openMainActivity();
-                }, throwable -> {
-                    setIsLoading(false);
-                    getNavigator().handleError(throwable);
-                }));
-    }
+    //public void login(String email, String password) {
+    //    setIsLoading(true);
+    //    getCompositeDisposable().add(getRepository()
+    //            .doServerLoginApiCall(new LoginRequest.ServerLoginRequest(email, password))
+    //            .doOnSuccess(response -> getRepository()
+    //                    .updateUserInfo(
+    //                            response.getAccessToken(),
+    //                            response.getUserId(),
+    //                            UserSessionRepository.LoggedInMode.LOGGED_IN_MODE_FIREBASE_AUTH_UI,
+    //                            response.getUserName(),
+    //                            response.getUserEmail(),
+    //                            response.getGoogleProfilePicUrl()))
+    //            .subscribeOn(getSchedulerProvider().io())
+    //            .observeOn(getSchedulerProvider().ui())
+    //            .subscribe(response -> {
+    //                setIsLoading(false);
+    //                getNavigator().openMainActivity();
+    //            }, throwable -> {
+    //                setIsLoading(false);
+    //                getNavigator().handleError(throwable);
+    //            }));
+    //}
 
     public void onServerLoginClick() {
         getNavigator().login();
     }
 
     public void updateUserSession() {
-
         repository.updateUserInfo();
         getNavigator().openMainActivity();
     }
