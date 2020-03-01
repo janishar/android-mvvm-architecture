@@ -13,27 +13,26 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License
  */
+package com.mindorks.framework.mvvm.data.model.db
 
-package com.mindorks.framework.mvvm.data.model.db;
-
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 /**
  * Created by amitshekhar on 07/07/17.
  */
 @Entity(tableName = "users")
-public class User {
-
+data class User (
+    @JvmField
     @ColumnInfo(name = "created_at")
-    public String createdAt;
-
+    var createdAt: String? = null,
+    @JvmField
     @PrimaryKey
-    public Long id;
-
-    public String name;
-
+    var id: Long? = null,
+    @JvmField
+    var name: String? = null,
+    @JvmField
     @ColumnInfo(name = "updated_at")
-    public String updatedAt;
-}
+    var updatedAt: String? = null
+)
