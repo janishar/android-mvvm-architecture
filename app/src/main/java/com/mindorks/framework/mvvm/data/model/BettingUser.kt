@@ -1,6 +1,6 @@
 package com.mindorks.framework.mvvm.data.model
 
-import com.mindorks.framework.mvvm.data.model.betting.Bet
+import com.mindorks.framework.mvvm.data.model.betting.BetContest
 import com.mindorks.framework.mvvm.data.model.db.User
 
 data class BettingUser (
@@ -12,7 +12,7 @@ data class BettingUser (
     var lostBettingBalance: Int = 0,
     var wonBettingBalance: Int = 0,
 
-    var currentBets: List<Bet> = emptyList(),
-    var winningBets: List<Bet> = emptyList(),
-    var losingBets: List<Bet> = emptyList()
+    var currentBets: List<BetContest> = emptyList(),
+    var winningBets: List<BetContest> = emptyList(),
+    var losingBets: List<BetContest> = emptyList()
 )
