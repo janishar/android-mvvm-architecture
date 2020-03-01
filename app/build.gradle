@@ -73,6 +73,7 @@ dependencies {
 
     // database
     implementation "androidx.room:room-rxjava2:$rootProject.roomDatabaseVersion"
+    implementation 'com.google.firebase:firebase-firestore:17.1.2'
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomDatabaseVersion"
 
     // font

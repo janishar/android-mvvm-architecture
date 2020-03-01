@@ -18,7 +18,12 @@ package com.mindorks.framework.mvvm.data;
 
 import android.content.Context;
 import android.content.Intent;
+import androidx.annotation.NonNull;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
 import com.google.gson.reflect.TypeToken;
@@ -41,10 +46,20 @@ import com.mindorks.framework.mvvm.utils.CommonUtils;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import static com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl.USER_KEY_ACCESS_TOKEN;
+import static com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl.USER_KEY_EMAIL;
+import static com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl.USER_KEY_LOGGED_IN_MODE;
+import static com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl.USER_KEY_PROFILE_PIC_PATH;
+import static com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl.USER_KEY_USERNAME;
+import static com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl.USER_KEY_USER_ID;
 
 /**
  * Repository is responsible for the persistence of your architecture and what it contains.
@@ -264,7 +279,15 @@ import org.jetbrains.annotations.Nullable;
         setCurrentUserEmail(email);
         setCurrentUserProfilePicUrl(profilePicPath);
 
-        updateApiHeader(userId, accessToken);
+        HashMap<String, Object> userMap = new HashMap<>();
+        userMap.put(USER_KEY_ACCESS_TOKEN, accessToken);
+        userMap.put(USER_KEY_USER_ID, userId);
+        userMap.put(USER_KEY_LOGGED_IN_MODE, loggedInMode.toString());
+        userMap.put(USER_KEY_USERNAME, userName);
+        userMap.put(USER_KEY_EMAIL, email);
+        userMap.put(USER_KEY_PROFILE_PIC_PATH, profilePicPath);
+
+        setUserInFirestore(userMap);
     }
 
     @Override public Intent getSignInInent() {
@@ -273,5 +296,19 @@ import org.jetbrains.annotations.Nullable;
 
     @Nullable @Override public FirebaseUser getCurrentUser() {
         return mFirebaseHelper.getCurrentUser();
+    }
+
+    @NotNull @Override
+    public Task<DocumentReference> setUserInFirestore(@NotNull Map<String, ?> userMap) {
+        return mFirebaseHelper.setUserInFirestore(userMap)
+            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override public void onSuccess(DocumentReference documentReference) {
+                    // TODO: 3/1/20
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+            @Override public void onFailure(@NonNull Exception e) {
+                // TODO: 3/1/20
+            }
+        });
     }
 }
