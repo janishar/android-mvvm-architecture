@@ -30,7 +30,8 @@ import javax.inject.Singleton;
  */
 
 @Singleton
-public class AppDbHelper implements DbHelper {
+public class
+AppDbHelper implements DbHelper {
 
     private final AppDatabase mAppDatabase;
 

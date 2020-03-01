@@ -17,12 +17,11 @@
 package com.mindorks.framework.mvvm.data;
 
 import android.content.Context;
-
 import android.content.Intent;
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
 import com.google.gson.reflect.TypeToken;
-import com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl;
+import com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelper;
 import com.mindorks.framework.mvvm.data.local.db.DbHelper;
 import com.mindorks.framework.mvvm.data.local.prefs.PreferencesHelper;
 import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
@@ -62,7 +61,7 @@ public class UserSessionRepositoryImpl implements UserSessionRepository {
 
     private final DbHelper mDbHelper;
 
-    private final FirebaseDataHelperImpl mFirebaseHelper;
+    private final FirebaseDataHelper mFirebaseHelper;
 
     private final Gson mGson;
 
@@ -74,7 +73,7 @@ public class UserSessionRepositoryImpl implements UserSessionRepository {
         DbHelper dbHelper,
         PreferencesHelper preferencesHelper,
         ApiHelper apiHelper,
-        FirebaseDataHelperImpl firebaseHelper,
+        FirebaseDataHelper firebaseHelper,
         Gson gson
     ) {
         mContext = context;

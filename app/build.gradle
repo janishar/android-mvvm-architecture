@@ -31,6 +31,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         debug {
@@ -55,6 +56,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.android.support:multidex:1.0.3'
 
     // android support libraries
     implementation "androidx.appcompat:appcompat:$rootProject.supportLibraryVersion"
