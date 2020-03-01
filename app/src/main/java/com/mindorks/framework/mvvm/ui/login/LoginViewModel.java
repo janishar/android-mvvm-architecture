@@ -16,9 +16,12 @@
 
 package com.mindorks.framework.mvvm.ui.login;
 
+import android.content.Intent;
 import android.text.TextUtils;
-import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.UserSessionRepository;
+import com.mindorks.framework.mvvm.data.UserSessionRepositoryImpl;
 import com.mindorks.framework.mvvm.data.model.api.LoginRequest;
+import com.mindorks.framework.mvvm.google.SingleLiveEvent;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.CommonUtils;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
@@ -26,11 +29,22 @@ import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 /**
  * Created by amitshekhar on 08/07/17.
  */
-
 public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
-    public LoginViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+    private UserSessionRepository repository;
+
+    SingleLiveEvent<Intent> launchSignInEvent;
+
+    public LoginViewModel(UserSessionRepository userSessionRepository, SchedulerProvider schedulerProvider) {
+        super(userSessionRepository, schedulerProvider);
+
+        repository = userSessionRepository;
+
+        launchSignInEvent = new SingleLiveEvent<>();
+    }
+
+    public void buildSignInIntent() {
+        launchSignInEvent.setValue(repository.getSignInInent());
     }
 
     public boolean isEmailAndPasswordValid(String email, String password) {
@@ -55,7 +69,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                         .updateUserInfo(
                                 response.getAccessToken(),
                                 response.getUserId(),
-                                DataManager.LoggedInMode.LOGGED_IN_MODE_SERVER,
+                                UserSessionRepository.LoggedInMode.LOGGED_IN_MODE_SERVER,
                                 response.getUserName(),
                                 response.getUserEmail(),
                                 response.getGoogleProfilePicUrl()))
@@ -78,7 +92,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                         .updateUserInfo(
                                 response.getAccessToken(),
                                 response.getUserId(),
-                                DataManager.LoggedInMode.LOGGED_IN_MODE_FB,
+                                UserSessionRepository.LoggedInMode.LOGGED_IN_MODE_FB,
                                 response.getUserName(),
                                 response.getUserEmail(),
                                 response.getGoogleProfilePicUrl()))
@@ -101,7 +115,7 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
                         .updateUserInfo(
                                 response.getAccessToken(),
                                 response.getUserId(),
-                                DataManager.LoggedInMode.LOGGED_IN_MODE_GOOGLE,
+                                UserSessionRepository.LoggedInMode.LOGGED_IN_MODE_GOOGLE,
                                 response.getUserName(),
                                 response.getUserEmail(),
                                 response.getGoogleProfilePicUrl()))

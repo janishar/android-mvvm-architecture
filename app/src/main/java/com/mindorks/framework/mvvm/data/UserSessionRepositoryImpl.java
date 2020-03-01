@@ -17,11 +17,12 @@
 package com.mindorks.framework.mvvm.data;
 
 import android.content.Context;
-import android.util.Log;
 
+import android.content.Intent;
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
 import com.google.gson.reflect.TypeToken;
+import com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl;
 import com.mindorks.framework.mvvm.data.local.db.DbHelper;
 import com.mindorks.framework.mvvm.data.local.prefs.PreferencesHelper;
 import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
@@ -45,10 +46,13 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * Created by amitshekhar on 07/07/17.
+ * Repository is responsible for the persistence of your architecture and what it contains.
+ * Simple now, this will grow to contain checks for where we fetch our data locally and remote.
+ * Allow your helpers to construct objects and return the object in a reactive form, we don't care
+ * how you got it.
  */
 @Singleton
-public class AppDataManager implements DataManager {
+public class UserSessionRepositoryImpl implements UserSessionRepository {
 
     private static final String TAG = "AppDataManager";
 
@@ -58,16 +62,26 @@ public class AppDataManager implements DataManager {
 
     private final DbHelper mDbHelper;
 
+    private final FirebaseDataHelperImpl mFirebaseHelper;
+
     private final Gson mGson;
 
     private final PreferencesHelper mPreferencesHelper;
 
     @Inject
-    public AppDataManager(Context context, DbHelper dbHelper, PreferencesHelper preferencesHelper, ApiHelper apiHelper, Gson gson) {
+    public UserSessionRepositoryImpl(
+        Context context,
+        DbHelper dbHelper,
+        PreferencesHelper preferencesHelper,
+        ApiHelper apiHelper,
+        FirebaseDataHelperImpl firebaseHelper,
+        Gson gson
+    ) {
         mContext = context;
         mDbHelper = dbHelper;
         mPreferencesHelper = preferencesHelper;
         mApiHelper = apiHelper;
+        mFirebaseHelper = firebaseHelper;
         mGson = gson;
     }
 
@@ -262,7 +276,7 @@ public class AppDataManager implements DataManager {
         updateUserInfo(
                 null,
                 null,
-                DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT,
+                UserSessionRepository.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT,
                 null,
                 null,
                 null);
@@ -291,5 +305,9 @@ public class AppDataManager implements DataManager {
         setCurrentUserProfilePicUrl(profilePicPath);
 
         updateApiHeader(userId, accessToken);
+    }
+
+    @Override public Intent getSignInInent() {
+        return mFirebaseHelper.getSignInInent();
     }
 }

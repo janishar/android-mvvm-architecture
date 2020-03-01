@@ -18,7 +18,7 @@ package com.mindorks.framework.mvvm.data.local.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.UserSessionRepository;
 import com.mindorks.framework.mvvm.di.PreferenceInfo;
 import com.mindorks.framework.mvvm.utils.AppConstants;
 import javax.inject.Inject;
@@ -83,11 +83,11 @@ public class AppPreferencesHelper implements PreferencesHelper {
     @Override
     public int getCurrentUserLoggedInMode() {
         return mPrefs.getInt(PREF_KEY_USER_LOGGED_IN_MODE,
-                DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType());
+                UserSessionRepository.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType());
     }
 
     @Override
-    public void setCurrentUserLoggedInMode(DataManager.LoggedInMode mode) {
+    public void setCurrentUserLoggedInMode(UserSessionRepository.LoggedInMode mode) {
         mPrefs.edit().putInt(PREF_KEY_USER_LOGGED_IN_MODE, mode.getType()).apply();
     }
 

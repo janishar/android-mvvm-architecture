@@ -18,7 +18,7 @@ package com.mindorks.framework.mvvm.ui.feed.blogs;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.UserSessionRepository;
 import com.mindorks.framework.mvvm.data.model.api.BlogResponse;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
@@ -32,9 +32,9 @@ public class BlogViewModel extends BaseViewModel<BlogNavigator> {
 
     private final MutableLiveData<List<BlogResponse.Blog>> blogListLiveData;
 
-    public BlogViewModel(DataManager dataManager,
+    public BlogViewModel(UserSessionRepository UserSessionRepository,
                          SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+        super(UserSessionRepository, schedulerProvider);
         blogListLiveData = new MutableLiveData<>();
         fetchBlogs();
     }

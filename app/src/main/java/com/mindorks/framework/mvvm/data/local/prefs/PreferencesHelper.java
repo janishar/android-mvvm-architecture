@@ -16,7 +16,7 @@
 
 package com.mindorks.framework.mvvm.data.local.prefs;
 
-import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.UserSessionRepository;
 
 /**
  * Created by amitshekhar on 07/07/17.
@@ -38,7 +38,7 @@ public interface PreferencesHelper {
 
     int getCurrentUserLoggedInMode();
 
-    void setCurrentUserLoggedInMode(DataManager.LoggedInMode mode);
+    void setCurrentUserLoggedInMode(UserSessionRepository.LoggedInMode mode);
 
     String getCurrentUserName();
 

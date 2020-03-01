@@ -15,7 +15,10 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 apply from: '../config/quality/quality.gradle'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -111,8 +114,18 @@ dependencies {
     // view model
     implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVersion"
+    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //firebase
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
+    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
 }
 
 configurations.all {
     resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+}
+repositories {
+    mavenCentral()
 }

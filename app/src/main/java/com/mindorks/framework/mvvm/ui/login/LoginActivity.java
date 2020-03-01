@@ -16,6 +16,8 @@
 
 package com.mindorks.framework.mvvm.ui.login;
 
+import android.util.Log;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +30,7 @@ import com.mindorks.framework.mvvm.databinding.ActivityLoginBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 import com.mindorks.framework.mvvm.ui.main.MainActivity;
 import javax.inject.Inject;
+import timber.log.Timber;
 
 /**
  * Created by amitshekhar on 08/07/17.
@@ -65,6 +68,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         // handle error
     }
 
+    @Override public void loginFailed() {
+        // TODO: 2/29/20
+    }
+
     @Override
     public void login() {
         String email = mActivityLoginBinding.etEmail.getText().toString();
@@ -89,5 +96,13 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         super.onCreate(savedInstanceState);
         mActivityLoginBinding = getViewDataBinding();
         mLoginViewModel.setNavigator(this);
+
+        mLoginViewModel.buildSignInIntent();
+
+        mLoginViewModel.launchSignInEvent.observe(this, new Observer<Intent>() {
+            @Override public void onChanged(Intent intent) {
+                startActivity(intent);
+            }
+        });
     }
 }

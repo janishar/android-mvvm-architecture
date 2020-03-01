@@ -19,7 +19,7 @@ package com.mindorks.framework.mvvm.ui.login;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 
-import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.UserSessionRepository;
 import com.mindorks.framework.mvvm.data.model.api.LoginRequest;
 import com.mindorks.framework.mvvm.data.model.api.LoginResponse;
 import com.mindorks.framework.mvvm.utils.rx.TestSchedulerProvider;
@@ -41,8 +41,7 @@ public class LoginViewModelTest {
 
     @Mock
     LoginNavigator mLoginCallback;
-    @Mock
-    DataManager mMockDataManager;
+    @Mock UserSessionRepository mMockUserSessionRepository;
     private LoginViewModel mLoginViewModel;
     private TestScheduler mTestScheduler;
 
@@ -54,7 +53,7 @@ public class LoginViewModelTest {
     public void setUp() throws Exception {
         mTestScheduler = new TestScheduler();
         TestSchedulerProvider testSchedulerProvider = new TestSchedulerProvider(mTestScheduler);
-        mLoginViewModel = new LoginViewModel(mMockDataManager, testSchedulerProvider);
+        mLoginViewModel = new LoginViewModel(mMockUserSessionRepository, testSchedulerProvider);
         mLoginViewModel.setNavigator(mLoginCallback);
     }
 
@@ -73,7 +72,7 @@ public class LoginViewModelTest {
         LoginResponse loginResponse = new LoginResponse();
 
         doReturn(Single.just(loginResponse))
-                .when(mMockDataManager)
+                .when(mMockUserSessionRepository)
                 .doServerLoginApiCall(new LoginRequest.ServerLoginRequest(email, password));
 
         mLoginViewModel.login(email, password);

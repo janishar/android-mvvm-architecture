@@ -24,7 +24,7 @@ import androidx.databinding.ObservableList;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.UserSessionRepository;
 import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
@@ -54,8 +54,8 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
 
     private int action = NO_ACTION;
 
-    public MainViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+    public MainViewModel(UserSessionRepository UserSessionRepository, SchedulerProvider schedulerProvider) {
+        super(UserSessionRepository, schedulerProvider);
         questionCardData = new MutableLiveData<>();
         loadQuestionCards();
     }

@@ -24,6 +24,8 @@ public interface LoginNavigator {
 
     void handleError(Throwable throwable);
 
+    void loginFailed();
+
     void login();
 
     void openMainActivity();

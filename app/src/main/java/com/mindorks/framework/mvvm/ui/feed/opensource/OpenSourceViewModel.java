@@ -19,7 +19,7 @@ package com.mindorks.framework.mvvm.ui.feed.opensource;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.UserSessionRepository;
 import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
@@ -37,9 +37,9 @@ public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
 
     private final MutableLiveData<List<OpenSourceItemViewModel>> openSourceItemsLiveData;
 
-    public OpenSourceViewModel(DataManager dataManager,
+    public OpenSourceViewModel(UserSessionRepository UserSessionRepository,
                                SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+        super(UserSessionRepository, schedulerProvider);
         openSourceItemsLiveData = new MutableLiveData<>();
         fetchRepos();
     }
