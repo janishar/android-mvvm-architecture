@@ -2,7 +2,7 @@ package com.mindorks.framework.mvvm;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.UserSessionRepository;
 import com.mindorks.framework.mvvm.ui.about.AboutViewModel;
 import com.mindorks.framework.mvvm.ui.feed.FeedViewModel;
 import com.mindorks.framework.mvvm.ui.feed.blogs.BlogViewModel;
@@ -21,13 +21,13 @@ import javax.inject.Singleton;
 @Singleton
 public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFactory {
 
-  private final DataManager dataManager;
+  private final UserSessionRepository UserSessionRepository;
   private final SchedulerProvider schedulerProvider;
 
   @Inject
-  public ViewModelProviderFactory(DataManager dataManager,
+  public ViewModelProviderFactory(UserSessionRepository UserSessionRepository,
       SchedulerProvider schedulerProvider) {
-    this.dataManager = dataManager;
+    this.UserSessionRepository = UserSessionRepository;
     this.schedulerProvider = schedulerProvider;
   }
 
@@ -36,32 +36,32 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
   public <T extends ViewModel> T create(Class<T> modelClass) {
     if (modelClass.isAssignableFrom(AboutViewModel.class)) {
       //noinspection unchecked
-      return (T) new AboutViewModel(dataManager,schedulerProvider);
+      return (T) new AboutViewModel(UserSessionRepository,schedulerProvider);
     } else if (modelClass.isAssignableFrom(FeedViewModel.class)) {
       //noinspection unchecked
-      return (T) new FeedViewModel(dataManager,schedulerProvider);
+      return (T) new FeedViewModel(UserSessionRepository,schedulerProvider);
     } else if (modelClass.isAssignableFrom(LoginViewModel.class)) {
       //noinspection unchecked
-      return (T) new LoginViewModel(dataManager,schedulerProvider);
+      return (T) new LoginViewModel(UserSessionRepository,schedulerProvider);
     } else if (modelClass.isAssignableFrom(MainViewModel.class)) {
       //noinspection unchecked
-      return (T) new MainViewModel(dataManager,schedulerProvider);
+      return (T) new MainViewModel(UserSessionRepository,schedulerProvider);
     }
     else if (modelClass.isAssignableFrom(BlogViewModel.class)) {
       //noinspection unchecked
-      return (T) new BlogViewModel(dataManager,schedulerProvider);
+      return (T) new BlogViewModel(UserSessionRepository,schedulerProvider);
     }
     else if (modelClass.isAssignableFrom(RateUsViewModel.class)) {
       //noinspection unchecked
-      return (T) new RateUsViewModel(dataManager,schedulerProvider);
+      return (T) new RateUsViewModel(UserSessionRepository,schedulerProvider);
     }
     else if (modelClass.isAssignableFrom(OpenSourceViewModel.class)) {
       //noinspection unchecked
-      return (T) new OpenSourceViewModel(dataManager,schedulerProvider);
+      return (T) new OpenSourceViewModel(UserSessionRepository,schedulerProvider);
     }
     else if (modelClass.isAssignableFrom(SplashViewModel.class)) {
       //noinspection unchecked
-      return (T) new SplashViewModel(dataManager,schedulerProvider);
+      return (T) new SplashViewModel(UserSessionRepository,schedulerProvider);
     }
     throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
   }

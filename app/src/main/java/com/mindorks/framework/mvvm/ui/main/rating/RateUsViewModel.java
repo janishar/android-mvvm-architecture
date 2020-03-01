@@ -16,7 +16,7 @@
 
 package com.mindorks.framework.mvvm.ui.main.rating;
 
-import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.UserSessionRepository;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
@@ -26,8 +26,8 @@ import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 public class RateUsViewModel extends BaseViewModel<RateUsCallback> {
 
-    public RateUsViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+    public RateUsViewModel(UserSessionRepository UserSessionRepository, SchedulerProvider schedulerProvider) {
+        super(UserSessionRepository, schedulerProvider);
     }
 
     public void onLaterClick() {

@@ -16,11 +16,12 @@
 
 package com.mindorks.framework.mvvm.ui.login;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import com.firebase.ui.auth.IdpResponse;
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.ViewModelProviderFactory;
@@ -28,12 +29,15 @@ import com.mindorks.framework.mvvm.databinding.ActivityLoginBinding;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 import com.mindorks.framework.mvvm.ui.main.MainActivity;
 import javax.inject.Inject;
+import timber.log.Timber;
 
 /**
  * Created by amitshekhar on 08/07/17.
  */
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator {
+
+    private static final int RC_SIGN_IN = 200;
 
     @Inject
     ViewModelProviderFactory factory;
@@ -65,16 +69,20 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         // handle error
     }
 
+    @Override public void loginFailed() {
+        // TODO: 2/29/20
+    }
+
     @Override
     public void login() {
-        String email = mActivityLoginBinding.etEmail.getText().toString();
-        String password = mActivityLoginBinding.etPassword.getText().toString();
-        if (mLoginViewModel.isEmailAndPasswordValid(email, password)) {
-            hideKeyboard();
-            mLoginViewModel.login(email, password);
-        } else {
-            Toast.makeText(this, getString(R.string.invalid_email_password), Toast.LENGTH_SHORT).show();
-        }
+        //String email = mActivityLoginBinding.etEmail.getText().toString();
+        //String password = mActivityLoginBinding.etPassword.getText().toString();
+        //if (mLoginViewModel.isEmailAndPasswordValid(email, password)) {
+        //    hideKeyboard();
+        //    mLoginViewModel.login(email, password);
+        //} else {
+        //    Toast.makeText(this, getString(R.string.invalid_email_password), Toast.LENGTH_SHORT).show();
+        //}
     }
 
     @Override
@@ -89,5 +97,36 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         super.onCreate(savedInstanceState);
         mActivityLoginBinding = getViewDataBinding();
         mLoginViewModel.setNavigator(this);
+
+        mLoginViewModel.buildSignInIntent();
+
+        mLoginViewModel.launchSignInEvent.observe(this, new Observer<Intent>() {
+            @Override public void onChanged(Intent intent) {
+                startActivityForResult(intent, RC_SIGN_IN);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+       super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
+                // Successfully signed in
+                IdpResponse fromResultIntent = IdpResponse.fromResultIntent(data);
+                mLoginViewModel.updateUserSession();
+
+
+                // ...
+            } else {
+                // Sign in failed. If response is null the user canceled the
+                // sign-in flow using the back button. Otherwise check
+                // response.getError().getErrorCode() and handle the error.
+                // ...
+                // TODO: 2/29/20 1) set error page 2) set a null/error user session
+                Timber.e("error here");
+            }
+        }
     }
 }

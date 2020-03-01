@@ -17,14 +17,16 @@
 package com.mindorks.framework.mvvm.di.module;
 
 import android.app.Application;
-import androidx.room.Room;
 import android.content.Context;
+import androidx.room.Room;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mindorks.framework.mvvm.BuildConfig;
 import com.mindorks.framework.mvvm.R;
-import com.mindorks.framework.mvvm.data.AppDataManager;
-import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.UserSessionRepository;
+import com.mindorks.framework.mvvm.data.UserSessionRepositoryImpl;
+import com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelper;
+import com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl;
 import com.mindorks.framework.mvvm.data.local.db.AppDatabase;
 import com.mindorks.framework.mvvm.data.local.db.AppDbHelper;
 import com.mindorks.framework.mvvm.data.local.db.DbHelper;
@@ -49,6 +51,11 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  */
 @Module
 public class AppModule {
+
+    @Provides
+    @Singleton FirebaseDataHelper provideFirebaseDataHelper() {
+        return new FirebaseDataHelperImpl();
+    }
 
     @Provides
     @Singleton
@@ -85,9 +92,8 @@ public class AppModule {
     }
 
     @Provides
-    @Singleton
-    DataManager provideDataManager(AppDataManager appDataManager) {
-        return appDataManager;
+    @Singleton UserSessionRepository provideDataManager(UserSessionRepositoryImpl appRepository) {
+        return appRepository;
     }
 
     @Provides

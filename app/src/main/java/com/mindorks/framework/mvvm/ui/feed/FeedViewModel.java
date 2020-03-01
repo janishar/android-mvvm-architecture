@@ -1,6 +1,6 @@
 package com.mindorks.framework.mvvm.ui.feed;
 
-import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.UserSessionRepository;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
@@ -10,7 +10,7 @@ import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 public class FeedViewModel extends BaseViewModel {
 
-    public FeedViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+    public FeedViewModel(UserSessionRepository UserSessionRepository, SchedulerProvider schedulerProvider) {
+        super(UserSessionRepository, schedulerProvider);
     }
 }

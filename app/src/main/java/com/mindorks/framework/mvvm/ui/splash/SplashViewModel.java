@@ -16,7 +16,7 @@
 
 package com.mindorks.framework.mvvm.ui.splash;
 
-import com.mindorks.framework.mvvm.data.DataManager;
+import com.mindorks.framework.mvvm.data.UserSessionRepository;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
@@ -26,14 +26,14 @@ import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 
 public class SplashViewModel extends BaseViewModel<SplashNavigator> {
 
-    public SplashViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+    public SplashViewModel(UserSessionRepository UserSessionRepository, SchedulerProvider schedulerProvider) {
+        super(UserSessionRepository, schedulerProvider);
     }
 
     public void startSeeding() {
-        getCompositeDisposable().add(getDataManager()
+        getCompositeDisposable().add(getRepository()
                 .seedDatabaseQuestions()
-                .flatMap(aBoolean -> getDataManager().seedDatabaseOptions())
+                .flatMap(aBoolean -> getRepository().seedDatabaseOptions())
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(aBoolean -> {
@@ -44,7 +44,7 @@ public class SplashViewModel extends BaseViewModel<SplashNavigator> {
     }
 
     private void decideNextActivity() {
-        if (getDataManager().getCurrentUserLoggedInMode() == DataManager.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType()) {
+        if (getRepository().getCurrentUserLoggedInMode() == UserSessionRepository.LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT.getType()) {
             getNavigator().openLoginActivity();
         } else {
             getNavigator().openMainActivity();

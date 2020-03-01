@@ -16,6 +16,7 @@
 
 package com.mindorks.framework.mvvm.data;
 
+import com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelper;
 import com.mindorks.framework.mvvm.data.local.db.DbHelper;
 import com.mindorks.framework.mvvm.data.local.prefs.PreferencesHelper;
 import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
@@ -27,7 +28,8 @@ import java.util.List;
  * Created by amitshekhar on 07/07/17.
  */
 
-public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
+public interface UserSessionRepository extends DbHelper, PreferencesHelper, ApiHelper,
+    FirebaseDataHelper {
 
     Observable<List<QuestionCardData>> getQuestionCardData();
 
@@ -38,6 +40,8 @@ public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
     void setUserAsLoggedOut();
 
     void updateApiHeader(Long userId, String accessToken);
+
+    void updateUserInfo();
 
     void updateUserInfo(
             String accessToken,
@@ -52,7 +56,7 @@ public interface DataManager extends DbHelper, PreferencesHelper, ApiHelper {
         LOGGED_IN_MODE_LOGGED_OUT(0),
         LOGGED_IN_MODE_GOOGLE(1),
         LOGGED_IN_MODE_FB(2),
-        LOGGED_IN_MODE_SERVER(3);
+        LOGGED_IN_MODE_FIREBASE_AUTH_UI(3);
 
         private final int mType;
 

@@ -16,15 +16,14 @@
 
 package com.mindorks.framework.mvvm.ui.main;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import android.text.TextUtils;
+import android.util.Log;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableList;
-import android.text.TextUtils;
-import android.util.Log;
-
-import com.mindorks.framework.mvvm.data.DataManager;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import com.mindorks.framework.mvvm.data.UserSessionRepository;
 import com.mindorks.framework.mvvm.data.model.others.QuestionCardData;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
@@ -54,8 +53,8 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
 
     private int action = NO_ACTION;
 
-    public MainViewModel(DataManager dataManager, SchedulerProvider schedulerProvider) {
-        super(dataManager, schedulerProvider);
+    public MainViewModel(UserSessionRepository UserSessionRepository, SchedulerProvider schedulerProvider) {
+        super(UserSessionRepository, schedulerProvider);
         questionCardData = new MutableLiveData<>();
         loadQuestionCards();
     }
@@ -95,7 +94,7 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
     }
 
     public void loadQuestionCards() {
-        getCompositeDisposable().add(getDataManager()
+        getCompositeDisposable().add(getRepository()
                 .getQuestionCardData()
                 .doOnNext(list -> Log.d(TAG, "loadQuestionCards: " + list.size()))
                 .subscribeOn(getSchedulerProvider().io())
@@ -113,8 +112,8 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
 
     public void logout() {
         setIsLoading(true);
-        getCompositeDisposable().add(getDataManager().doLogoutApiCall()
-                .doOnSuccess(response -> getDataManager().setUserAsLoggedOut())
+        getCompositeDisposable().add(getRepository().doLogoutApiCall()
+                .doOnSuccess(response -> getRepository().setUserAsLoggedOut())
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(response -> {
@@ -127,17 +126,17 @@ public class MainViewModel extends BaseViewModel<MainNavigator> {
     }
 
     public void onNavMenuCreated() {
-        final String currentUserName = getDataManager().getCurrentUserName();
+        final String currentUserName = getRepository().getCurrentUserName();
         if (!TextUtils.isEmpty(currentUserName)) {
             userName.set(currentUserName);
         }
 
-        final String currentUserEmail = getDataManager().getCurrentUserEmail();
+        final String currentUserEmail = getRepository().getCurrentUserEmail();
         if (!TextUtils.isEmpty(currentUserEmail)) {
             userEmail.set(currentUserEmail);
         }
 
-        final String profilePicUrl = getDataManager().getCurrentUserProfilePicUrl();
+        final String profilePicUrl = getRepository().getCurrentUserProfilePicUrl();
         if (!TextUtils.isEmpty(profilePicUrl)) {
             userProfilePicUrl.set(profilePicUrl);
         }
