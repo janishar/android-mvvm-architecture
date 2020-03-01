@@ -31,7 +31,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <RelativeLayout
 
@@ -144,7 +145,6 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@color/transparent"
-                        android:onClick="@{() -> viewModel.onGoogleLoginClick()}"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/ic_google_plus" />
 
@@ -154,7 +154,6 @@
                         android:layout_height="40dp"
                         android:layout_marginLeft="24dp"
                         android:background="@color/transparent"
-                        android:onClick="@{() -> viewModel.onFbLoginClick()}"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/ic_facebook" />
                 </LinearLayout>

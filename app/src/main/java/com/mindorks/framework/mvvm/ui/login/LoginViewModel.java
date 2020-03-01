@@ -18,8 +18,8 @@ package com.mindorks.framework.mvvm.ui.login;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import com.firebase.ui.auth.IdpResponse;
 import com.mindorks.framework.mvvm.data.UserSessionRepository;
-import com.mindorks.framework.mvvm.data.UserSessionRepositoryImpl;
 import com.mindorks.framework.mvvm.data.model.api.LoginRequest;
 import com.mindorks.framework.mvvm.google.SingleLiveEvent;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
@@ -132,5 +132,10 @@ public class LoginViewModel extends BaseViewModel<LoginNavigator> {
 
     public void onServerLoginClick() {
         getNavigator().login();
+    }
+
+    public void updateUserSession(IdpResponse fromResultIntent) {
+        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        getNavigator().openMainActivity();
     }
 }
