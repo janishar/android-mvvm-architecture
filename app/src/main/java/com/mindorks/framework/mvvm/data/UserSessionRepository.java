@@ -41,6 +41,8 @@ public interface UserSessionRepository extends DbHelper, PreferencesHelper, ApiH
 
     void updateApiHeader(Long userId, String accessToken);
 
+    void updateUserInfo();
+
     void updateUserInfo(
             String accessToken,
             Long userId,
@@ -54,7 +56,7 @@ public interface UserSessionRepository extends DbHelper, PreferencesHelper, ApiH
         LOGGED_IN_MODE_LOGGED_OUT(0),
         LOGGED_IN_MODE_GOOGLE(1),
         LOGGED_IN_MODE_FB(2),
-        LOGGED_IN_MODE_SERVER(3);
+        LOGGED_IN_MODE_FIREBASE_AUTH_UI(3);
 
         private final int mType;
 

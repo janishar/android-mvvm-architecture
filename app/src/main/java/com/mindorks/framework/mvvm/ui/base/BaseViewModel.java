@@ -16,8 +16,8 @@
 
 package com.mindorks.framework.mvvm.ui.base;
 
-import androidx.lifecycle.ViewModel;
 import androidx.databinding.ObservableBoolean;
+import androidx.lifecycle.ViewModel;
 import com.mindorks.framework.mvvm.data.UserSessionRepository;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
 import io.reactivex.disposables.CompositeDisposable;
@@ -29,7 +29,7 @@ import java.lang.ref.WeakReference;
 
 public abstract class BaseViewModel<N> extends ViewModel {
 
-    private final UserSessionRepository mUserSessionRepository;
+    private final UserSessionRepository mRepository;
 
     private final ObservableBoolean mIsLoading = new ObservableBoolean();
 
@@ -41,7 +41,7 @@ public abstract class BaseViewModel<N> extends ViewModel {
 
     public BaseViewModel(UserSessionRepository UserSessionRepository,
                          SchedulerProvider schedulerProvider) {
-        this.mUserSessionRepository = UserSessionRepository;
+        this.mRepository = UserSessionRepository;
         this.mSchedulerProvider = schedulerProvider;
         this.mCompositeDisposable = new CompositeDisposable();
     }
@@ -56,8 +56,8 @@ public abstract class BaseViewModel<N> extends ViewModel {
         return mCompositeDisposable;
     }
 
-    public UserSessionRepository getDataManager() {
-        return mUserSessionRepository;
+    public UserSessionRepository getRepository() {
+        return mRepository;
     }
 
     public ObservableBoolean getIsLoading() {

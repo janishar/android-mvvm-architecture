@@ -18,4 +18,7 @@ class FirebaseDataHelperImpl @Inject constructor(
             .createSignInIntentBuilder()
             .setAvailableProviders(providers)
             .build()
+
+    override fun getCurrentUser() = firebaseAuth.currentUser
+
 }

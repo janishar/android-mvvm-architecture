@@ -18,16 +18,13 @@ package com.mindorks.framework.mvvm.ui.feed.opensource;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import com.mindorks.framework.mvvm.data.UserSessionRepository;
 import com.mindorks.framework.mvvm.data.model.api.OpenSourceResponse;
 import com.mindorks.framework.mvvm.ui.base.BaseViewModel;
 import com.mindorks.framework.mvvm.utils.rx.SchedulerProvider;
-
-import java.util.List;
-
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import java.util.List;
 
 /**
  * Created by amitshekhar on 10/07/17.
@@ -46,7 +43,7 @@ public class OpenSourceViewModel extends BaseViewModel<OpenSourceNavigator> {
 
     public void fetchRepos() {
         setIsLoading(true);
-        getCompositeDisposable().add(getDataManager()
+        getCompositeDisposable().add(getRepository()
                 .getOpenSourceApiCall()
                 .map(openSourceResponse -> openSourceResponse.getData())
                 .flatMap(this::getViewModelList)

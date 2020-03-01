@@ -114,7 +114,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
-                mLoginViewModel.updateUserSession(IdpResponse.fromResultIntent(data));
+                IdpResponse fromResultIntent = IdpResponse.fromResultIntent(data);
+                mLoginViewModel.updateUserSession();
+
+
                 // ...
             } else {
                 // Sign in failed. If response is null the user canceled the

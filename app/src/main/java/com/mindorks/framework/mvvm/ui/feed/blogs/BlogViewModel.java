@@ -41,7 +41,7 @@ public class BlogViewModel extends BaseViewModel<BlogNavigator> {
 
     public void fetchBlogs() {
         setIsLoading(true);
-        getCompositeDisposable().add(getDataManager()
+        getCompositeDisposable().add(getRepository()
                 .getBlogApiCall()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
