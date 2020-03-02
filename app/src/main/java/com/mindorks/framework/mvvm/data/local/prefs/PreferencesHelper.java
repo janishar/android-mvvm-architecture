@@ -32,9 +32,9 @@ public interface PreferencesHelper {
 
     void setCurrentUserEmail(String email);
 
-    Long getCurrentUserId();
+    String getCurrentUserId();
 
-    void setCurrentUserId(Long userId);
+    void setCurrentUserId(String userId);
 
     int getCurrentUserLoggedInMode();
 

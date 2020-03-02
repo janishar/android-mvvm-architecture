@@ -3,7 +3,6 @@ package com.mindorks.framework.mvvm.data.firebase
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,8 +29,8 @@ class FirebaseDataHelperImpl @Inject constructor(
     override fun getCurrentUser() = firebaseAuth.currentUser
 
     //firestore
-    override fun setUserInFirestore(userMap: Map<String, Any>): Task<DocumentReference> {
-        return firebaseFirestore.collection(USER_COLLECTION).add(userMap)
+    override fun setUserInFirestore(userMap: Map<String, Any>): Task<Void> {
+        return firebaseFirestore.collection(USER_COLLECTION).document(userMap[USER_KEY_USER_ID].toString()).set(userMap)
     }
 
     companion object {
