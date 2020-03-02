@@ -295,7 +295,7 @@ import static com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl.U
                                 setCurrentUserId((Long) user.get(USER_KEY_USER_ID));
                                 setCurrentUserLoggedInMode(LoggedInMode.valueOf((String) user.get(USER_KEY_LOGGED_IN_MODE)));
                                 setCurrentUserName((String) user.get(USER_KEY_USERNAME));
-                                setCurrentUserEmail((String) user.get(USER_KEY_EMAIL);
+                                setCurrentUserEmail((String) user.get(USER_KEY_EMAIL));
                                 setCurrentUserProfilePicUrl((String) user.get(USER_KEY_PROFILE_PIC_PATH));
                             }
                         }
