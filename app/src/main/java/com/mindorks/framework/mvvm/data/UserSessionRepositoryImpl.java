@@ -19,11 +19,13 @@ package com.mindorks.framework.mvvm.data;
 import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.NonNull;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
 import com.google.gson.reflect.TypeToken;
@@ -53,6 +55,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import timber.log.Timber;
 
 import static com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl.USER_KEY_ACCESS_TOKEN;
 import static com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl.USER_KEY_EMAIL;
@@ -264,20 +267,13 @@ import static com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl.U
                         LoggedInMode.LOGGED_IN_MODE_FIREBASE_AUTH_UI,
                         user.getDisplayName(),
                         user.getEmail(),
-                        user.getPhotoUrl().toString())
+                        String.valueOf(user.getPhotoUrl()))
                 );
         }
     }
 
     @Override public void updateUserInfo(String accessToken, Long userId, LoggedInMode loggedInMode,
         String userName, String email, String profilePicPath) {
-
-        setAccessToken(accessToken);
-        setCurrentUserId(userId);
-        setCurrentUserLoggedInMode(loggedInMode);
-        setCurrentUserName(userName);
-        setCurrentUserEmail(email);
-        setCurrentUserProfilePicUrl(profilePicPath);
 
         HashMap<String, Object> userMap = new HashMap<>();
         userMap.put(USER_KEY_ACCESS_TOKEN, accessToken);
@@ -287,7 +283,36 @@ import static com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl.U
         userMap.put(USER_KEY_EMAIL, email);
         userMap.put(USER_KEY_PROFILE_PIC_PATH, profilePicPath);
 
-        setUserInFirestore(userMap);
+        setUserInFirestore(userMap)
+            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override public void onSuccess(DocumentReference documentReference) {
+                    documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                Map<String, Object> user = task.getResult().getData();
+
+                                setAccessToken((String) user.get((USER_KEY_ACCESS_TOKEN)));
+                                setCurrentUserId((Long) user.get(USER_KEY_USER_ID));
+                                setCurrentUserLoggedInMode(LoggedInMode.valueOf((String) user.get(USER_KEY_LOGGED_IN_MODE)));
+                                setCurrentUserName((String) user.get(USER_KEY_USERNAME));
+                                setCurrentUserEmail((String) user.get(USER_KEY_EMAIL);
+                                setCurrentUserProfilePicUrl((String) user.get(USER_KEY_PROFILE_PIC_PATH));
+                            }
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+            @Override public void onFailure(@NonNull Exception e) {
+                Timber.e(e);
+
+                setAccessToken(accessToken);
+                setCurrentUserId(userId);
+                setCurrentUserLoggedInMode(loggedInMode);
+                setCurrentUserName(userName);
+                setCurrentUserEmail(email);
+                setCurrentUserProfilePicUrl(profilePicPath);
+            }
+        });
     }
 
     @Override public Intent getSignInInent() {
@@ -300,15 +325,6 @@ import static com.mindorks.framework.mvvm.data.firebase.FirebaseDataHelperImpl.U
 
     @NotNull @Override
     public Task<DocumentReference> setUserInFirestore(@NotNull Map<String, ?> userMap) {
-        return mFirebaseHelper.setUserInFirestore(userMap)
-            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                @Override public void onSuccess(DocumentReference documentReference) {
-                    // TODO: 3/1/20
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-            @Override public void onFailure(@NonNull Exception e) {
-                // TODO: 3/1/20
-            }
-        });
+        return mFirebaseHelper.setUserInFirestore(userMap);
     }
 }

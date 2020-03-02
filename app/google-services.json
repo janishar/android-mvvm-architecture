@@ -1,42 +1,71 @@
 {
   "project_info": {
-    "project_number": "564255766344",
-    "firebase_url": "https://sushibet-a495d.firebaseio.com",
-    "project_id": "sushibet-a495d",
-    "storage_bucket": "sushibet-a495d.appspot.com"
+    "project_number": "210857027612",
+    "firebase_url": "https://soshibet-a85b7.firebaseio.com",
+    "project_id": "soshibet-a85b7",
+    "storage_bucket": "soshibet-a85b7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:564255766344:android:dcf5a6f116abcd9e37a57d",
+        "mobilesdk_app_id": "1:210857027612:android:08bc1a6aee111282b017d9",
         "android_client_info": {
           "package_name": "com.mindorks.framework.mvvm"
         }
       },
       "oauth_client": [
         {
-          "client_id": "564255766344-c3on5h1s45qko2e2n7g6jgqjtebch9j0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.mindorks.framework.mvvm",
-            "certificate_hash": "45b60e2e307642c37f0f43f7d6dd775e7ce9b1ff"
-          }
-        },
-        {
-          "client_id": "564255766344-3ms76kivuhtok4k5rj4f2d3brhpd7tm2.apps.googleusercontent.com",
+          "client_id": "210857027612-dc914djo7flor3f88ulktdqdpbjk08p0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDmt2CiEJCpfB5l2mWwJyHPPXb0Tr4PU38"
+          "current_key": "AIzaSyCx3TXXNbnvAV6YOeEJl8e_6_pE942fChw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "564255766344-3ms76kivuhtok4k5rj4f2d3brhpd7tm2.apps.googleusercontent.com",
+              "client_id": "210857027612-dc914djo7flor3f88ulktdqdpbjk08p0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210857027612:android:5f84bbbfadc22a35b017d9",
+        "android_client_info": {
+          "package_name": "com.nomadmobile.sushibet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210857027612-8kmgupatbiil38f9514n0p3ju64h4h8v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nomadmobile.sushibet",
+            "certificate_hash": "45b60e2e307642c37f0f43f7d6dd775e7ce9b1ff"
+          }
+        },
+        {
+          "client_id": "210857027612-dc914djo7flor3f88ulktdqdpbjk08p0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx3TXXNbnvAV6YOeEJl8e_6_pE942fChw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210857027612-dc914djo7flor3f88ulktdqdpbjk08p0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
