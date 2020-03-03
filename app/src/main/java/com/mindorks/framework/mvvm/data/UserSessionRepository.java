@@ -39,13 +39,11 @@ public interface UserSessionRepository extends DbHelper, PreferencesHelper, ApiH
 
     void setUserAsLoggedOut();
 
-    void updateApiHeader(String userId, String accessToken);
-
     void updateUserInfo();
 
     void updateUserInfo(
             String accessToken,
-            String userId,
+            Long userId,
             LoggedInMode loggedInMode,
             String userName,
             String email,

@@ -89,11 +89,11 @@ class UserSessionRepositoryImpl @Inject constructor(private val mContext: Contex
         mPreferencesHelper.currentUserEmail = email
     }
 
-    override fun getCurrentUserId(): String? {
+    override fun getCurrentUserId(): Long {
         return mPreferencesHelper.currentUserId
     }
 
-    override fun setCurrentUserId(userId: String) {
+    override fun setCurrentUserId(userId: Long) {
         mPreferencesHelper.currentUserId = userId
     }
 
@@ -196,13 +196,8 @@ class UserSessionRepositoryImpl @Inject constructor(private val mContext: Contex
     }
 
     override fun setUserAsLoggedOut() {
-        updateUserInfo(accessToken, currentUserId ?: "", LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT,
+        updateUserInfo(accessToken, currentUserId, LoggedInMode.LOGGED_IN_MODE_LOGGED_OUT,
             currentUserName ?: "", currentUserEmail ?: "", currentUserProfilePicUrl ?: "")
-    }
-
-    override fun updateApiHeader(userId: String, accessToken: String) {
-        mApiHelper.apiHeader.protectedApiHeader.userId = userId
-        mApiHelper.apiHeader.protectedApiHeader.accessToken = accessToken
     }
 
     override fun updateUserInfo() {
@@ -210,7 +205,7 @@ class UserSessionRepositoryImpl @Inject constructor(private val mContext: Contex
         user?.getIdToken(false)?.addOnSuccessListener { getTokenResult: GetTokenResult ->
             updateUserInfo(
                 getTokenResult.token ?: "",
-                user.uid,
+                user.metadata?.creationTimestamp ?: 0,
                 LoggedInMode.LOGGED_IN_MODE_FIREBASE_AUTH_UI,
                 user.displayName ?: "",
                 user.email ?: "",
@@ -219,7 +214,7 @@ class UserSessionRepositoryImpl @Inject constructor(private val mContext: Contex
         }
     }
 
-    override fun updateUserInfo(accessToken: String, userId: String, loggedInMode: LoggedInMode,
+    override fun updateUserInfo(accessToken: String, userId: Long, loggedInMode: LoggedInMode,
                                 userName: String, email: String, profilePicPath: String) {
 
         val userMap = HashMap<String, Any>()

@@ -68,13 +68,13 @@ public class AppPreferencesHelper implements PreferencesHelper {
     }
 
     @Override
-    public String getCurrentUserId() {
-        return mPrefs.getString(PREF_KEY_CURRENT_USER_ID, "");
+    public Long getCurrentUserId() {
+        return mPrefs.getLong(PREF_KEY_CURRENT_USER_ID, 0);
     }
 
     @Override
-    public void setCurrentUserId(String userId) {
-        mPrefs.edit().putString(PREF_KEY_CURRENT_USER_ID, userId).apply();
+    public void setCurrentUserId(Long userId) {
+        mPrefs.edit().putLong(PREF_KEY_CURRENT_USER_ID, userId).apply();
     }
 
     @Override
