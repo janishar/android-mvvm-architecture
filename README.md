@@ -49,6 +49,8 @@ This repository contains a detailed sample app that implements MVVM architecture
 
 ### Looking for MVP Architecture - [Check here](https://github.com/MindorksOpenSource/android-mvp-architecture)
 
+### Looking for MVVM Architecture for Beginners - [Check here](https://github.com/MindorksOpenSource/MVVM-Architecture-Android-Beginners)
+
 [Check out Mindorks awesome open source projects here](https://mindorks.com/open-source-projects)
 
 ### License
