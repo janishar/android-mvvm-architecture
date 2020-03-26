@@ -51,6 +51,8 @@ This repository contains a detailed sample app that implements MVVM architecture
 
 ### Looking for MVVM Architecture for Beginners - [Check here](https://github.com/MindorksOpenSource/MVVM-Architecture-Android-Beginners)
 
+### Learn to build a ride-sharing Android app like Uber, Lyft - [Check here](https://github.com/MindorksOpenSource/ridesharing-uber-lyft-app)
+
 [Check out Mindorks awesome open source projects here](https://mindorks.com/open-source-projects)
 
 ### License
