@@ -16,42 +16,38 @@
 
 package com.mindorks.framework.mvvm;
 
-import android.app.Activity;
 import android.app.Application;
+
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.interceptors.HttpLoggingInterceptor;
+import com.mindorks.framework.mvvm.di.component.AppComponent;
 import com.mindorks.framework.mvvm.di.component.DaggerAppComponent;
 import com.mindorks.framework.mvvm.utils.AppLogger;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasActivityInjector;
+
 import javax.inject.Inject;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by amitshekhar on 07/07/17.
  */
 
-public class MvvmApp extends Application implements HasActivityInjector {
+public class MvvmApp extends Application {
 
-    @Inject
-    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
+    public AppComponent appComponent;
 
     @Inject
     CalligraphyConfig mCalligraphyConfig;
 
     @Override
-    public DispatchingAndroidInjector<Activity> activityInjector() {
-        return activityDispatchingAndroidInjector;
-    }
-
-    @Override
     public void onCreate() {
         super.onCreate();
 
-        DaggerAppComponent.builder()
+        appComponent = DaggerAppComponent.builder()
                 .application(this)
-                .build()
-                .inject(this);
+                .build();
+
+        appComponent.inject(this);
 
         AppLogger.init();
 

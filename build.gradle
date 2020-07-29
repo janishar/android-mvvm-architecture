@@ -53,7 +53,7 @@ ext {
     cardViewVersion = '1.0.0'
 
     // App dependencies
-    supportLibraryVersion = '1.0.2'
+    supportLibraryVersion = '1.1.0'
     materialVersion = '1.0.0'
     vectorDrawableVersion = '1.0.1'
     animatedVectorDrawableVersion = '1.0.0'

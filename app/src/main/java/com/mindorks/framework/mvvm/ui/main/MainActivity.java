@@ -16,30 +16,31 @@
 
 package com.mindorks.framework.mvvm.ui.main;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
-import androidx.databinding.DataBindingUtil;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import com.google.android.material.navigation.NavigationView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.google.android.material.navigation.NavigationView;
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.BuildConfig;
 import com.mindorks.framework.mvvm.R;
-import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.databinding.ActivityMainBinding;
 import com.mindorks.framework.mvvm.databinding.NavHeaderMainBinding;
+import com.mindorks.framework.mvvm.di.component.ActivityComponent;
 import com.mindorks.framework.mvvm.ui.about.AboutFragment;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 import com.mindorks.framework.mvvm.ui.feed.FeedActivity;
@@ -48,27 +49,18 @@ import com.mindorks.framework.mvvm.ui.main.rating.RateUsDialog;
 import com.mindorks.framework.mvvm.utils.ScreenUtils;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
-import javax.inject.Inject;
 
-public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator, HasSupportFragmentInjector {
+public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewModel> implements MainNavigator {
 
-    @Inject
-    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
-    @Inject
-    ViewModelProviderFactory factory;
     private ActivityMainBinding mActivityMainBinding;
     private SwipePlaceHolderView mCardsContainerView;
     private DrawerLayout mDrawer;
-    private MainViewModel mMainViewModel;
+
     private NavigationView mNavigationView;
     private Toolbar mToolbar;
 
     public static Intent newIntent(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
-        return intent;
+        return new Intent(context, MainActivity.class);
     }
 
     @Override
@@ -79,12 +71,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
-    }
-
-    @Override
-    public MainViewModel getViewModel() {
-        mMainViewModel = ViewModelProviders.of(this, factory).get(MainViewModel.class);
-        return mMainViewModel;
     }
 
     @Override
@@ -151,16 +137,16 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
-        return fragmentDispatchingAndroidInjector;
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivityMainBinding = getViewDataBinding();
-        mMainViewModel.setNavigator(this);
+        mViewModel.setNavigator(this);
         setUp();
+    }
+
+    @Override
+    public void performDependencyInjection(ActivityComponent buildComponent) {
+        buildComponent.inject(this);
     }
 
     @Override
@@ -205,8 +191,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         mDrawerToggle.syncState();
         setupNavMenu();
         String version = getString(R.string.version) + " " + BuildConfig.VERSION_NAME;
-        mMainViewModel.updateAppVersion(version);
-        mMainViewModel.onNavMenuCreated();
+        mViewModel.updateAppVersion(version);
+        mViewModel.onNavMenuCreated();
         setupCardContainerView();
         subscribeToLiveData();
     }
@@ -231,10 +217,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 // reload the contents again after 1 sec delay
                 new Handler(getMainLooper()).postDelayed(() -> {
                     //Reload once all the cards are removed
-                    mMainViewModel.loadQuestionCards();
+                    mViewModel.loadQuestionCards();
                 }, 800);
             } else {
-                mMainViewModel.removeQuestionCard();
+                mViewModel.removeQuestionCard();
             }
         });
     }
@@ -243,7 +229,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         NavHeaderMainBinding navHeaderMainBinding = DataBindingUtil.inflate(getLayoutInflater(),
                 R.layout.nav_header_main, mActivityMainBinding.navigationView, false);
         mActivityMainBinding.navigationView.addHeaderView(navHeaderMainBinding.getRoot());
-        navHeaderMainBinding.setViewModel(mMainViewModel);
+        navHeaderMainBinding.setViewModel(mViewModel);
 
         mNavigationView.setNavigationItemSelectedListener(
                 item -> {
@@ -259,7 +245,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                             startActivity(FeedActivity.newIntent(MainActivity.this));
                             return true;
                         case R.id.navItemLogout:
-                            mMainViewModel.logout();
+                            mViewModel.logout();
                             return true;
                         default:
                             return false;
@@ -278,7 +264,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     private void subscribeToLiveData() {
-        mMainViewModel.getQuestionCardData().observe(this, questionCardDatas -> mMainViewModel.setQuestionDataList(questionCardDatas));
+        mViewModel.getQuestionCardData().observe(this, questionCardDatas -> mViewModel.setQuestionDataList(questionCardDatas));
     }
 
     private void unlockDrawer() {

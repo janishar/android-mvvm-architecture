@@ -29,10 +29,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import com.mindorks.framework.mvvm.MvvmApp;
+import com.mindorks.framework.mvvm.di.component.ActivityComponent;
+import com.mindorks.framework.mvvm.di.component.DaggerActivityComponent;
+import com.mindorks.framework.mvvm.di.module.ActivityModule;
 import com.mindorks.framework.mvvm.ui.login.LoginActivity;
 import com.mindorks.framework.mvvm.utils.CommonUtils;
 import com.mindorks.framework.mvvm.utils.NetworkUtils;
-import dagger.android.AndroidInjection;
+
+import javax.inject.Inject;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -46,8 +53,11 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     // this can probably depend on isLoading variable of BaseViewModel,
     // since its going to be common for all the activities
     private ProgressDialog mProgressDialog;
+
     private T mViewDataBinding;
-    private V mViewModel;
+
+    @Inject
+    protected V mViewModel;
 
     /**
      * Override for set binding variable
@@ -63,12 +73,6 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     @LayoutRes
     int getLayoutId();
 
-    /**
-     * Override for set view model
-     *
-     * @return view model instance
-     */
-    public abstract V getViewModel();
 
     @Override
     public void onFragmentAttached() {
@@ -87,7 +91,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        performDependencyInjection();
+        performDependencyInjection(getBuildComponent());
         super.onCreate(savedInstanceState);
         performDataBinding();
     }
@@ -127,9 +131,14 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         finish();
     }
 
-    public void performDependencyInjection() {
-        AndroidInjection.inject(this);
+    private ActivityComponent getBuildComponent() {
+        return DaggerActivityComponent.builder()
+                .appComponent(((MvvmApp)getApplication()).appComponent)
+                .activityModule(new ActivityModule(this))
+                .build();
     }
+
+    public abstract void performDependencyInjection(ActivityComponent buildComponent);
 
     @TargetApi(Build.VERSION_CODES.M)
     public void requestPermissionsSafely(String[] permissions, int requestCode) {
@@ -145,7 +154,6 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     private void performDataBinding() {
         mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId());
-        this.mViewModel = mViewModel == null ? getViewModel() : mViewModel;
         mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
         mViewDataBinding.executePendingBindings();
     }

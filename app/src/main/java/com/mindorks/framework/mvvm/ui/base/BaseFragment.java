@@ -17,17 +17,26 @@
 package com.mindorks.framework.mvvm.ui.base;
 
 import android.content.Context;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import android.os.Bundle;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import dagger.android.support.AndroidSupportInjection;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
+
+import com.mindorks.framework.mvvm.MvvmApp;
+import com.mindorks.framework.mvvm.di.component.DaggerFragmentComponent;
+import com.mindorks.framework.mvvm.di.component.FragmentComponent;
+import com.mindorks.framework.mvvm.di.module.FragmentModule;
+
+import javax.inject.Inject;
+
+
 
 /**
  * Created by amitshekhar on 09/07/17.
@@ -38,7 +47,10 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     private BaseActivity mActivity;
     private View mRootView;
     private T mViewDataBinding;
-    private V mViewModel;
+
+
+    @Inject
+    protected V mViewModel;
 
     /**
      * Override for set binding variable
@@ -54,12 +66,6 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     @LayoutRes
     int getLayoutId();
 
-    /**
-     * Override for set view model
-     *
-     * @return view model instance
-     */
-    public abstract V getViewModel();
 
     @Override
     public void onAttach(Context context) {
@@ -73,9 +79,8 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        performDependencyInjection();
+        performDependencyInjection(getBuildComponent());
         super.onCreate(savedInstanceState);
-        mViewModel = getViewModel();
         setHasOptionsMenu(false);
     }
 
@@ -124,8 +129,14 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         }
     }
 
-    private void performDependencyInjection() {
-        AndroidSupportInjection.inject(this);
+    public abstract void performDependencyInjection(FragmentComponent buildComponent);
+
+
+    private FragmentComponent getBuildComponent() {
+        return DaggerFragmentComponent.builder()
+                .appComponent(((MvvmApp)(getContext().getApplicationContext())).appComponent)
+                .fragmentModule(new FragmentModule(this))
+                .build();
     }
 
     public interface Callback {

@@ -17,18 +17,20 @@
 package com.mindorks.framework.mvvm.ui.feed.opensource;
 
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import android.view.View;
+
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
-import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.databinding.FragmentOpenSourceBinding;
+import com.mindorks.framework.mvvm.di.component.FragmentComponent;
 import com.mindorks.framework.mvvm.ui.base.BaseFragment;
+
 import javax.inject.Inject;
 
 /**
@@ -43,9 +45,6 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
     LinearLayoutManager mLayoutManager;
     @Inject
     OpenSourceAdapter mOpenSourceAdapter;
-    @Inject
-    ViewModelProviderFactory factory;
-    private OpenSourceViewModel mOpenSourceViewModel;
 
     public static OpenSourceFragment newInstance() {
         Bundle args = new Bundle();
@@ -64,11 +63,7 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
         return R.layout.fragment_open_source;
     }
 
-    @Override
-    public OpenSourceViewModel getViewModel() {
-        mOpenSourceViewModel = ViewModelProviders.of(this, factory).get(OpenSourceViewModel.class);
-        return mOpenSourceViewModel;
-    }
+
 
     @Override
     public void handleError(Throwable throwable) {
@@ -78,13 +73,13 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mOpenSourceViewModel.setNavigator(this);
+        mViewModel.setNavigator(this);
         mOpenSourceAdapter.setListener(this);
     }
 
     @Override
     public void onRetryClick() {
-        mOpenSourceViewModel.fetchRepos();
+        mViewModel.fetchRepos();
     }
 
     @Override
@@ -92,6 +87,11 @@ public class OpenSourceFragment extends BaseFragment<FragmentOpenSourceBinding, 
         super.onViewCreated(view, savedInstanceState);
         mFragmentOpenSourceBinding = getViewDataBinding();
         setUp();
+    }
+
+    @Override
+    public void performDependencyInjection(FragmentComponent buildComponent) {
+        buildComponent.inject(this);
     }
 
     private void setUp() {
