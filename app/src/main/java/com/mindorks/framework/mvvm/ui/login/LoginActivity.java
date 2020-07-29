@@ -16,18 +16,17 @@
 
 package com.mindorks.framework.mvvm.ui.login;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
+
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
-import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.databinding.ActivityLoginBinding;
+import com.mindorks.framework.mvvm.di.component.ActivityComponent;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 import com.mindorks.framework.mvvm.ui.main.MainActivity;
-import javax.inject.Inject;
 
 /**
  * Created by amitshekhar on 08/07/17.
@@ -35,9 +34,6 @@ import javax.inject.Inject;
 
 public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewModel> implements LoginNavigator {
 
-    @Inject
-    ViewModelProviderFactory factory;
-    private LoginViewModel mLoginViewModel;
     private ActivityLoginBinding mActivityLoginBinding;
 
     public static Intent newIntent(Context context) {
@@ -55,12 +51,6 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     }
 
     @Override
-    public LoginViewModel getViewModel() {
-        mLoginViewModel = ViewModelProviders.of(this,factory).get(LoginViewModel.class);
-        return mLoginViewModel;
-    }
-
-    @Override
     public void handleError(Throwable throwable) {
         // handle error
     }
@@ -69,9 +59,9 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     public void login() {
         String email = mActivityLoginBinding.etEmail.getText().toString();
         String password = mActivityLoginBinding.etPassword.getText().toString();
-        if (mLoginViewModel.isEmailAndPasswordValid(email, password)) {
+        if (mViewModel.isEmailAndPasswordValid(email, password)) {
             hideKeyboard();
-            mLoginViewModel.login(email, password);
+            mViewModel.login(email, password);
         } else {
             Toast.makeText(this, getString(R.string.invalid_email_password), Toast.LENGTH_SHORT).show();
         }
@@ -88,6 +78,11 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivityLoginBinding = getViewDataBinding();
-        mLoginViewModel.setNavigator(this);
+        mViewModel.setNavigator(this);
+    }
+
+    @Override
+    public void performDependencyInjection(ActivityComponent buildComponent) {
+        buildComponent.inject(this);
     }
 }

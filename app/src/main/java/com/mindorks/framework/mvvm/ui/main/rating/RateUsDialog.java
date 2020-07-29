@@ -24,11 +24,16 @@ import androidx.fragment.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.mindorks.framework.mvvm.MvvmApp;
 import com.mindorks.framework.mvvm.R;
 import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.databinding.DialogRateUsBinding;
+import com.mindorks.framework.mvvm.di.component.DaggerDialogComponent;
+import com.mindorks.framework.mvvm.di.component.DialogComponent;
+import com.mindorks.framework.mvvm.di.module.DialogModule;
+import com.mindorks.framework.mvvm.di.module.FragmentModule;
 import com.mindorks.framework.mvvm.ui.base.BaseDialog;
-import dagger.android.support.AndroidSupportInjection;
 import javax.inject.Inject;
 
 /**
@@ -37,10 +42,10 @@ import javax.inject.Inject;
 
 public class RateUsDialog extends BaseDialog implements RateUsCallback {
 
-    private static final String TAG = RateUsDialog.class.getSimpleName();
+    private static final String TAG = "RateUsDialog";
+
     @Inject
-    ViewModelProviderFactory factory;
-    private RateUsViewModel mRateUsViewModel;
+    RateUsViewModel mRateUsViewModel;
 
     public static RateUsDialog newInstance() {
         RateUsDialog fragment = new RateUsDialog();
@@ -59,8 +64,8 @@ public class RateUsDialog extends BaseDialog implements RateUsCallback {
         DialogRateUsBinding binding = DataBindingUtil.inflate(inflater, R.layout.dialog_rate_us, container, false);
         View view = binding.getRoot();
 
-        AndroidSupportInjection.inject(this);
-        mRateUsViewModel = ViewModelProviders.of(this,factory).get(RateUsViewModel.class);
+        performDependencyInjection(getBuildComponent());
+
         binding.setViewModel(mRateUsViewModel);
 
         mRateUsViewModel.setNavigator(this);
@@ -70,5 +75,16 @@ public class RateUsDialog extends BaseDialog implements RateUsCallback {
 
     public void show(FragmentManager fragmentManager) {
         super.show(fragmentManager, TAG);
+    }
+
+    private DialogComponent getBuildComponent(){
+        return DaggerDialogComponent.builder()
+                .appComponent(((MvvmApp)(getContext().getApplicationContext())).appComponent)
+                .dialogModule(new DialogModule(this))
+                .build();
+    }
+
+    private void performDependencyInjection(DialogComponent buildComponent){
+        buildComponent.inject(this);
     }
 }

@@ -16,29 +16,22 @@
 
 package com.mindorks.framework.mvvm.ui.splash;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.mindorks.framework.mvvm.BR;
 import com.mindorks.framework.mvvm.R;
-import com.mindorks.framework.mvvm.ViewModelProviderFactory;
 import com.mindorks.framework.mvvm.databinding.ActivitySplashBinding;
+import com.mindorks.framework.mvvm.di.component.ActivityComponent;
 import com.mindorks.framework.mvvm.ui.base.BaseActivity;
 import com.mindorks.framework.mvvm.ui.login.LoginActivity;
 import com.mindorks.framework.mvvm.ui.main.MainActivity;
-import javax.inject.Inject;
 
 /**
  * Created by amitshekhar on 08/07/17.
  */
 
 public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashViewModel> implements SplashNavigator {
-
-    @Inject
-    ViewModelProviderFactory factory;
-    
-    private SplashViewModel mSplashViewModel;
 
     @Override
     public int getBindingVariable() {
@@ -48,12 +41,6 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     @Override
     public int getLayoutId() {
         return R.layout.activity_splash;
-    }
-
-    @Override
-    public SplashViewModel getViewModel() {
-        mSplashViewModel = ViewModelProviders.of(this,factory).get(SplashViewModel.class);
-        return mSplashViewModel;
     }
 
     @Override
@@ -73,7 +60,12 @@ public class SplashActivity extends BaseActivity<ActivitySplashBinding, SplashVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mSplashViewModel.setNavigator(this);
-        mSplashViewModel.startSeeding();
+        mViewModel.setNavigator(this);
+        mViewModel.startSeeding();
+    }
+
+    @Override
+    public void performDependencyInjection(ActivityComponent buildComponent) {
+        buildComponent.inject(this);
     }
 }
