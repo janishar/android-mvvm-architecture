@@ -34,6 +34,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class MvvmApp extends Application {
 
+    //test
     public AppComponent appComponent;
 
     @Inject
