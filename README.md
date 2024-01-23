@@ -1,4 +1,11 @@
-# Android MVVM Architecture: Sample App
+[![Deprecated](https://img.shields.io/badge/deprecated-yes-red)](https://github.com/janishar/wimm-android-app)
+
+---
+# This Project is [Deprecated] goto latest project: [Modern Android Development - WhereIsMyMotivation](https://github.com/janishar/wimm-android-app)
+---
+
+# Deprecated
+### Android MVVM Architecture: Sample App
 
 This repository contains a detailed sample app that implements MVVM architecture using Dagger2, Room, RxJava, FastAndroidNetworking, PlaceHolderView and AndroidDebugDatabase
 <p align="center">
